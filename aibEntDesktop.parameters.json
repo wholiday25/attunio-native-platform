@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "imageTemplateName": {
+        "value": "AIBEntDesktop"
+        },
+        "api-version": {
+          "value": "2020-02-14"
+        },
+        "svclocation": {
+            "value": "eastus"
+        },
+        "ManagedIdentityID": {
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourcegroups/AzureImageBuilder-Dev/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aibIdentityDev"
+        },
+        "SharedImageGalleryID": {
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV"
+        },
+        "SubnetID": {
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/hostpool1"
+        }
+    }
+   
+}    
+
+
+
+
+
+
+

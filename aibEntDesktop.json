@@ -56,8 +56,8 @@
             "source": {
                 "type": "PlatformImage",
                 "publisher": "MicrosoftWindowsDesktop",
-                "offer": "windows-10",
-                "sku": "20h2-evd",
+                "offer": "office-365",
+                "sku": "20h2-evd-o365pp",
                 "version": "latest"
             },
 
@@ -66,17 +66,17 @@
 
                 {
                     "type": "PowerShell",
-                    "name": "installFsLogix",
+                    "name": "Install FsLogix",
                     "runElevated": true,
                     "runAsSystem": true,
-                    "scriptUri": "https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/solutions/14_Building_Images_WVD/0_installConfFsLogix.ps1"
+                    "scriptUri": "https://raw.githubusercontent.com/azure/azvmimagebuilder/master/solutions/14_Building_Images_WVD/0_installConfFsLogix.ps1"
                 },
                 {
                     "type": "PowerShell",
                     "name": "OptimizeOS",
                     "runElevated": true,
                     "runAsSystem": true,
-                    "scriptUri": "https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/solutions/14_Building_Images_WVD/1_Optimize_OS_for_WVD.ps1"
+                    "scriptUri": "https://raw.githubusercontent.com/azure/azvmimagebuilder/master/solutions/14_Building_Images_WVD/1_Optimize_OS_for_WVD.ps1"
                 },
                 {
                     "type": "WindowsRestart",
@@ -88,11 +88,58 @@
                     "name": "Install Teams",
                     "runElevated": true,
                     "runAsSystem": true,
-                    "scriptUri": "https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/solutions/14_Building_Images_WVD/2_installTeams.ps1"
+                    "scriptUri": "https://raw.githubusercontent.com/azure/azvmimagebuilder/master/solutions/14_Building_Images_WVD/2_installTeams.ps1"
+                },
+                {
+                    "type": "PowerShell",
+                    "name": "Install 7Zip",
+                    "runElevated": true,
+                    "runAsSystem": true,
+                    "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-7Zip.ps1"
+                },
+                {
+                    "type": "PowerShell",
+                    "name": "Install Chrome",
+                    "runElevated": true,
+                    "runAsSystem": true,
+                    "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Chrome.ps1"
+                },
+                {
+                    "type": "PowerShell",
+                    "name": "Install Adobe Reader",
+                    "runElevated": true,
+                    "runAsSystem": true,
+                    "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AdobeReader.ps1"
+                },
+                {
+                    "type": "PowerShell",
+                    "name": "Install VSCode",
+                    "runElevated": true,
+                    "runAsSystem": true,
+                    "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSCode.ps1"
+                },
+                {
+                    "type": "PowerShell",
+                    "name": "Install Java x86",
+                    "runElevated": true,
+                    "runAsSystem": true,
+                    "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86.ps1"
                 },
                 {
                     "type": "WindowsRestart",
-                    "restartCheckCommand": "write-host 'restarting post Teams Install'",
+                    "restartCheckCommand": "write-host 'restarting post JREx86 Install'",
+                    "restartTimeout": "5m"
+                },
+                {
+                    "type": "PowerShell",
+                    "name": "Install Java x64",
+                    "runElevated": true,
+                    "runAsSystem": true,
+                    "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64.ps1"
+                },   
+                {
+                    "type": "WindowsRestart",
+                    "restartCheckCommand": "write-host 'restarting post JREx64 Install'",
                     "restartTimeout": "5m"
                 }
 
@@ -103,8 +150,8 @@
                     "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
                     "runOutputName": "sigOutput",
                     "artifactTags": {
-                        "source": "wvd10",
-                        "baseosimg": "windows10"
+                        "source": "wvd10-o365pp",
+                        "baseosimg": "windows10-office365pp"
                     },
                     "replicationRegions": [
                         "eastus"
