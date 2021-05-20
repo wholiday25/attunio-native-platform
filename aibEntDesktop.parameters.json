@@ -19,6 +19,15 @@
         },
         "SubnetID": {
             "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/hostpool1"
+        },
+        "SEPInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/InstallSEP-WVD.zip?sv=2020-04-08&st=2021-05-19T03%3A19%3A36Z&se=2031-05-20T03%3A19%3A00Z&sr=b&sp=r&sig=gRFGWAP02VX1r80wdmvyO0TSmg68oez2LQ8Wqjfih%2BI%3D"
+        },
+        "ProjectInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/InstallProject-WVD.zip?sv=2020-04-08&st=2021-05-19T03%3A20%3A36Z&se=2031-05-20T03%3A20%3A00Z&sr=b&sp=r&sig=stvMKUiuSCHN%2B23eIatyH5y9POrIRrKahexlnRP61FA%3D"
+        },
+        "VisioInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/InstallVisio-WVD.zip?sv=2020-04-08&st=2021-05-19T03%3A20%3A58Z&se=2031-05-20T03%3A20%3A00Z&sr=b&sp=r&sig=RULdaktuWNtGmTvj3bkCvw0yJ7tOrEPIZ8NUXwUpsRY%3D"
         }
     }
    

@@ -19,10 +19,24 @@
         },
         "SubnetID": {
             "type": "string"
+        },
+        "SEPInstallerURI": {
+            "type": "string"
+        },
+        "ProjectInstallerURI": {
+            "type": "string"
+        },
+        "VisioInstallerURI": {
+            "type": "string"
         }
     },
 
     "variables": {
+        "SEPDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SEPInstallerURI'),'\", \"C:\\Comcast\\InstallSEP-WVD.zip\")')]",
+        "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
+        "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]"
+
+
     },
 
 
@@ -53,111 +67,167 @@
                         "subnetId": "[parameters('SubnetID')]"
                     }
                 },
-            "source": {
-                "type": "PlatformImage",
-                "publisher": "MicrosoftWindowsDesktop",
-                "offer": "office-365",
-                "sku": "20h2-evd-o365pp",
-                "version": "latest"
-            },
+                "source": {
+                    "type": "PlatformImage",
+                    "publisher": "MicrosoftWindowsDesktop",
+                    "offer": "office-365",
+                    "sku": "20h1-evd-o365pp",
+                    "version": "latest"
+                },
 
-            "customize": [
-
-
-                {
-                    "type": "PowerShell",
-                    "name": "Install FsLogix",
-                    "runElevated": true,
-                    "runAsSystem": true,
-                    "scriptUri": "https://raw.githubusercontent.com/azure/azvmimagebuilder/master/solutions/14_Building_Images_WVD/0_installConfFsLogix.ps1"
-                },
-                {
-                    "type": "PowerShell",
-                    "name": "OptimizeOS",
-                    "runElevated": true,
-                    "runAsSystem": true,
-                    "scriptUri": "https://raw.githubusercontent.com/azure/azvmimagebuilder/master/solutions/14_Building_Images_WVD/1_Optimize_OS_for_WVD.ps1"
-                },
-                {
-                    "type": "WindowsRestart",
-                    "restartCheckCommand": "write-host 'restarting post Optimizations'",
-                    "restartTimeout": "5m"
-                },
-                {
-                    "type": "PowerShell",
-                    "name": "Install Teams",
-                    "runElevated": true,
-                    "runAsSystem": true,
-                    "scriptUri": "https://raw.githubusercontent.com/azure/azvmimagebuilder/master/solutions/14_Building_Images_WVD/2_installTeams.ps1"
-                },
-                {
-                    "type": "PowerShell",
-                    "name": "Install 7Zip",
-                    "runElevated": true,
-                    "runAsSystem": true,
-                    "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-7Zip.ps1"
-                },
-                {
-                    "type": "PowerShell",
-                    "name": "Install Chrome",
-                    "runElevated": true,
-                    "runAsSystem": true,
-                    "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Chrome.ps1"
-                },
-                {
-                    "type": "PowerShell",
-                    "name": "Install Adobe Reader",
-                    "runElevated": true,
-                    "runAsSystem": true,
-                    "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AdobeReader.ps1"
-                },
-                {
-                    "type": "PowerShell",
-                    "name": "Install VSCode",
-                    "runElevated": true,
-                    "runAsSystem": true,
-                    "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSCode.ps1"
-                },
-                {
-                    "type": "PowerShell",
-                    "name": "Install Java x86",
-                    "runElevated": true,
-                    "runAsSystem": true,
-                    "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86.ps1"
-                },
-                {
-                    "type": "WindowsRestart",
-                    "restartCheckCommand": "write-host 'restarting post JREx86 Install'",
-                    "restartTimeout": "5m"
-                },
-                {
-                    "type": "PowerShell",
-                    "name": "Install Java x64",
-                    "runElevated": true,
-                    "runAsSystem": true,
-                    "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64.ps1"
-                },   
-                {
-                    "type": "WindowsRestart",
-                    "restartCheckCommand": "write-host 'restarting post JREx64 Install'",
-                    "restartTimeout": "5m"
-                }
-
-            ],
-            "distribute": [
-                {
-                    "type": "SharedImage",
-                    "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
-                    "runOutputName": "sigOutput",
-                    "artifactTags": {
-                        "source": "wvd10-o365pp",
-                        "baseosimg": "windows10-office365pp"
+                "customize": [
+                    {
+                        "type": "PowerShell",
+                        "name": "Create workd",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["New-Item -ItemType Directory -Force -Path C:\\Comcast\\"]
                     },
-                    "replicationRegions": [
-                        "eastus"
-                    ]
-                }
-            ]
+                    {
+                        "type": "File",
+                        "name": "Download Optimization zip",
+                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/optimizeComcastProd.zip",
+                        "destination": "C:\\Comcast\\optimizeComcastProd.zip"                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "OptimizeOS",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Optimize-WVDAppx.ps1",
+                        "validExitCodes": [0,16001]
+                    },
+                    {
+
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "write-output 'restarting post Optimizations'",
+                        "restartTimeout": "5m"
+                    },
+                    {
+
+                        "type": "File",
+                        "name": "Download BGInfo",
+                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/BGInfo.zip",
+                        "destination": "C:\\Comcast\\BGInfo.zip"                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Configure BGInfo",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-BGInfo.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download Symantec",
+                        "inline": ["[variables('SEPDownloadCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download Visio",
+                        "inline": ["[variables('VisioDownloadCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download Project",
+                        "inline": ["[variables('ProjectDownloadCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Symantec",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SEP.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Teams",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://raw.githubusercontent.com/azure/azvmimagebuilder/master/solutions/14_Building_Images_WVD/2_installTeams.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Visio",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Visio.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Project",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Project.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install 7Zip",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-7Zip.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Chrome",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Chrome.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Adobe Reader",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AdobeReader.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install VSCode",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSCode.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Java x86",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86.ps1"
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "write-output 'restarting post JREx86 Install'",
+                        "restartTimeout": "5m"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Java x64",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64.ps1"
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "write-output 'restarting post JREx64 Install'",
+                        "restartTimeout": "5m"
+                    }
+
+                ],
+                "distribute": [
+                    {
+                        "type": "SharedImage",
+                        "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
+                        "runOutputName": "sigOutput",
+                        "artifactTags": {
+                            "source": "wvd10-o365pp",
+                            "baseosimg": "windows10-office365pp"
+                        },
+                        "replicationRegions": [
+                            "eastus"
+                        ]
+                    }
+                ]
             }
         }
     ]

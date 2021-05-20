@@ -80,7 +80,7 @@
                 },
                 {
                     "type": "WindowsRestart",
-                    "restartCheckCommand": "write-host 'restarting post Optimizations'",
+                    "restartCheckCommand": "write-output 'restarting post Optimizations'",
                     "restartTimeout": "5m"
                 },
                 {
@@ -92,7 +92,7 @@
                 },
                 {
                     "type": "WindowsRestart",
-                    "restartCheckCommand": "write-host 'restarting post Teams Install'",
+                    "restartCheckCommand": "write-output 'restarting post Teams Install'",
                     "restartTimeout": "5m"
                 }
 
