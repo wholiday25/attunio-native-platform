@@ -1,0 +1,26 @@
+{
+    "Name": "Azure Image Builder Nerdio-Dev",
+    "IsCustom": true,
+    "Description": "Image Builder access to create resources for the image build, you should delete or split out as appropriate",
+    "Actions": [
+        "Microsoft.Compute/galleries/read",
+        "Microsoft.Compute/galleries/images/read",
+        "Microsoft.Compute/galleries/images/versions/read",
+        "Microsoft.Compute/galleries/images/versions/write",
+        "Microsoft.Compute/images/write",
+        "Microsoft.Compute/images/read",
+        "Microsoft.Compute/images/delete",
+        "Microsoft.Network/virtualNetworks/read",
+        "Microsoft.Network/virtualNetworks/subnets/join/action"
+    ],
+    "NotActions": [
+  
+    ],
+    "AssignableScopes": [
+      "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6"
+    ]
+  }
+
+
+
+
