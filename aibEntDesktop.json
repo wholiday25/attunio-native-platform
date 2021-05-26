@@ -71,7 +71,7 @@
                     "type": "PlatformImage",
                     "publisher": "MicrosoftWindowsDesktop",
                     "offer": "office-365",
-                    "sku": "20h1-evd-o365pp",
+                    "sku": "21h1-evd-o365pp",
                     "version": "latest"
                 },
 
@@ -169,6 +169,14 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Install Tableau",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Tableau.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Install Chrome",
                         "runElevated": true,
                         "runAsSystem": true,
@@ -198,7 +206,7 @@
                     {
                         "type": "WindowsRestart",
                         "restartCheckCommand": "write-output 'restarting post JREx86 Install'",
-                        "restartTimeout": "5m"
+                        "restartTimeout": "10m"
                     },
                     {
                         "type": "PowerShell",
@@ -210,7 +218,7 @@
                     {
                         "type": "WindowsRestart",
                         "restartCheckCommand": "write-output 'restarting post JREx64 Install'",
-                        "restartTimeout": "5m"
+                        "restartTimeout": "10m"
                     }
 
                 ],
