@@ -1,4 +1,4 @@
-# AzureImageBuilder Support Now
+# AzureImageBuilder -- Support Now
 Uses Enterprise Desktop as the base
 Install additional applications:
   LogMeIn 
