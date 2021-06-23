@@ -97,6 +97,13 @@
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowRumba.ps1"
                     },
+                                         {
+                        "type": "PowerShell",
+                        "name": "Install RSAT Tools ",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowRSAT.ps1"
+                    },
                     {
                         "type": "WindowsRestart",
                         "restartCheckCommand": "write-output 'restarting post SupportNow Installation'",
