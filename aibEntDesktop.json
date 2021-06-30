@@ -84,17 +84,11 @@
                         "inline": ["New-Item -ItemType Directory -Force -Path C:\\Comcast\\"]
                     },
                     {
-                        "type": "File",
-                        "name": "Download Optimization zip",
-                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/optimizeComcastProd.zip",
-                        "destination": "C:\\Comcast\\optimizeComcastProd.zip"                    
-                    },
-                    {
                         "type": "PowerShell",
                         "name": "OptimizeOS",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Optimize-WVDAppx.ps1",
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Optimize-AVDv2.ps1",
                         "validExitCodes": [0,16001]
                     },
                     {

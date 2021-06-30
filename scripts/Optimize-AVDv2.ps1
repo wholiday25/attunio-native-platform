@@ -57,8 +57,6 @@ Microsoft.ScreenSketch,"https://www.microsoft.com/en-us/p/snip-sketch/9mz95kl8mr
 $Services = @"
 autotimesvc
 BcastDVRUserService
-CDPSvc
-CDPUserSvc
 CscService
 defragsvc
 DiagSvc
@@ -418,16 +416,22 @@ $WinVersion = '2004'
 # Download repo for WVD optimizations
 mkdir D:\temp\optimize
 
+# Download repo for WVD optimizations
+mkdir C:\wvdtemp\Optimize_sa\optimize -Force
+
+Invoke-WebRequest `
+-Uri "https://github.com/The-Virtual-Desktop-Team/Virtual-Desktop-Optimization-Tool/archive/refs/heads/main.zip" `
+-OutFile "C:\Comcast\optimizeComcastProd.zip"
 
 Expand-Archive -Path "C:\Comcast\optimizeComcastProd.zip" -DestinationPath "D:\temp\optimize\"
 
 
 # remove json files
-Remove-Item -Path "D:\temp\optimize\Virtual-Desktop-Optimization-Tool-master\$WinVersion\ConfigurationFiles\AppxPackages.json" -Force
-Remove-Item -Path "D:\temp\optimize\Virtual-Desktop-Optimization-Tool-master\$WinVersion\ConfigurationFiles\Autologgers.Json" -Force
-Remove-Item -Path "D:\temp\optimize\Virtual-Desktop-Optimization-Tool-master\$WinVersion\ConfigurationFiles\DefaultUserSettings.json" -Force
-Remove-Item -Path "D:\temp\optimize\Virtual-Desktop-Optimization-Tool-master\$WinVersion\ConfigurationFiles\ScheduledTasks.json" -Force
-Remove-Item -Path "D:\temp\optimize\Virtual-Desktop-Optimization-Tool-master\$WinVersion\ConfigurationFiles\Services.json" -Force
+Remove-Item -Path "D:\temp\optimize\Virtual-Desktop-Optimization-Tool-main\$WinVersion\ConfigurationFiles\AppxPackages.json" -Force
+Remove-Item -Path "D:\temp\optimize\Virtual-Desktop-Optimization-Tool-main\$WinVersion\ConfigurationFiles\Autologgers.Json" -Force
+Remove-Item -Path "D:\temp\optimize\Virtual-Desktop-Optimization-Tool-main\$WinVersion\ConfigurationFiles\DefaultUserSettings.json" -Force
+Remove-Item -Path "D:\temp\optimize\Virtual-Desktop-Optimization-Tool-main\$WinVersion\ConfigurationFiles\ScheduledTasks.json" -Force
+Remove-Item -Path "D:\temp\optimize\Virtual-Desktop-Optimization-Tool-main\$WinVersion\ConfigurationFiles\Services.json" -Force
 
 # Build JSON and txt Configuration Files - These are built here according to the hash table variables specified above.
 
@@ -435,7 +439,7 @@ Remove-Item -Path "D:\temp\optimize\Virtual-Desktop-Optimization-Tool-master\$Wi
 $AppxPackages = ($AppxPackages -split "`n").trim()
 $AppxPackages = $AppxPackages | ConvertFrom-Csv -Delimiter ',' -Header "PackageName", "HelpURL"
 $AppxPackagesJson = $AppxPackages | ForEach-Object { [PSCustomObject]@{'AppxPackage' = $_.PackageName; 'VDIState' = 'Disabled'; 'Description' = $_.PackageName; 'URL' = $_.HelpURL } } | ConvertTo-Json
-$AppxPackagesJson | Out-File D:\temp\optimize\Virtual-Desktop-Optimization-Tool-master\$WinVersion\ConfigurationFiles\AppxPackages.json
+$AppxPackagesJson | Out-File D:\temp\optimize\Virtual-Desktop-Optimization-Tool-main\$WinVersion\ConfigurationFiles\AppxPackages.json
 
 #Autologgers JSON
 $AutoLoggers = ($AutoLoggers -split "`n").Trim() | ForEach-Object {
@@ -500,23 +504,23 @@ $AutoLoggers = ($AutoLoggers -split "`n").Trim() | ForEach-Object {
     }
     [PSCustomObject]$LogHash
 } | ConvertTo-Json
-$AutoLoggers | Out-File D:\temp\optimize\Virtual-Desktop-Optimization-Tool-master\$WinVersion\ConfigurationFiles\Autologgers.Json
+$AutoLoggers | Out-File D:\temp\optimize\Virtual-Desktop-Optimization-Tool-main\$WinVersion\ConfigurationFiles\Autologgers.Json
 
 # Scheduled Tasks JSON
 $ScheduledTasks = ($ScheduledTasks -split "`n").Trim()
 $ScheduledTasksJson = $ScheduledTasks | ForEach-Object { [PSCustomObject] @{'ScheduledTask' = $_; 'VDIState' = 'Disabled'; 'Description' = (Get-ScheduledTask $_ -ErrorAction SilentlyContinue).Description } } | ConvertTo-Json
-$ScheduledTasksJson | Out-File D:\temp\optimize\Virtual-Desktop-Optimization-Tool-master\$WinVersion\ConfigurationFiles\ScheduledTasks.json
+$ScheduledTasksJson | Out-File D:\temp\optimize\Virtual-Desktop-Optimization-Tool-main\$WinVersion\ConfigurationFiles\ScheduledTasks.json
  
 #Services JSON
 $Services = ($Services -split "`n").Trim()
 $ServicesJson = $Services | Foreach-Object { [PSCustomObject]@{Name = $_; 'VDIState' = 'Disabled' ; 'Description' = (Get-Service $_ -ErrorAction SilentlyContinue).DisplayName } } | ConvertTo-Json
-$ServicesJson | Out-File D:\temp\optimize\Virtual-Desktop-Optimization-Tool-master\$WinVersion\ConfigurationFiles\Services.json
+$ServicesJson | Out-File D:\temp\optimize\Virtual-Desktop-Optimization-Tool-main\$WinVersion\ConfigurationFiles\Services.json
 
 # Create Default User Settings JSON
-$DefaultUserSettings | Out-File D:\temp\optimize\Virtual-Desktop-Optimization-Tool-master\$WinVersion\ConfigurationFiles\DefaultUserSettings.Json
+$DefaultUserSettings | Out-File D:\temp\optimize\Virtual-Desktop-Optimization-Tool-main\$WinVersion\ConfigurationFiles\DefaultUserSettings.Json
 
 # run the Optimize Script with newly created JSON files 
-D:\temp\optimize\Virtual-Desktop-Optimization-Tool-master\Win10_VirtualDesktop_Optimize.ps1 -WindowsVersion $WinVersion -AppxPackages -ScheduledTasks -DefaultUserSettings -Autologgers -Services -LGPO -DiskCleanup
+D:\temp\optimize\Virtual-Desktop-Optimization-Tool-main\Win10_VirtualDesktop_Optimize.ps1 -AcceptEULA -WindowsVersion $WinVersion -Optimizations "AppxPackages","ScheduledTasks","DefaultUserSettings","Autologgers","Services","LGPO","DiskCleanup"
 
 Stop-Transcript
 
