@@ -1,0 +1,131 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "imageTemplateName": {
+            "type": "string"
+        },
+        "api-version": {
+            "type": "string"
+        },
+        "svclocation": {
+            "type": "string"
+        },
+        "ManagedIdentityID": {
+            "type": "string"
+        },
+        "SharedImageGalleryID": {
+            "type": "string"
+        },
+        "SubnetID": {
+            "type": "string"
+        },
+        "imageVersionID": {
+            "type": "string",
+            "metadata": {
+                "description": "URL for Shared Image Gallery for Enterprise Desktop"
+            }
+        },
+        "SupportNowLogmeInURI": {
+            "type": "string"
+        },
+        "SupportNowRumbaURI": {
+            "type": "string"
+        }
+    },
+
+    "variables": {
+        "SupportNowLogmeInCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowLogmeInURI'),'\", \"C:\\Comcast\\Install-SupportNowLogmeIn.zip\")')]",
+        "SupportNowRumbaCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowRumbaURI'),'\", \"C:\\Comcast\\Install-SupportNowRumba.zip\")')]"
+
+    },
+
+
+    "resources": [
+        {
+            "name": "[parameters('imageTemplateName')]",
+            "type": "Microsoft.VirtualMachineImages/imageTemplates",
+            "apiVersion": "[parameters('api-version')]",
+            "location": "[parameters('svclocation')]",
+            "dependsOn": [],
+            "tags": {
+                "userIdentity": "enabled"
+            },
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[parameters('ManagedIdentityID')]": {}
+                }
+            },
+
+            "properties": {
+                "buildTimeoutInMinutes": 120,
+
+                "vmProfile": {
+                    "vmSize": "Standard_D2_v2",
+                    "osDiskSizeGB": 128,
+                    "vnetConfig": {
+                        "subnetId": "[parameters('SubnetID')]"
+                    }
+                },
+                "source": {
+                    "type": "SharedImageVersion",
+                    "imageVersionID": "[parameters('imageVersionID')]"
+                },
+
+                "customize": [
+                    {
+                        "type": "PowerShell",
+                        "name": "Download SupportNowLogmeInCMD",
+                        "inline": ["[variables('SupportNowLogmeInCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download SupportNowRumbaCMD",
+                        "inline": ["[variables('SupportNowRumbaCMD')]"]           
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install LogMeIn",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowLogmeIn.ps1"
+                    },                    {
+                        "type": "PowerShell",
+                        "name": "Install Rumba",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowRumba.ps1"
+                    },
+                                         {
+                        "type": "PowerShell",
+                        "name": "Install RSAT Tools ",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowRSAT.ps1"
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "write-output 'restarting post SupportNow Installation'",
+                        "restartTimeout": "10m"
+                    }
+
+                ],
+                "distribute": [
+                    {
+                        "type": "SharedImage",
+                        "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
+                        "runOutputName": "sigOutput",
+                        "artifactTags": {
+                            "source": "wvd10-o365pp",
+                            "baseosimg": "windows10-office365pp"
+                        },
+                        "replicationRegions": [
+                            "eastus"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
