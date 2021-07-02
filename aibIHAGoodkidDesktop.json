@@ -1,0 +1,124 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "imageTemplateName": {
+            "type": "string"
+        },
+        "api-version": {
+            "type": "string"
+        },
+        "svclocation": {
+            "type": "string"
+        },
+        "ManagedIdentityID": {
+            "type": "string"
+        },
+        "SharedImageGalleryID": {
+            "type": "string"
+        },
+        "SubnetID": {
+            "type": "string"
+        },
+        "imageVersionID": {
+            "type": "string",
+            "metadata": {
+                "description": "URL for Shared Image Gallery for Enterprise Desktop"
+            }
+        },
+        "AdobeCreativeCloudURI": {
+            "type": "string"
+        },
+        "IBMAsperaConnectURI": {
+            "type": "string"
+        }
+    },
+
+    "variables": {
+        "AdobeCreativeCloudCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AdobeCreativeCloudURI'),'\", \"C:\\Comcast\\Install-AdobeCreativeCloud.zip\")')]",
+        "IBMAsperaConnectCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('IBMAsperaConnectURI'),'\", \"C:\\Comcast\\Install-IBMAsperaConnect.zip\")')]"
+
+    },
+
+
+    "resources": [
+        {
+            "name": "[parameters('imageTemplateName')]",
+            "type": "Microsoft.VirtualMachineImages/imageTemplates",
+            "apiVersion": "[parameters('api-version')]",
+            "location": "[parameters('svclocation')]",
+            "dependsOn": [],
+            "tags": {
+                "userIdentity": "enabled"
+            },
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[parameters('ManagedIdentityID')]": {}
+                }
+            },
+
+            "properties": {
+                "buildTimeoutInMinutes": 240,
+
+                "vmProfile": {
+                    "vmSize": "Standard_D2_v2",
+                    "osDiskSizeGB": 128,
+                    "vnetConfig": {
+                        "subnetId": "[parameters('SubnetID')]"
+                    }
+                },
+                "source": {
+                    "type": "SharedImageVersion",
+                    "imageVersionID": "[parameters('imageVersionID')]"
+                },
+
+                "customize": [
+                    {
+                        "type": "PowerShell",
+                        "name": "Download AdobeCreativeCloudCMD",
+                        "inline": ["[variables('AdobeCreativeCloudCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download IBMAsperaConnectCMD",
+                        "inline": ["[variables('IBMAsperaConnectCMD')]"]           
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install AdobeCreativeCloud",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AdobeCreativeCloud.ps1"
+                    },                    {
+                        "type": "PowerShell",
+                        "name": "Install IBMAsperaConnect",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-IBMAsperaConnect.ps1"
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "write-output 'restarting post SupportNow Installation'",
+                        "restartTimeout": "10m"
+                    }
+
+                ],
+                "distribute": [
+                    {
+                        "type": "SharedImage",
+                        "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
+                        "runOutputName": "sigOutput",
+                        "artifactTags": {
+                            "source": "wvd10-o365pp",
+                            "baseosimg": "windows10-office365pp"
+                        },
+                        "replicationRegions": [
+                            "eastus"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
