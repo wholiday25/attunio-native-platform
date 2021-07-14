@@ -27,7 +27,7 @@
             "value": "https://aibdev.blob.core.windows.net/installers/Install-IBMAsperaConnect.zip?sp=rl&st=2021-07-08T15:17:43Z&se=2031-11-09T15:17:00Z&sv=2020-08-04&sr=b&sig=waGuPjOdn69fSgrGA7LfqFekboHEbx%2B95NJQs%2B2txgo%3D"
         },
         "imageVersionID": {
-            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV/images/AIBEntDesktop/versions/0.24796.52872"
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV/images/AIBEntDesktop/versions/0.24813.52238"
         }
     }
 }
