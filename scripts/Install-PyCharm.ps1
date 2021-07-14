@@ -6,4 +6,4 @@ This script installs Pycharm Community Edition via Chocolatey
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # Install Pycharm Community Edition
-choco install pycharm-community -y
+choco install pycharm-community -y --no-progress
