@@ -7,6 +7,8 @@ Name: AIBEntDesktop
 
 Location: Dev, Stage, Prod 
 Applications: 
+BGInfo ( background image editor0
+Windows Optimization
 SEP (Symantec EndPoint Protection) 
 Visio Project 
 Teams 
@@ -29,13 +31,30 @@ Name: AIBDeveloper
 Location: Dev
 Applications:
 See AIBEntDesktop
+Notepad++
+Python
+Docker Desktop
+Github Desktop
+PyCharm
+Java Development Kit
+Maven
+Nuget
+Gulp
+Postman
+PuTTY
+
 
 Name:aibIHAGoodkidDesktop 
 Location: Dev
 Applications:
 See AIBEntDesktop
+Adobe Creative Cloud
+IBm Aspera Connect
+
 
 Name:AIBSupportNowDesktop Name:
 Location: Dev, Stage, Prod 
 Applications:
 See AIBEntDesktop
+LogmeIn
+Rumba Desktop
