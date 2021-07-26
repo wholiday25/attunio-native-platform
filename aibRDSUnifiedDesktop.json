@@ -1,0 +1,147 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "imageTemplateName": {
+            "type": "string"
+        },
+        "api-version": {
+            "type": "string"
+        },
+        "svclocation": {
+            "type": "string"
+        },
+        "ManagedIdentityID": {
+            "type": "string"
+        },
+        "SharedImageGalleryID": {
+            "type": "string"
+        },
+        "SubnetID": {
+            "type": "string"
+        },
+        "imageVersionID": {
+            "type": "string",
+            "metadata": {
+                "description": "URL for Shared Image Gallery for Enterprise Desktop"
+            }
+        }
+    },
+
+    "variables": {
+    },
+
+
+    "resources": [
+        {
+            "name": "[parameters('imageTemplateName')]",
+            "type": "Microsoft.VirtualMachineImages/imageTemplates",
+            "apiVersion": "[parameters('api-version')]",
+            "location": "[parameters('svclocation')]",
+            "dependsOn": [],
+            "tags": {
+                "userIdentity": "enabled"
+            },
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[parameters('ManagedIdentityID')]": {}
+                }
+            },
+
+            "properties": {
+                "buildTimeoutInMinutes": 120,
+
+                "vmProfile": {
+                    "vmSize": "Standard_D2_v2",
+                    "osDiskSizeGB": 128,
+                    "vnetConfig": {
+                        "subnetId": "[parameters('SubnetID')]"
+                    }
+                },
+                "source": {
+                    "type": "SharedImageVersion",
+                    "imageVersionID": "[parameters('imageVersionID')]"
+                },
+
+                "customize": [
+                    {
+                        "type": "PowerShell",
+                        "name": "Install NotepadPP",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-NotepadPP.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                   {
+                        "type": "PowerShell",
+                        "name": "Install Postman",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Postman.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Putty",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Putty.ps1",
+                        "validExitCodes": [0,3010]
+                    }, {
+                        "type": "PowerShell",
+                        "name": "Install SOAP UI",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SOAPUI.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                     {
+                        "type": "PowerShell",
+                        "name": "Install SQL Management Studio",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SQLManagementStudio.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install UltraVNC",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-UltraVNC.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install WinSCP",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-WinSCP.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "write-output 'restarting post Developer apps installation'",
+                        "restartTimeout": "10m"
+                    }
+
+                ],
+                "distribute": [
+                    {
+                        "type": "SharedImage",
+                        "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
+                        "runOutputName": "sigOutput",
+                        "artifactTags": {
+                            "source": "wvd10-o365pp",
+                            "baseosimg": "windows10-office365pp"
+                        },
+                        "replicationRegions": [
+                            "eastus"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
