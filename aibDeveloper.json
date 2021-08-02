@@ -75,6 +75,19 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Install VCRedist",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VCRedist.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "write-output 'restarting post Developer apps installation'",
+                        "restartTimeout": "10m"
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Install Python",
                         "runElevated": true,
                         "runAsSystem": true,
