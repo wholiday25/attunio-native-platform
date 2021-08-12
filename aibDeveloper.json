@@ -87,6 +87,21 @@
                         "restartTimeout": "10m"
                     },
                     {
+
+                        "type": "File",
+                        "name": "Download VSBuildTools",
+                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/VSBuildTools.zip",
+                        "destination": "C:\\Comcast\\VSBuildTools.zip"                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Configure VSBuildTools",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSBuildTools.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
                         "type": "PowerShell",
                         "name": "Install Python",
                         "runElevated": true,
