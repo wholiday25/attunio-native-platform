@@ -75,6 +75,34 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Install VCRedist",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VCRedist.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "write-output 'restarting post Developer apps installation'",
+                        "restartTimeout": "10m"
+                    },
+                    {
+
+                        "type": "File",
+                        "name": "Download VSBuildTools",
+                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/vs_buildtools.exe",
+                        "destination": "C:\\Comcast\\VSBuildTools.zip"                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Configure VSBuildTools",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSBuildTools.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Install Python",
                         "runElevated": true,
                         "runAsSystem": true,
@@ -151,6 +179,62 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Putty.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install SOAP UI",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SOAPUI.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                     {
+                        "type": "PowerShell",
+                        "name": "Install SQL Management Studio",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SQLManagementStudio.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install WinSCP",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-WinSCP.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Azure Data Studio",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AzureDataStudio.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install DBeaver",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-DBeaver.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install MongoDB Compass",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MongoDBCompass.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install InelliJ IDEA",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-IntelliJIDEA.ps1",
                         "validExitCodes": [0,3010]
                     },
                     {
