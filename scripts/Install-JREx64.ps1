@@ -21,8 +21,8 @@ NOSTARTMENU=Enable
 $text | Set-Content "$workd\JREconfig64bit.cfg"
     
 #download executable, this is the small online installer
-#Source for 64-bit can be found here -   https://java.com/en/download/win10.jsp -- and copying button link
-$source = "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=244584_d7fc238d0cbf4b0dac67be84580cfb4b"
+#Source for 64-bit can be found here on the "Manual" page - https://java.com/en/download/manual.jsp . Look for "Windows Offline (64-bit)". it is about 80 MB
+$source = "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=245060_d3c52aa6bfa54d3ca74e617f18309292"
 $destination = "$workd\jreInstall64bit.exe"
 $client = New-Object System.Net.WebClient
 $client.DownloadFile($source, $destination)
@@ -34,7 +34,7 @@ Start-Process -FilePath "$workd\jreInstall64bit.exe" -ArgumentList INSTALLCFG="$
 Start-Sleep -s 240
 
 # Remove the installer
-rm -Force $workd\jreInstall64bit.exe
+Remove-Item -Force $workd\jreInstall64bit.exe
 
 
 #Set-ExecutionPolicy Restricted

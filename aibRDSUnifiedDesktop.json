@@ -25,10 +25,22 @@
             "metadata": {
                 "description": "URL for Shared Image Gallery for Enterprise Desktop"
             }
+        },
+        "MetasolvInstallerURI": {
+            "type": "string"
+        },
+        "RSASecurIDTokenInstallerURI": {
+            "type": "string"
+        },
+        "SAPGUIInstallerURI": {
+            "type": "string"
         }
     },
 
     "variables": {
+        "MetaSolvDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetaSolvInstallerURI'),'\", \"C:\\Comcast\\Install-RDS631b192-Metasolv.zip\")')]",
+        "RSASecurIDTokenDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('RSASecurIDTokenInstallerURI'),'\", \"C:\\Comcast\\Install-RSASecurIDToken.zip\")')]",
+        "SAPGUIDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPGUIInstallerURI'),'\", \"C:\\Comcast\\Install-SAPGUI.zip\")')]"
     },
 
 
@@ -88,7 +100,8 @@
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Putty.ps1",
                         "validExitCodes": [0,3010]
-                    }, {
+                    }, 
+                    {
                         "type": "PowerShell",
                         "name": "Install SOAP UI",
                         "runElevated": true,
@@ -119,6 +132,42 @@
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-WinSCP.ps1",
                         "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download MetaSolvDownloadCMD",
+                        "inline": ["[variables('MetaSolvDownloadCMD')]"]               
+                    },
+                              {
+                        "type": "PowerShell",
+                        "name": "Install Metasolv",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-RDS631b192-Metasolv.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download RSASecurIDTokenCMD",
+                        "inline": ["[variables('RSASecurIDTokenDownloadCMD')]"]               
+                    },
+                              {
+                        "type": "PowerShell",
+                        "name": "Install RSASecurIDToken",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-RSASecurIDToken.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download SAPGUIDownloadCMD",
+                        "inline": ["[variables('SAPGUIDownloadCMD')]"]               
+                    },
+                              {
+                        "type": "PowerShell",
+                        "name": "Install SAPGUI",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SAPGUI.ps1"
                     },
                     {
                         "type": "WindowsRestart",

@@ -20,7 +20,7 @@
         "SubnetID": {
             "type": "string"
         },
-        "SEPInstallerURI": {
+        "CrowdStrikeInstallerURI": {
             "type": "string"
         },
         "ProjectInstallerURI": {
@@ -32,7 +32,7 @@
     },
 
     "variables": {
-        "SEPDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SEPInstallerURI'),'\", \"C:\\Comcast\\InstallSEP-WVD.zip\")')]",
+"CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-WVD.zip\")')]",
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
         "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]"
 
@@ -114,7 +114,7 @@
                     {
                         "type": "PowerShell",
                         "name": "Download Symantec",
-                        "inline": ["[variables('SEPDownloadCMD')]"]                    
+                        "inline": ["[variables('CrowdStrikeDownloadCMD')]"]                    
                     },
                     {
                         "type": "PowerShell",
@@ -131,7 +131,7 @@
                         "name": "Install Symantec",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SEP.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CrowdStrike.ps1"
                     },
                     {
                         "type": "PowerShell",
@@ -153,6 +153,13 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Project.ps1"
+                    },{
+                        "type": "PowerShell",
+                        "name": "Install NotepadPP",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-NotepadPP.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
