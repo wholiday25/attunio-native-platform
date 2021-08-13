@@ -9,5 +9,5 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 choco install openssl --x86 -y --no-progress
 
 # Install openssl x64
-choco install openssl -y --no-progress
+choco install openssl -y --no-progress --sidebyside --force
 

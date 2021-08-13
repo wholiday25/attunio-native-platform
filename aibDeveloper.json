@@ -91,7 +91,7 @@
                         "type": "File",
                         "name": "Download VSBuildTools",
                         "sourceUri": "https://aibdev.blob.core.windows.net/installers/vs_buildtools.exe",
-                        "destination": "C:\\Comcast\\VSBuildTools.zip"                    
+                        "destination": "C:\\Comcast\\vs_buildtools.exe"                    
                     },
                     {
                         "type": "PowerShell",
