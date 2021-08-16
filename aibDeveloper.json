@@ -50,10 +50,10 @@
             },
 
             "properties": {
-                "buildTimeoutInMinutes": 120,
+                "buildTimeoutInMinutes": 180,
 
                 "vmProfile": {
-                    "vmSize": "Standard_D2_v2",
+                    "vmSize": "Standard_D4s_v4",
                     "osDiskSizeGB": 128,
                     "vnetConfig": {
                         "subnetId": "[parameters('SubnetID')]"
@@ -84,7 +84,7 @@
                     {
                         "type": "WindowsRestart",
                         "restartCheckCommand": "write-output 'restarting post Developer apps installation'",
-                        "restartTimeout": "10m"
+                        "restartTimeout": "15m"
                     },
                     {
 
@@ -248,7 +248,7 @@
                     {
                         "type": "WindowsRestart",
                         "restartCheckCommand": "write-output 'restarting post Developer apps installation'",
-                        "restartTimeout": "10m"
+                        "restartTimeout": "15m"
                     }
 
                 ],
