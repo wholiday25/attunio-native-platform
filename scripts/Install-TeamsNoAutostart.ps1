@@ -47,14 +47,14 @@ if ($null -ne $GetWebRTC){
 #region Download and Install Teams + WebRTC
 
 # make directories to hold new install (Uses the TEMP D: Drive found in all Win10 Azure VMs)
-mkdir D:\temp\msteams\install
+mkdir C:\Comcast\Teams\\install
 
 # grab MSI installer for MSTeams
 $DLink = "https://teams.microsoft.com/downloads/desktopurl?env=production&plat=windows&arch=x64&managedInstaller=true&download=true"
-Invoke-WebRequest -Uri $DLink -OutFile "D:\temp\msteams\install\Teams_windows_x64.msi" -UseBasicParsing
+Invoke-WebRequest -Uri $DLink -OutFile "C:\Comcast\Teams\\install\Teams_windows_x64.msi" -UseBasicParsing
 
 # use installer to install Machine-Wide
-Start-Process C:\Windows\System32\msiexec.exe -ArgumentList  '/i D:\temp\msteams\install\Teams_windows_x64.msi /l*v D:\temp\msteams\teamslog.txt ALLUSER=1 ALLUSERS=1 OPTIONS="noAutoStart=true" /qn /norestart' -wait
+Start-Process C:\Windows\System32\msiexec.exe -ArgumentList  '/i C:\Comcast\Teams\\install\Teams_windows_x64.msi /l*v C:\Comcast\Teams\\teamslog.txt ALLUSER=1 ALLUSERS=1 OPTIONS="noAutoStart=true" /qn /norestart' -wait
 
 
 # get MS Docs page that has WebRTC Download link
@@ -68,12 +68,12 @@ ForEach ($Href in $MSDlSite2.Links.Href)
     }
 }
 
-Invoke-WebRequest -Uri $DLink2 -OutFile "D:\temp\msteams\install\MsRdcWebRTCSvc_x64.msi" -UseBasicParsing
+Invoke-WebRequest -Uri $DLink2 -OutFile "C:\Comcast\Teams\\install\MsRdcWebRTCSvc_x64.msi" -UseBasicParsing
 
 # install Teams Websocket Service
-Start-Process C:\Windows\System32\msiexec.exe -ArgumentList '/i D:\temp\msteams\install\MsRdcWebRTCSvc_x64.msi /l*v D:\temp\msteams\webrtclog.txt /qn /norestart' -Wait
+Start-Process C:\Windows\System32\msiexec.exe -ArgumentList '/i C:\Comcast\Teams\\install\MsRdcWebRTCSvc_x64.msi /l*v C:\Comcast\Teams\\webrtclog.txt /qn /norestart' -Wait
 
-write-host "Finished running installers. Check D:\temp\msteams for logs on the MSI installations."
+write-host "Finished running installers. Check C:\Comcast\Teams\ for logs on the MSI installations."
 
 #endregion
 
