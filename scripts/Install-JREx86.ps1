@@ -21,8 +21,8 @@ NOSTARTMENU=Enable
 $text | Set-Content "$workd\JREconfig32bit.cfg"
     
 #download executable, this is the small online installer
-#Source for 32-bit can be found here -   https://java.com/en/download/win10.jsp -- and copying button link
-$source = "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=244582_d7fc238d0cbf4b0dac67be84580cfb4b"
+#Source for 32-bit can be found here -   https://java.com/en/download/win10.jsp -- and copying button link. It should be about 2 MB.
+$source = "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=245029_d3c52aa6bfa54d3ca74e617f18309292"
 $destination = "$workd\jreInstall32bit.exe"
 $client = New-Object System.Net.WebClient
 $client.DownloadFile($source, $destination)
@@ -34,6 +34,6 @@ Start-Process -FilePath "$workd\jreInstall32bit.exe" -ArgumentList INSTALLCFG="$
 Start-Sleep -s 240
 
 # Remove the installer
-rm -Force $workd\jreInstall32bit.exe
+Remove-Item -Force $workd\jreInstall32bit.exe
 
 #Set-ExecutionPolicy Restricted

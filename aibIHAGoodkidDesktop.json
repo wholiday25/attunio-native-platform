@@ -26,17 +26,17 @@
                 "description": "URL for Shared Image Gallery for Enterprise Desktop"
             }
         },
-        "SupportNowLogmeInURI": {
+        "AdobeCreativeCloudURI": {
             "type": "string"
         },
-        "SupportNowRumbaURI": {
+        "IBMAsperaConnectURI": {
             "type": "string"
         }
     },
 
     "variables": {
-        "SupportNowLogmeInCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowLogmeInURI'),'\", \"C:\\Comcast\\Install-SupportNowLogmeIn.zip\")')]",
-        "SupportNowRumbaCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowRumbaURI'),'\", \"C:\\Comcast\\Install-SupportNowRumba.zip\")')]"
+        "AdobeCreativeCloudCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AdobeCreativeCloudURI'),'\", \"C:\\Comcast\\Install-AdobeCreativeCloud.zip\")')]",
+        "IBMAsperaConnectCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('IBMAsperaConnectURI'),'\", \"C:\\Comcast\\Install-IBMAsperaConnect.zip\")')]"
 
     },
 
@@ -59,7 +59,7 @@
             },
 
             "properties": {
-                "buildTimeoutInMinutes": 120,
+                "buildTimeoutInMinutes": 240,
 
                 "vmProfile": {
                     "vmSize": "Standard_D4s_v4",
@@ -76,33 +76,26 @@
                 "customize": [
                     {
                         "type": "PowerShell",
-                        "name": "Download SupportNowLogmeInCMD",
-                        "inline": ["[variables('SupportNowLogmeInCMD')]"]                    
+                        "name": "Download AdobeCreativeCloudCMD",
+                        "inline": ["[variables('AdobeCreativeCloudCMD')]"]                    
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Download SupportNowRumbaCMD",
-                        "inline": ["[variables('SupportNowRumbaCMD')]"]           
+                        "name": "Download IBMAsperaConnectCMD",
+                        "inline": ["[variables('IBMAsperaConnectCMD')]"]           
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install LogMeIn",
+                        "name": "Install AdobeCreativeCloud",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowLogmeIn.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AdobeCreativeCloud.ps1"
                     },                    {
                         "type": "PowerShell",
-                        "name": "Install Rumba",
+                        "name": "Install IBMAsperaConnect",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowRumba.ps1"
-                    },
-                                         {
-                        "type": "PowerShell",
-                        "name": "Install RSAT Tools ",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowRSAT.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-IBMAsperaConnect.ps1"
                     },
                     {
                         "type": "WindowsRestart",

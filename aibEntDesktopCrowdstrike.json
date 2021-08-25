@@ -32,7 +32,7 @@
     },
 
     "variables": {
-"CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-WVD.zip\")')]",
+        "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-WVD.zip\")')]",
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
         "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]"
 
@@ -81,7 +81,7 @@
                         "name": "Create workd",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "inline": ["New-Item -ItemType Directory -Force -Path C:\\Comcast\\"]
+                        "inline": [ "New-Item -ItemType Directory -Force -Path C:\\Comcast\\" ]
                     },
                     {
                         "type": "PowerShell",
@@ -89,7 +89,7 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Optimize-AVDv2.ps1",
-                        "validExitCodes": [0,16001]
+                        "validExitCodes": [ 0, 16001 ]
                     },
                     {
 
@@ -102,7 +102,7 @@
                         "type": "File",
                         "name": "Download BGInfo",
                         "sourceUri": "https://aibdev.blob.core.windows.net/installers/BGInfo.zip",
-                        "destination": "C:\\Comcast\\BGInfo.zip"                    
+                        "destination": "C:\\Comcast\\BGInfo.zip"
                     },
                     {
                         "type": "PowerShell",
@@ -113,22 +113,22 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Download Symantec",
-                        "inline": ["[variables('CrowdStrikeDownloadCMD')]"]                    
+                        "name": "Download CrowdStrike",
+                        "inline": [ "[variables('CrowdStrikeDownloadCMD')]" ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Download Visio",
-                        "inline": ["[variables('VisioDownloadCMD')]"]                    
+                        "inline": [ "[variables('VisioDownloadCMD')]" ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Download Project",
-                        "inline": ["[variables('ProjectDownloadCMD')]"]                    
+                        "inline": [ "[variables('ProjectDownloadCMD')]" ]
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install Symantec",
+                        "name": "Install CrowdStrike",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CrowdStrike.ps1"
@@ -153,13 +153,6 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Project.ps1"
-                    },{
-                        "type": "PowerShell",
-                        "name": "Install NotepadPP",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-NotepadPP.ps1",
-                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
@@ -174,7 +167,7 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Tableau.ps1",
-                        "validExitCodes": [0,3010]
+                        "validExitCodes": [ 0, 3010 ]
                     },
                     {
                         "type": "PowerShell",
