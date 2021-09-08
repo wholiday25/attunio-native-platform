@@ -41,7 +41,7 @@
     },
 
     "variables": {
-        "MetaSolvDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetaSolvInstallerURI'),'\", \"C:\\Comcast\\Install-RDS631b192-Metasolv.zip\")')]",
+        "MetaSolvDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetaSolvInstallerURI'),'\", \"C:\\Comcast\\Install-Metasolv-RDS631b192.zip\")')]",
         "MetaSolvDEVDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetasolvDEVInstallerURI'),'\", \"C:\\Comcast\\Install-MetaSolvDEV.zip\")')]",
         "RSASecurIDTokenDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('RSASecurIDTokenInstallerURI'),'\", \"C:\\Comcast\\Install-RSASecurIDToken.zip\")')]",
         "SAPGUIDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPGUIInstallerURI'),'\", \"C:\\Comcast\\Install-SAPGUI.zip\")')]"
@@ -155,13 +155,19 @@
                         "name": "Download MetaSolvDEVDownloadCMD",
                         "inline": ["[variables('MetaSolvDEVDownloadCMD')]"]               
                     }
-                    ,
+                    ,{
+                        "type": "PowerShell",
+                        "name": "Install MetasolvDEV",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Metasolv-Dev.ps1"
+                    },
                               {
                         "type": "PowerShell",
                         "name": "Install Metasolv",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-RDS631b192-Metasolv.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Metasolv-RDS631b192.ps1"
                     },
                     {
                         "type": "PowerShell",

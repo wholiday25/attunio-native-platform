@@ -138,7 +138,7 @@
                         "name": "Install Teams",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-TeamsNoAutostart.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-TeamsNoAutostart8_17_2-21.ps1"
                     },
                     {
                         "type": "PowerShell",
