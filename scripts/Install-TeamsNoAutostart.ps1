@@ -61,6 +61,7 @@ if ($null -ne $GetWebRTC){
     Write-Host "INFO: WebRTC Install Found, uninstalling Current version of WebRTC"
 }
 
+<<<<<<< HEAD
 # make directories to hold new install 
 mkdir "C:\Windows\Temp\msteams_sa\install" -Force
 
@@ -72,6 +73,22 @@ Invoke-WebRequest -Uri $DLink -OutFile "C:\Windows\Temp\msteams_sa\install\Teams
 Write-Host "INFO: Installing MS Teams"
 Start-Process C:\Windows\System32\msiexec.exe `
 -ArgumentList  '/i C:\Windows\Temp\msteams_sa\install\Teams_windows_x64.msi /l*v C:\Windows\temp\NMWLogs\ScriptedActions\msteams\teams_install_log.txt ALLUSER=1 ALLUSERS=1 /qn /norestart' -Wait
+=======
+#endregion
+
+#region Download and Install Teams + WebRTC
+
+# make directories to hold new install (Uses the TEMP D: Drive found in all Win10 Azure VMs)
+mkdir C:\Comcast\Teams\\install
+
+# grab MSI installer for MSTeams
+$DLink = "https://teams.microsoft.com/downloads/desktopurl?env=production&plat=windows&arch=x64&managedInstaller=true&download=true"
+Invoke-WebRequest -Uri $DLink -OutFile "C:\Comcast\Teams\\install\Teams_windows_x64.msi" -UseBasicParsing
+
+# use installer to install Machine-Wide
+Start-Process C:\Windows\System32\msiexec.exe -ArgumentList  '/i C:\Comcast\Teams\\install\Teams_windows_x64.msi /l*v C:\Comcast\Teams\\teamslog.txt ALLUSER=1 ALLUSERS=1 OPTIONS="noAutoStart=true" /qn /norestart' -wait
+
+>>>>>>> 6f052a75b300a005c9373af32bcb5223c346c202
 
 # get MS Docs page that has WebRTC Download link
 $MSDlSite2 = Invoke-WebRequest "https://docs.microsoft.com/en-us/azure/virtual-desktop/teams-on-wvd" -UseBasicParsing
@@ -83,6 +100,7 @@ ForEach ($Href in $MSDlSite2.Links.Href)
         $DLink2 = $href
     }
 }
+<<<<<<< HEAD
 Invoke-WebRequest -Uri $DLink2 -OutFile "C:\Windows\Temp\msteams_sa\install\MsRdcWebRTCSvc_x64.msi" -UseBasicParsing
 
 # install Teams WebRTC Websocket Service
@@ -95,3 +113,16 @@ Write-Host "INFO: All Commands Executed; script is now finished. Allow 5 minutes
 # End Logging
 Stop-Transcript
 $VerbosePreference=$SaveVerbosePreference
+=======
+
+Invoke-WebRequest -Uri $DLink2 -OutFile "C:\Comcast\Teams\\install\MsRdcWebRTCSvc_x64.msi" -UseBasicParsing
+
+# install Teams Websocket Service
+Start-Process C:\Windows\System32\msiexec.exe -ArgumentList '/i C:\Comcast\Teams\\install\MsRdcWebRTCSvc_x64.msi /l*v C:\Comcast\Teams\\webrtclog.txt /qn /norestart' -Wait
+
+write-host "Finished running installers. Check C:\Comcast\Teams\ for logs on the MSI installations."
+
+#endregion
+
+Write-Host "All Commands Executed; script is now finished. Allow 5 minutes for teams to appear" -ForegroundColor Green
+>>>>>>> 6f052a75b300a005c9373af32bcb5223c346c202

@@ -69,7 +69,7 @@
                 "buildTimeoutInMinutes": 120,
 
                 "vmProfile": {
-                    "vmSize": "Standard_D2_v2",
+                    "vmSize": "Standard_D4s_v4",
                     "osDiskSizeGB": 128,
                     "vnetConfig": {
                         "subnetId": "[parameters('SubnetID')]"

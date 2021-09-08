@@ -50,10 +50,10 @@
             },
 
             "properties": {
-                "buildTimeoutInMinutes": 120,
+                "buildTimeoutInMinutes": 180,
 
                 "vmProfile": {
-                    "vmSize": "Standard_D2_v2",
+                    "vmSize": "Standard_D4s_v4",
                     "osDiskSizeGB": 128,
                     "vnetConfig": {
                         "subnetId": "[parameters('SubnetID')]"
@@ -82,16 +82,24 @@
                         "validExitCodes": [0,3010]
                     },
                     {
+                        "type": "PowerShell",
+                        "name": "Install ActiveDirectory RSAT",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-ActiveDirectory-DS.Tools.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {                    
                         "type": "WindowsRestart",
                         "restartCheckCommand": "write-output 'restarting post Developer apps installation'",
-                        "restartTimeout": "10m"
+                        "restartTimeout": "15m"
                     },
                     {
 
                         "type": "File",
                         "name": "Download VSBuildTools",
                         "sourceUri": "https://aibdev.blob.core.windows.net/installers/vs_buildtools.exe",
-                        "destination": "C:\\Comcast\\VSBuildTools.zip"                    
+                        "destination": "C:\\Comcast\\vs_buildtools.exe"                    
                     },
                     {
                         "type": "PowerShell",
@@ -99,6 +107,14 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSBuildTools.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install OpenSSL",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-OpenSSL.ps1",
                         "validExitCodes": [0,3010]
                     },
                     {
@@ -240,7 +256,7 @@
                     {
                         "type": "WindowsRestart",
                         "restartCheckCommand": "write-output 'restarting post Developer apps installation'",
-                        "restartTimeout": "10m"
+                        "restartTimeout": "15m"
                     }
 
                 ],
