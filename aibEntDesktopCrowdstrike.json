@@ -62,7 +62,7 @@
 
                 "vmProfile": {
                     "vmSize": "Standard_D4s_v4",
-                    "osDiskSizeGB": 128,"Install Java x64"
+                    "osDiskSizeGB": 128,
                     "vnetConfig": {
                         "subnetId": "[parameters('SubnetID')]"
                     }
