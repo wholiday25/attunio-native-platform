@@ -3,35 +3,33 @@ Azure Image Builder ARM Templates for image creation for WVD
 
 Inventory for Images:
 
-Name: AIBEntDesktop 
+Name: aibEntDesktop 
 
 Location: Dev, Stage, Prod 
 Applications: 
-BGInfo ( background image editor0
-Windows Optimization
-SEP (Symantec EndPoint Protection) 
-Visio Project 
-Teams 
-7Zip 
-Tableau 
-Chrome 
-Adobe Acrobat Reader 
-Visual Studio Code 
-Java x86, 64 ( currently 1.8v291)
-
-Name:aibEntDesktopCrowdstrike
-Location: Dev
-Applications:
-See AIBEntDesktop
-MINUS SEP
+Notepad++
+Visual C++ Redistributable Runtime
+BGInfo
+VDI Optimization Script
 Crowdstrike
+Microsoft Visio
+Microsoft Project
+Microsoft Office
+Microsoft Teams 
+7Zip 
+Tableau 2020
+Google Chrome
+Adobe Acrobat Reader 
+Microsoft Visual Studio Code 
+Orcale Java JRE x86 and x64 (currently 1.8v291)
 
-
-Name: AIBDeveloper 
-Location: Dev
+Name: aibDeveloper 
+Location: Dev, Stage, Prod
 Applications:
 See AIBEntDesktop
 Notepad++
+Visual C++ Redidistributable Runtime
+Active Directory RSAT Tools
 Python
 Docker Desktop
 Github Desktop
@@ -43,35 +41,38 @@ Gulp
 Postman
 PuTTY
 
+Name: aibRDSUnifiedDesktop 
+Location: Dev, Stage, Prod
+Applications:
+See AIBEntDesktop
+Notepad++
+Firefox
+Postman
+PuTTY
+SOAP UI
+Microsoft SQL Server Management Studio
+UltraVNC Viewer
+WinSCP
+MetaSolv
+MetaSolv Dev
+RSA SecuireID Softtoken
+SAPGUI
 
 Name:aibIHAGoodkidDesktop 
-Location: Dev
+Location: Dev, Stage, Prod
 Applications:
 See AIBEntDesktop
 Adobe Creative Cloud
-IBm Aspera Connect
+IBM Aspera Connect
 
 
-Name:AIBSupportNowDesktop Name:
+Name:aibSupportNowDesktop Name:
 Location: Dev, Stage, Prod 
 Applications:
 See AIBEntDesktop
 LogmeIn
 Rumba Desktop
-=======
-Name:  AIBEntDesktop
-Location:  Dev, Stage, Prod
-Applications:
-SEP (Symantec EndPoint Protection)
-Visio
-Project
-Teams
-7Zip
-Tableau
-Chrome
-Adobe Acrobat Reader
-Visual Studio Code
-Java x86, 64 ( currently 1.8v291)
+
 
 
 

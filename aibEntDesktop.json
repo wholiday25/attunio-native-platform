@@ -113,7 +113,7 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Download Symantec",
+                        "name": "Download Crowdstrike",
                         "inline": ["[variables('CrowdStrikeDownloadCMD')]"]                    
                     },
                     {
@@ -128,17 +128,10 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install Symantec",
+                        "name": "Install Crowdstrike",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CrowdStrike.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install Teams",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-TeamsNoAutostart.ps1"
                     },
                     {
                         "type": "PowerShell",
@@ -167,6 +160,14 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-7Zip.ps1"
+                    },
+					{
+                        "type": "PowerShell",
+                        "name": "Install VCRedist",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VCRedist.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
