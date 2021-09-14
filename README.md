@@ -32,7 +32,7 @@ Dev, Stage, Prod
   
 
 ### Name:  aibDeveloper
-### location:
+### Location:
 Dev, Stage, Prod
 ### Applications:
 *All from aibEntDesktop AND*
@@ -54,7 +54,7 @@ Dev, Stage, Prod
   
 
 ### Name: aibRDSUnifiedDesktop
-### location:
+### Location:
 Dev, Stage, Prod
 ### Applications:
 *All from aibEntDesktop AND*
@@ -74,7 +74,7 @@ Dev, Stage, Prod
 
 ### Name: aibIHAGoodkidDesktop
 
-### location:
+### Location:
 Dev, Stage, Prod
 
 ### Applications:
@@ -85,7 +85,7 @@ Dev, Stage, Prod
 
 ### Name: aibSupportNowDesktop Name:
 
-### location:
+### Location:
 Dev, Stage, Prod
 
 ### Applications:
