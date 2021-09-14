@@ -51,6 +51,11 @@ Dev, Stage, Prod
 - PuTTY
 - OpenSSL (x86 and x64)
 - Visual Studio 2019 Build Tools (C++ Desktop workload)
+- Microsoft SQL Server Management Studio
+- DBeaver Community Edition
+- Azure Data Studio
+- MongoDB Compass
+- IntelliJ IDEA Community
   
 
 ### Name: aibRDSUnifiedDesktop
