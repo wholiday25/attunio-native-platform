@@ -37,7 +37,7 @@ Dev, Stage, Prod
 ### Applications:
 *All from aibEntDesktop AND*
 - Notepad++
-- Visual C++ Redidistributable Runtime
+- Visual C++ Redistributable Runtime
 - Active Directory RSAT Tools
 - Python
 - Docker Desktop
