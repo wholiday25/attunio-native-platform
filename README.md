@@ -51,6 +51,7 @@ Dev, Stage, Prod
 - PuTTY
 - OpenSSL (x86 and x64)
 - Visual Studio 2019 Build Tools (C++ Desktop workload)
+- SOAP UI
 - Microsoft SQL Server Management Studio
 - DBeaver Community Edition
 - Azure Data Studio
@@ -95,5 +96,5 @@ Dev, Stage, Prod
 
 ### Applications:
 *All from aibEntDesktop AND*
-- LogmeIn
+- LogMeIn
 - Rumba Desktop
