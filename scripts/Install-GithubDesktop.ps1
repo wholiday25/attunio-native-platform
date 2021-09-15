@@ -12,7 +12,5 @@ Invoke-WebRequest https://central.github.com/deployments/desktop/desktop/latest/
 
 msiexec /i C:\Comcast\GitHubDesktopSetup-x64.msi /qn ALLUSERS=1
 
-& 'C:\Program Files (x86)\GitHub Desktop Deployment\GitHubDesktopDeploymentTool.exe'
-
-
+Start-Process -FilePath 'C:\Program Files (x86)\GitHub Desktop Deployment\GitHubDesktopDeploymentTool.exe' -wait 
 

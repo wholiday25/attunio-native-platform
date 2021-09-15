@@ -236,6 +236,13 @@
                         "type": "WindowsRestart",
                         "restartCheckCommand": "write-output 'restarting post Developer apps installation'",
                         "restartTimeout": "15m"
+                    },
+					{
+                        "type": "PowerShell",
+                        "name": "Pause to fix SysPrep",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["Start-Sleep -Seconds 300"]
                     }
 
                 ],
