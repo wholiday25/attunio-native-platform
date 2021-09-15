@@ -1,77 +1,100 @@
-AzureImageBuilder
+
+# AzureImageBuilder
+
 Azure Image Builder ARM Templates for image creation for WVD
 
-Inventory for Images:
+  
 
-Name: AIBEntDesktop 
+## Inventory for Images:
 
-Location: Dev, Stage, Prod 
-Applications: 
-BGInfo ( background image editor0
-Windows Optimization
-SEP (Symantec EndPoint Protection) 
-Visio Project 
-Teams 
-7Zip 
-Tableau 
-Chrome 
-Adobe Acrobat Reader 
-Visual Studio Code 
-Java x86, 64 ( currently 1.8v291)
+  
 
-Name:aibEntDesktopCrowdstrike
-Location: Dev
-Applications:
-See AIBEntDesktop
-MINUS SEP
-Crowdstrike
+### Name: aibEntDesktop
+### Location:
+Dev, Stage, Prod
+### Applications:
+- Notepad++
+- Visual C++ Redistributable Runtime
+- BGInfo
+- VDI Optimization Script
+- Crowdstrike
+- Microsoft Visio
+- Microsoft Project
+- Microsoft Office
+- Microsoft Teams
+- 7Zip
+- Tableau Desktop
+- Google Chrome
+- Adobe Acrobat Reader
+- Microsoft Visual Studio Code
+- Oracle Java JRE x86 and x64 (currently 1.8v291)
+
+  
+
+### Name:  aibDeveloper
+### Location:
+Dev, Stage, Prod
+### Applications:
+*All from aibEntDesktop AND*
+- Notepad++
+- Visual C++ Redistributable Runtime
+- Active Directory RSAT Tools
+- Python
+- Docker Desktop
+- Github Desktop
+- PyCharm
+- Java Development Kit
+- Maven
+- Nuget
+- Gulp
+- Postman
+- PuTTY
+- OpenSSL (x86 and x64)
+- Visual Studio 2019 Build Tools (C++ Desktop workload)
+- SOAP UI
+- Microsoft SQL Server Management Studio
+- DBeaver Community Edition
+- Azure Data Studio
+- MongoDB Compass
+- IntelliJ IDEA Community
+  
+
+### Name: aibRDSUnifiedDesktop
+### Location:
+Dev, Stage, Prod
+### Applications:
+*All from aibEntDesktop AND*
+- Notepad++
+- Firefox
+- Postman
+- PuTTY
+- SOAP UI
+- Microsoft SQL Server Management Studio
+- UltraVNC Viewer
+- WinSCP
+- MetaSolv
+- MetaSolv Dev
+- RSA SecureID Softtoken
+- SAPGUI
 
 
-Name: AIBDeveloper 
-Location: Dev
-Applications:
-See AIBEntDesktop
-Notepad++
-Python
-Docker Desktop
-Github Desktop
-PyCharm
-Java Development Kit
-Maven
-Nuget
-Gulp
-Postman
-PuTTY
+### Name: aibIHAGoodkidDesktop
+
+### Location:
+Dev, Stage, Prod
+
+### Applications:
+*All from aibEntDesktop AND*
+- Adobe Creative Cloud
+- IBM Aspera Connect
 
 
-Name:aibIHAGoodkidDesktop 
-Location: Dev
-Applications:
-See AIBEntDesktop
-Adobe Creative Cloud
-IBm Aspera Connect
+### Name: aibSupportNowDesktop Name:
 
+### Location:
+Dev, Stage, Prod
 
-Name:AIBSupportNowDesktop Name:
-Location: Dev, Stage, Prod 
-Applications:
-See AIBEntDesktop
-LogmeIn
-Rumba Desktop
-=======
-Name:  AIBEntDesktop
-Location:  Dev, Stage, Prod
-Applications:
-SEP (Symantec EndPoint Protection)
-Visio
-Project
-Teams
-7Zip
-Tableau
-Chrome
-Adobe Acrobat Reader
-Visual Studio Code
-Java x86, 64 ( currently 1.8v291)
-
-
-
+### Applications:
+*All from aibEntDesktop AND*
+- LogMeIn
+- Rumba Desktop
