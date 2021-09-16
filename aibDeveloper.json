@@ -75,10 +75,10 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install VCRedist",
+                        "name": "Install Docker Desktop",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VCRedist.ps1",
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-DockerDesktop.ps1",
                         "validExitCodes": [0,3010]
                     },
                     {
@@ -88,11 +88,6 @@
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-ActiveDirectory-DS.Tools.ps1",
                         "validExitCodes": [0,3010]
-                    },
-                    {                    
-                        "type": "WindowsRestart",
-                        "restartCheckCommand": "write-output 'restarting post Developer apps installation'",
-                        "restartTimeout": "15m"
                     },
                     {
 
@@ -123,14 +118,6 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Python.ps1",
-                        "validExitCodes": [0,3010]
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install Docker Desktop",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-DockerDesktop.ps1",
                         "validExitCodes": [0,3010]
                     },
                     {
@@ -179,14 +166,6 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Gulp.ps1",
-                        "validExitCodes": [0,3010]
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install Postman",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Postman.ps1",
                         "validExitCodes": [0,3010]
                     },
                     {
@@ -257,6 +236,13 @@
                         "type": "WindowsRestart",
                         "restartCheckCommand": "write-output 'restarting post Developer apps installation'",
                         "restartTimeout": "15m"
+                    },
+					{
+                        "type": "PowerShell",
+                        "name": "Pause to fix SysPrep",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["Start-Sleep -Seconds 300"]
                     }
 
                 ],

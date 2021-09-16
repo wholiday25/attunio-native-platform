@@ -47,7 +47,8 @@ Dev, Stage, Prod
 - Maven
 - Nuget
 - Gulp
-- Postman
+-Node.JS - installed as part of Gulp
+- Postman - available for user install. Creator has not provided system-wide installer yet, only user/personal
 - PuTTY
 - OpenSSL (x86 and x64)
 - Visual Studio 2019 Build Tools (C++ Desktop workload)
@@ -66,7 +67,7 @@ Dev, Stage, Prod
 *All from aibEntDesktop AND*
 - Notepad++
 - Firefox
-- Postman
+- Postman - available for user install. Creator has not provided system-wide installer yet, only user/personal
 - PuTTY
 - SOAP UI
 - Microsoft SQL Server Management Studio
