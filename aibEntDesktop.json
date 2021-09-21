@@ -179,6 +179,14 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Install AutoHotKey",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AutoHotKey.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Install Chrome",
                         "runElevated": true,
                         "runAsSystem": true,

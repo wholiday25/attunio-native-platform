@@ -13,6 +13,7 @@ Azure Image Builder ARM Templates for image creation for WVD
 ### Location:
 Dev, Stage, Prod
 ### Applications:
+-AutoHotKey (added 9/21/202)
 - Notepad++
 - Visual C++ Redistributable Runtime
 - BGInfo
@@ -40,7 +41,6 @@ Dev, Stage, Prod
 - Visual C++ Redistributable Runtime
 - Active Directory RSAT Tools
 - Python
-- Docker Desktop
 - Github Desktop
 - PyCharm
 - Java Development Kit
