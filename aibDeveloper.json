@@ -63,7 +63,6 @@
                     "type": "SharedImageVersion",
                     "imageVersionID": "[parameters('imageVersionID')]"
                 },
-
                 "customize": [
                     {
                         "type": "PowerShell",
@@ -75,10 +74,18 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install Docker Desktop",
+                        "name": "AWS CLI 2.0",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-DockerDesktop.ps1",
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AWSCLI.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Azure PowerShell Module",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AzurePS.ps1",
                         "validExitCodes": [0,3010]
                     },
                     {

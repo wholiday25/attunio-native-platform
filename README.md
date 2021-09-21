@@ -58,6 +58,9 @@ Dev, Stage, Prod
 - Azure Data Studio
 - MongoDB Compass
 - IntelliJ IDEA Community
+- AWS CLI 2.0  (added 9/21/2021)
+- Azure Powershell Module (added 9/21/2021)
+
   
 
 ### Name: aibRDSUnifiedDesktop
