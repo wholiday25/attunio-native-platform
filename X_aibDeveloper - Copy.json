@@ -25,20 +25,10 @@
             "metadata": {
                 "description": "URL for Shared Image Gallery for Enterprise Desktop"
             }
-        },
-        "AccessDatabaseEngineURI": {
-            "type": "string"
-        },
-        "Ginger.3.8.0.0_URI": {
-            "type": "string"
         }
     },
 
     "variables": {
-
-        "AccessDatabaseEngineCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AccessDatabaseEngineURI'),'\", \"C:\\Comcast\\AccessDatabaseEngine.exe\")')]",
-        "Ginger.3.8.0.0_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Ginger.3.8.0.0_URI'),'\", \"C:\\Comcast\\Ginger.3.8.0.0.exe\")')]"
-
     },
 
 
@@ -74,29 +64,6 @@
                     "imageVersionID": "[parameters('imageVersionID')]"
                 },
                 "customize": [
-                                        {
-                        "type": "PowerShell",
-                        "name": "Download AccessDatabaseEngineCMD",
-                        "inline": ["[variables('AccessDatabaseEngineCMD')]"]                    
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Download Ginger.3.8.0.0_CMD",
-                        "inline": ["[variables('Ginger.3.8.0.0_CMD')]"]           
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install AccessDatabaseEngineCMD",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AccessDatabaseEngine.ps1"
-                    },                    {
-                        "type": "PowerShell",
-                        "name": "Install Ginger.3.8.0.0_CMD",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Ginger.3.8.0.0.ps1"
-                    },
                     {
                         "type": "PowerShell",
                         "name": "Install NotepadPP",
