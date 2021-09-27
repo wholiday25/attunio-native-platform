@@ -18,7 +18,7 @@
             "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV"
         },
         "SubnetID": {
-            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/hostpool1"
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/aib"
         },
         "MetasolvInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-MetasolvProd09172021.zip?sp=rl&st=2021-09-16T17:52:57Z&se=2031-11-17T17:52:00Z&sv=2020-08-04&sr=b&sig=fAG6QJW1AAQTx40TtmCotHSTEPXc2tI%2BCS8oV7taJvQ%3D"
@@ -33,7 +33,7 @@
             "value": "https://aibdev.blob.core.windows.net/installers/Install-SAPGUI.zip?sp=rl&st=2021-08-11T19:14:50Z&se=2031-11-12T19:14:00Z&sv=2020-08-04&sr=b&sig=ANo8%2BqcVdHO8bSXicJeto1bbQzxngSwAgw9vctvMcfE%3D"
         },
         "imageVersionID": {
-            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV/images/AIBEntDesktop/versions/0.24895.35094"
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV/images/AIBEntDesktop/versions/0.24910.19590"
         }
     }
 }

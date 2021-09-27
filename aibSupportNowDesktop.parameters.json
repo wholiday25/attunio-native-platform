@@ -18,7 +18,7 @@
             "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV"
         },
         "SubnetID": {
-            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/hostpool1"
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/aib"
         },
         "SupportNowLogmeInURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-SupportNowLogmeIn.zip?sp=rl&st=2021-06-14T18:50:00Z&se=2031-11-15T18:50:00Z&sv=2020-02-10&sr=b&sig=%2FSaJOjH5wbSCbslI4EjUUq1EAH7yNHn%2FYTnAMEE8B0s%3D"
@@ -27,7 +27,7 @@
             "value": "https://aibdev.blob.core.windows.net/installers/Install-SupportNowRumba.zip?sp=rl&st=2021-06-14T18:52:51Z&se=2031-11-15T18:52:00Z&sv=2020-02-10&sr=b&sig=LQSFkEG6bbMZFxJqWlQDNV%2FoU4CMsFH6BE3YKYnaT1o%3D"
         },
         "imageVersionID": {
-            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV/images/AIBEntDesktop/versions/0.24895.35094"
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV/images/AIBEntDesktop/versions/0.24910.19590"
         }
     }
 }
