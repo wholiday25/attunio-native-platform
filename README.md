@@ -60,8 +60,9 @@ Dev, Stage, Prod
 - IntelliJ IDEA Community
 - AWS CLI 2.0  (added 9/21/2021)
 - Azure Powershell Module (added 9/21/2021)
+- Ginger 3.8.0 for AMDOCS (added 9/27/2021
+- MS Access 2010 Database Engine 32 bit (added 9/27/2021)
 
-  
 
 ### Name: aibRDSUnifiedDesktop
 ### Location:
