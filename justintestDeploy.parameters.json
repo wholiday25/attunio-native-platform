@@ -1,9 +1,9 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+        "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "imageTemplateName": {
-            "value": "aibIHAGoodkidDesktop"
+            "value": "justintestDeploy"
         },
         "api-version": {
             "value": "2020-02-14"
@@ -20,14 +20,15 @@
         "SubnetID": {
             "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/aib"
         },
-        "AdobeCreativeCloudURI": {
-            "value": "https://aibdev.blob.core.windows.net/installers/Install-AdobeCreativeCloud.zip?sp=rl&st=2021-07-08T15:16:24Z&se=2031-11-09T15:16:00Z&sv=2020-08-04&sr=b&sig=mQfx3DeNM9nVE7Ujfh%2FkBKA4udLcR%2FnkurAQb%2BHRE5I%3D"
+        "AccessDatabaseEngineURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/AccessDatabaseEngine.exe?sp=rl&st=2021-09-23T19:14:48Z&se=2031-11-24T19:14:00Z&sv=2020-08-04&sr=b&sig=FKKxmpSizkP38bkbWINM7AoaaXpJeAqIVBLbao4sSR8%3D"
         },
-        "IBMAsperaConnectURI": {
-            "value": "https://aibdev.blob.core.windows.net/installers/Install-IBMAsperaConnect.zip?sp=rl&st=2021-07-08T15:17:43Z&se=2031-11-09T15:17:00Z&sv=2020-08-04&sr=b&sig=waGuPjOdn69fSgrGA7LfqFekboHEbx%2B95NJQs%2B2txgo%3D"
+        "Ginger.3.8.0.0_URI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Ginger.3.8.0.0.exe?sp=rl&st=2021-09-23T19:16:06Z&se=2031-11-24T19:16:00Z&sv=2020-08-04&sr=b&sig=IMQCUM8omprd9cl8u9CTRmPizAfpKodNyt4I1nLBtnw%3D"
         },
         "imageVersionID": {
             "value": "[IMAGEID]"
-        }
+            }
+
     }
 }
