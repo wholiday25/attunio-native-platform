@@ -2,7 +2,7 @@
 
 
 $ImageResourceGroup = "AzureImageBuilder-DEV"
-$ImageTemplateName = "aibNSE"
+$ImageTemplateName = "aibDeveloperNSE"
 $imageTemplateFileName = $imageTemplateName + ".json"
 $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json"
 $sharedimagegallery = "WVD_DEV"
@@ -12,7 +12,7 @@ $parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegal
 $hash = @{ imageVersionID = $parentversionid }
 
 #be sure to modify parameters file to include [IMAGEID] under image for source location. this script rewrites the file.
-(Get-Content aibNSE.parameters.json).replace('[IMAGEID]', $parentversionid) | Set-Content aibNSE.parameters.json
+(Get-Content aibDeveloperNSE.parameters.json).replace('[IMAGEID]', $parentversionid) | Set-Content aibDeveloperNSE.parameters.json
 
 try {
     WRITe-OUTPUT "Create ImageDefinition $imageTemplateName in $sharedimagegallery in the $location location"
