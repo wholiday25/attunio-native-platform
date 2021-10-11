@@ -8,3 +8,4 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 # Install maven
 choco install autohotkey -y --noprogress
 
+
