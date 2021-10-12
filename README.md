@@ -13,6 +13,7 @@ Azure Image Builder ARM Templates for image creation for WVD
 ### Location:
 Dev, Stage, Prod
 ### Applications:
+-AutoHotKey (added 9/21/202)
 - Notepad++
 - Visual C++ Redistributable Runtime
 - BGInfo
@@ -40,14 +41,14 @@ Dev, Stage, Prod
 - Visual C++ Redistributable Runtime
 - Active Directory RSAT Tools
 - Python
-- Docker Desktop
 - Github Desktop
 - PyCharm
-- Java Development Kit
+- Java Development Kit 17
 - Maven
 - Nuget
 - Gulp
-- Postman
+-Node.JS - installed as part of Gulp
+- Postman - available for user install. Creator has not provided system-wide installer yet, only user/personal
 - PuTTY
 - OpenSSL (x86 and x64)
 - Visual Studio 2019 Build Tools (C++ Desktop workload)
@@ -57,7 +58,18 @@ Dev, Stage, Prod
 - Azure Data Studio
 - MongoDB Compass
 - IntelliJ IDEA Community
-  
+- AWS CLI 2.0  (added 9/21/2021)
+- Azure Powershell Module (added 9/21/2021)
+- Ginger 3.8.0 for AMDOCS (added 9/27/2021
+- MS Access 2010 Database Engine 32 bit (added 9/27/2021)
+
+
+### Name:  aibDeveloperNSE
+### Location:
+Dev, Stage, Prod
+### Applications:
+*All from aibEntDesktop AND* aibDeveloper AND*
+- Java Development Kit 1.8.211
 
 ### Name: aibRDSUnifiedDesktop
 ### Location:
@@ -66,7 +78,7 @@ Dev, Stage, Prod
 *All from aibEntDesktop AND*
 - Notepad++
 - Firefox
-- Postman
+- Postman - available for user install. Creator has not provided system-wide installer yet, only user/personal
 - PuTTY
 - SOAP UI
 - Microsoft SQL Server Management Studio

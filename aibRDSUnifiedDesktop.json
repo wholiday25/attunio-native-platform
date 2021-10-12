@@ -41,7 +41,7 @@
     },
 
     "variables": {
-        "MetaSolvDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetaSolvInstallerURI'),'\", \"C:\\Comcast\\Install-Metasolv-RDS631b192.zip\")')]",
+        "MetaSolvDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetaSolvInstallerURI'),'\", \"C:\\Comcast\\Install-MetasolvProd09172021.zip\")')]",
         "MetaSolvDEVDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetasolvDEVInstallerURI'),'\", \"C:\\Comcast\\Install-MetaSolvDEV.zip\")')]",
         "RSASecurIDTokenDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('RSASecurIDTokenInstallerURI'),'\", \"C:\\Comcast\\Install-RSASecurIDToken.zip\")')]",
         "SAPGUIDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPGUIInstallerURI'),'\", \"C:\\Comcast\\Install-SAPGUI.zip\")')]"
@@ -95,14 +95,6 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-FireFox.ps1",
-                        "validExitCodes": [0,3010]
-                    },
-                   {
-                        "type": "PowerShell",
-                        "name": "Install Postman",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Postman.ps1",
                         "validExitCodes": [0,3010]
                     },
                     {
@@ -167,7 +159,7 @@
                         "name": "Install Metasolv",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Metasolv-RDS631b192.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MetasolvProd09172021.ps1"
                     },
                     {
                         "type": "PowerShell",
@@ -197,8 +189,14 @@
                         "type": "WindowsRestart",
                         "restartCheckCommand": "write-output 'restarting post Developer apps installation'",
                         "restartTimeout": "10m"
-                    }
-
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Pause to fix SysPrep",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["Start-Sleep -Seconds 300"]
+                    }                 
                 ],
                 "distribute": [
                     {
