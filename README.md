@@ -43,7 +43,7 @@ Dev, Stage, Prod
 - Python
 - Github Desktop
 - PyCharm
-- Java Development Kit
+- Java Development Kit 17
 - Maven
 - Nuget
 - Gulp
@@ -63,6 +63,13 @@ Dev, Stage, Prod
 - Ginger 3.8.0 for AMDOCS (added 9/27/2021
 - MS Access 2010 Database Engine 32 bit (added 9/27/2021)
 
+
+### Name:  aibDeveloperNSE
+### Location:
+Dev, Stage, Prod
+### Applications:
+*All from aibEntDesktop AND* aibDeveloper AND*
+- Java Development Kit 1.8.211
 
 ### Name: aibRDSUnifiedDesktop
 ### Location:
