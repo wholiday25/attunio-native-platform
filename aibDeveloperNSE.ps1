@@ -1,3 +1,5 @@
+
+
 $ImageResourceGroup = "AzureImageBuilder-DEV"
 $ImageTemplateName = "aibDeveloperNSE"
 $imageTemplateFileName = $imageTemplateName + ".json"
@@ -7,13 +9,17 @@ $sharedimagegalleryRSG = "Nerdio-Dev"
 $location = "eastus"
 $parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName "AibEntDesktop").Id | Sort-Object -Descending | select-object -First 1
 $hash = @{ imageVersionID = $parentversionid }
-
 #be sure to modify parameters file to include [IMAGEID] under image for source location. this script rewrites the file.
-(Get-Content aibDeveloperNSE.parameters.json).replace('[IMAGEID]', $parentversionid) | Set-Content aibDeveloperNSE.parameters.json
+(Get-Content $imageTemplateFileNameParameters).replace('[IMAGEID]', $parentversionid) | Set-Content $imageTemplateFileNameParameters
 
 try {
     Write-Output "Create ImageDefinition $imageTemplateName in $sharedimagegallery in the $location location"
-    New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'Comcast' -Offer 'Windows' -Sku $ImageTemplateName
+    $acquiresku = (Get-AzGalleryImageDefinition -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName $imageTemplateName)
+    $acquiresku2 = ($acquiresku | Select-Object -ExpandProperty Identifier).sku
+    if ($acquiresku2 -eq "") {
+        $acquiresku2 = "10windows" + $ImageTemplateName
+    }
+    New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'Comcast' -Offer 'Windows' -Sku $acquiresku2
 
 }
 catch {
@@ -34,7 +40,7 @@ Write-Output "Creating New AzureImageBuilder Template Image Deployment for $imag
 New-AzResourceGroupDeployment -ResourceGroupName $imageResourceGroup -TemplateFile $imagetemplateFileName -TemplateParameterFile $imageTemplateFileNameParameters -Mode Incremental
 Write-Output "Starting Azure ImageBuilder Build for $imageTemplateName"
 Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName
-
+(Get-Content $imageTemplateFileNameParameters).replace($parentversionid, '[IMAGEID]') | Set-Content $imageTemplateFileNameParameters
 
 
 $gallery = Get-AzGallery -Name $galleryName
