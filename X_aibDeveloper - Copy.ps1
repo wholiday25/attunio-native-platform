@@ -2,7 +2,7 @@
 
 
 $ImageResourceGroup = "AzureImageBuilder-DEV"
-$ImageTemplateName = "aibSupportNowDesktop"
+$ImageTemplateName = "X_aibDeveloper - Copy"
 $imageTemplateFileName = $imageTemplateName + ".json"
 $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json"
 $sharedimagegallery = "WVD_DEV"
@@ -10,6 +10,7 @@ $sharedimagegalleryRSG = "Nerdio-Dev"
 $location = "eastus"
 $parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName "AibEntDesktop").Id | Sort-Object -Descending | select-object -First 1
 $hash = @{ imageVersionID = $parentversionid }
+
 #be sure to modify parameters file to include [IMAGEID] under image for source location. this script rewrites the file.
 (Get-Content $imageTemplateFileNameParameters).replace('[IMAGEID]', $parentversionid) | Set-Content $imageTemplateFileNameParameters
 
@@ -49,4 +50,6 @@ $versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupN
 $oldestVersion = $versions | Sort-Object -Property Name | Select-Object -First 1
 "Found oldest version $($oldestVersion.Name)...Deleting..."
 $oldestVersion | Remove-AzGalleryImageVersion -Force
+
+
 

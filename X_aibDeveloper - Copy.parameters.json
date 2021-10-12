@@ -21,7 +21,7 @@
             "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/hostpool1"
         },
         "imageVersionID": {
-            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV/images/AIBEntDesktop/versions/0.24895.35094"
+            "value": "[IMAGEID]"
         }
     }
 }

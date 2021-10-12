@@ -2,7 +2,7 @@
 
 
 $ImageResourceGroup = "AzureImageBuilder-DEV"
-$ImageTemplateName = "aibSupportNowDesktop"
+$ImageTemplateName = "aibDeveloperNSE"
 $imageTemplateFileName = $imageTemplateName + ".json"
 $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json"
 $sharedimagegallery = "WVD_DEV"
@@ -49,4 +49,5 @@ $versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupN
 $oldestVersion = $versions | Sort-Object -Property Name | Select-Object -First 1
 "Found oldest version $($oldestVersion.Name)...Deleting..."
 $oldestVersion | Remove-AzGalleryImageVersion -Force
+
 
