@@ -41,7 +41,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
     }
 
     try {
-        WRITE-OUTPUT "Removing existing AIB Template $imageTemplateName"
+        Write-Output "Removing existing AIB Template $imageTemplateName"
         Remove-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName
 
     }

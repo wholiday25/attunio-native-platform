@@ -35,7 +35,7 @@ try {
 }
 catch {
     $ErrorMessage = $_.Exception.Message
-    Write-OUtput "Exception: $ErrorMessage" 
+    Write-Output "Exception: $ErrorMessage" 
 }
 Write-Output "Creating New AzureImageBuilder Template Image Deployment for $imagetemplatefilename"
 New-AzResourceGroupDeployment -ResourceGroupName $imageResourceGroup -TemplateFile $imagetemplateFileName -TemplateParameterFile $imageTemplateFileNameParameters -Mode Incremental

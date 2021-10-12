@@ -106,7 +106,7 @@
                     },
                     {
                         "type": "WindowsRestart",
-                        "restartCheckCommand": "write-output 'restarting post SupportNow Installation'",
+                        "restartCheckCommand": "Write-Output 'restarting post SupportNow Installation'",
                         "restartTimeout": "10m"
                     },
                     {

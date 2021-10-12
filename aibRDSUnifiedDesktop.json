@@ -187,7 +187,7 @@
                     },
                     {
                         "type": "WindowsRestart",
-                        "restartCheckCommand": "write-output 'restarting post Developer apps installation'",
+                        "restartCheckCommand": "Write-Output 'restarting post Developer apps installation'",
                         "restartTimeout": "10m"
                     },
                     {
