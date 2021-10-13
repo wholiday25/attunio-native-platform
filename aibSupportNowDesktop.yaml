@@ -1,7 +1,5 @@
 # Build AzureImageBuilder Pipeline
 
-trigger:
-
 pool:
   name: aib-ap
 
