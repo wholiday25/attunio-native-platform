@@ -37,7 +37,10 @@
     "variables": {
 
         "AccessDatabaseEngineCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AccessDatabaseEngineURI'),'\", \"C:\\Comcast\\AccessDatabaseEngine.exe\")')]",
-        "Ginger.3.8.0.0_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Ginger.3.8.0.0_URI'),'\", \"C:\\Comcast\\Ginger.3.8.0.0.exe\")')]"
+        "Ginger.3.8.0.0_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Ginger.3.8.0.0_URI'),'\", \"C:\\Comcast\\Ginger.3.8.0.0.exe\")')]",
+        "MFLRAnalysis12.60CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRAnalysis12.60URI'),'\", \"C:\\Comcast\\Install-MFLRAnalysis12.60.zip\")')]",
+        "MFLRVUGen12.60CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUGen12.60URI'),'\", \"C:\\Comcast\\Install-MFLRVUGen12.60.zip\")')]",
+        "MFLRVUG_00264CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUG_00264URI'),'\", \"C:\\Comcast\\Install-MFLRVUG_00264.zip\")')]"
 
     },
 
@@ -86,16 +89,59 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download MFLRAnalysis12.60CMD",
+                        "inline": ["[variables('MFLRAnalysis12.60CMD')]"]           
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download MFLRVUGen12.60CMD",
+                        "inline": ["[variables('MFLRVUGen12.60CMD')]"]           
+                    },{
+                        "type": "PowerShell",
+                        "name": "Download MFLRVUG_00264CMD",
+                        "inline": ["[variables('MFLRVUG_00264CMD')]"]           
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Install AccessDatabaseEngineCMD",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AccessDatabaseEngine.ps1"
-                    },                    {
+                    }, 
+                    {
                         "type": "PowerShell",
                         "name": "Install Ginger.3.8.0.0_CMD",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Ginger.3.8.0.0.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "MFLRAnalysis12.60CMD",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MFLRAnalysis12.60.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download MFLRVUGen12.60CMD",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MFLRVUGen12.60.ps1"
+                    }, 
+                    
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "write-output 'restarting post MFLRVUGen12.60, prior to MFLRVUG_00264 patch'",
+                        "restartTimeout": "5m"
+                    },
+                    
+                    {
+                        "type": "PowerShell",
+                        "name": "Install MFLRVUG_00264CMD",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MFLRVUG_00264.ps1"
                     },
                     {
                         "type": "PowerShell",
