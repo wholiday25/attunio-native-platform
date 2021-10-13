@@ -31,6 +31,15 @@
         },
         "Ginger.3.8.0.0_URI": {
             "type": "string"
+        },
+        "MFLRAnalysis12.60URI": {
+            "type": "string"
+        },
+        "MFLRVUGen12.60URI": {
+            "type": "string"
+        },
+        "MFLRVUG_00264URI": {
+            "type": "string"
         }
     },
 
