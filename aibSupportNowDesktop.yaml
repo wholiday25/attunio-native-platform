@@ -18,11 +18,11 @@ steps:
     ContainerName: 'scripts'
 - task: AzurePowerShell@5
   inputs:
-    azureSubscription: 'WVD-Prod-SP' #This is the devops service connection name
+    azureSubscription: 'WVD-Dev-SP' #This is the devops service connection name
     ErrorActionPreference: 'Stop'
     FailOnStandardError: true
     ScriptType: 'FilePath'
-    ScriptPath: './scripts/aibSupportNowDesktop.ps1'
+    ScriptPath: './aibSupportNowDesktop.ps1'
     
     azurePowerShellVersion: 'LatestVersion'
   displayName: 'Run Azure Image Builder aibSupportNowDesktop'
