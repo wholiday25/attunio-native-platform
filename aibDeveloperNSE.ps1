@@ -1,6 +1,5 @@
 
 
-
 $ImageResourceGroup = "AzureImageBuilder-DEV"
 $ImageTemplateName = "aibDeveloperNSE"
 $imageTemplateFileName = $imageTemplateName + ".json"
@@ -10,33 +9,42 @@ $sharedimagegalleryRSG = "Nerdio-Dev"
 $location = "eastus"
 $parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName "AibEntDesktop").Id | Sort-Object -Descending | select-object -First 1
 $hash = @{ imageVersionID = $parentversionid }
-
 #be sure to modify parameters file to include [IMAGEID] under image for source location. this script rewrites the file.
-(Get-Content aibDeveloperNSE.parameters.json).replace('[IMAGEID]', $parentversionid) | Set-Content aibDeveloperNSE.parameters.json
+(Get-Content $imageTemplateFileNameParameters).replace('[IMAGEID]', $parentversionid) | Set-Content $imageTemplateFileNameParameters
 
 try {
-    WRITe-OUTPUT "Create ImageDefinition $imageTemplateName in $sharedimagegallery in the $location location"
-    New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'Comcast' -Offer 'Windows' -Sku $ImageTemplateName
+    Write-Output "Create ImageDefinition $imageTemplateName in $sharedimagegallery in the $location location"
+    $acquiresku = (Get-AzGalleryImageDefinition -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName $imageTemplateName)
+    $acquiresku2 = ($acquiresku | Select-Object -ExpandProperty Identifier).sku
+    if ($acquiresku2 -eq "") {
+        $acquiresku2 = "10windows" + $ImageTemplateName
+    }
+    New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'Comcast' -Offer 'Windows' -Sku $acquiresku2
 
 }
 catch {
     $ErrorMessage = $_.Exception.Message
-    Write-OUtput "Exception: $ErrorMessage"
+    Write-Output "Exception: $ErrorMessage"
 }
 
 try {
-    WRITE-OUTPUT "Removing existing AIB Template $imageTemplateName"
+    Write-Output "Removing existing AIB Template $imageTemplateName"
     Remove-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName 
 
 }
 catch {
     $ErrorMessage = $_.Exception.Message
-    Write-OUtput "Exception: $ErrorMessage" 
+    Write-Output "Exception: $ErrorMessage" 
 }
-WRITE-OUTPUT "Creating NEw AzureImageBuilder Template Image Deployment for $imagetemplatefilename"
+Write-Output "Creating New AzureImageBuilder Template Image Deployment for $imagetemplatefilename"
 New-AzResourceGroupDeployment -ResourceGroupName $imageResourceGroup -TemplateFile $imagetemplateFileName -TemplateParameterFile $imageTemplateFileNameParameters -Mode Incremental
-WRITE-OUTPUT "Starting Azure ImageBuilder Build for $imageTemplateName"
-Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName -NoWait
+Write-Output "Starting Azure ImageBuilder Build for $imageTemplateName"
+Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName
+(Get-Content $imageTemplateFileNameParameters).replace($parentversionid, '[IMAGEID]') | Set-Content $imageTemplateFileNameParameters
 
 
-
+$gallery = Get-AzGallery -Name $galleryName
+$versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupName -GalleryName $gallery.Name -GalleryImageDefinitionName $imageTemplateName
+$oldestVersion = $versions | Sort-Object -Property Name | Select-Object -First 1
+"Found oldest version $($oldestVersion.Name)...Deleting..."
+$oldestVersion | Remove-AzGalleryImageVersion -Force

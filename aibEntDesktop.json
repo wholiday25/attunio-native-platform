@@ -94,7 +94,7 @@
                     {
 
                         "type": "WindowsRestart",
-                        "restartCheckCommand": "write-output 'restarting post Optimizations'",
+                        "restartCheckCommand": "Write-Output 'restarting post Optimizations'",
                         "restartTimeout": "5m"
                     },
                     {
@@ -215,7 +215,7 @@
                     },
                     {
                         "type": "WindowsRestart",
-                        "restartCheckCommand": "write-output 'restarting post JREx86 Install'",
+                        "restartCheckCommand": "Write-Output 'restarting post JREx86 Install'",
                         "restartTimeout": "10m"
                     },
                     {
@@ -227,7 +227,7 @@
                     },
                     {
                         "type": "WindowsRestart",
-                        "restartCheckCommand": "write-output 'restarting post JREx64 Install'",
+                        "restartCheckCommand": "Write-Output 'restarting post JREx64 Install'",
                         "restartTimeout": "10m"
                     },
                     {
