@@ -7,6 +7,6 @@ Start-Sleep -s 240
 
 Remove-Item "C:\Comcast\Install-MFLRVUG_00264.zip" -Force
 
-Remove-Item "C:\Comcast\Installers\LRVUG_00264" -Recurse -Force
+# Remove-Item "C:\Comcast\Installers\LRVUG_00264" -Recurse -Force
 
 Stop-Transcript
