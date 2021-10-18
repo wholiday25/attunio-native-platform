@@ -17,6 +17,7 @@ steps:
     storage: 'aibdev'
     ContainerName: 'scripts'
 - task: AzurePowerShell@5
+  timeoutInMinutes: 360
   inputs:
     azureSubscription: 'WVD-Dev' #This is the devops service connection name
     ErrorActionPreference: 'Stop'
@@ -28,5 +29,5 @@ steps:
   displayName: 'Run Azure Image Builder aibBulkDeploy'
 
 
-  timeoutInMinutes: 360
+
   
