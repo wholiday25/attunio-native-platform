@@ -1,5 +1,6 @@
 # Build AzureImageBuilder Pipeline
 
+
 trigger: none
 
 pool:
@@ -28,6 +29,7 @@ steps:
     azurePowerShellVersion: 'LatestVersion'
   displayName: 'Run Azure Image Builder aibSupportNowDesktop'
   timeoutInMinutes: 360
+
 
 
 
