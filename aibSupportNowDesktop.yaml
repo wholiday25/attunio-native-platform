@@ -9,7 +9,8 @@ steps:
 # PowerShell
 # Run a PowerShell script on Linux, macOS, or Windows
 - task: AzureFileCopy@4
-  inputs:
+  inputs: 
+    AdditionalArgumentsForBlobCopy: '--overwrite=true'
     SourcePath: 'scripts/*'
     TargetPath: ''
     azureSubscription: 'WVD-Dev'
