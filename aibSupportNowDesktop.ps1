@@ -1,6 +1,4 @@
-## Add AZ PS modules to support AzUserAssignedIdentity and Az AIB
 
-'Az.ImageBuilder', 'Az.ManagedServiceIdentity' | ForEach-Object {Install-Module -Name $_}
 
 
 $ImageResourceGroup = "AzureImageBuilder-DEV"
