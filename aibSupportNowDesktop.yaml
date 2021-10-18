@@ -18,7 +18,9 @@ steps:
     Destination: 'AzureBlob'
     storage: 'aibdev'
     ContainerName: 'scripts'
+
 - task: AzurePowerShell@5
+  displayName: 'Run Azure Image Builder aibSupportNowDesktop'
   timeoutInMinutes: 360
   inputs:
     azureSubscription: 'WVD-Dev' #This is the devops service connection name
@@ -28,7 +30,7 @@ steps:
     ScriptPath: './aibSupportNowDesktop.ps1'
     
     azurePowerShellVersion: 'LatestVersion'
-  displayName: 'Run Azure Image Builder aibSupportNowDesktop'
+
 
 
 
