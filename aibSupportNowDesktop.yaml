@@ -2,13 +2,15 @@
 
 
 trigger: none
-
+jobs:
+- job: Build
 pool:
   name: aib-ap
 
 steps:
 # PowerShell
 # Run a PowerShell script on Linux, macOS, or Windows
+- job: Copy Files
 - task: AzureFileCopy@4
   inputs: 
     AdditionalArgumentsForBlobCopy: '--overwrite=true'
@@ -19,9 +21,12 @@ steps:
     storage: 'aibdev'
     ContainerName: 'scripts'
 
+- job: Deploy aibSupportNowDesktop
+  timeoutInMinutes: 360
+  cancelTimeoutInMinutes: 10
 - task: AzurePowerShell@5
   displayName: 'Run Azure Image Builder aibSupportNowDesktop'
-  timeoutInMinutes: 360
+
   inputs:
     azureSubscription: 'WVD-Dev' #This is the devops service connection name
     ErrorActionPreference: 'Stop'
