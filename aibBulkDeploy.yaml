@@ -1,5 +1,5 @@
 # Build AzureImageBuilder Pipeline
-
+# Build All Azure Image Builder Pipielines - calls all PS1 after EntDesktop
 trigger: none
 
 pool:
