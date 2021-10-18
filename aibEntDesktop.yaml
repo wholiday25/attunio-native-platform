@@ -21,16 +21,13 @@ jobs:
         Destination: 'AzureBlob'
         storage: 'aibdev'
         ContainerName: 'scripts'
-- task: AzurePowerShell@5
-  inputs:
-    azureSubscription: 'WVD-Dev' #This is the devops service connection name
-    ErrorActionPreference: 'Stop'
-    FailOnStandardError: true
-    ScriptType: 'FilePath'
-    ScriptPath: './aibEntDesktop.ps1'
-    
-    azurePowerShellVersion: 'LatestVersion'
-  displayName: 'Run Azure Image Builder aibEntDesktop'
-
-
+    - task: AzurePowerShell@5
+      displayName: 'Run Azure Image Builder aibEntDesktop'
+      inputs:
+        azureSubscription: 'WVD-Dev' #This is the devops service connection name
+        ErrorActionPreference: 'Stop'
+        FailOnStandardError: true
+        ScriptType: 'FilePath'
+        ScriptPath: './aibEntDesktop.ps1'
+        azurePowerShellVersion: 'LatestVersion'
 
