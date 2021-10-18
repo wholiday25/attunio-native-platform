@@ -22,10 +22,10 @@ steps:
     ErrorActionPreference: 'Stop'
     FailOnStandardError: true
     ScriptType: 'FilePath'
-    ScriptPath: './aibIHAGoodkidDesktop.ps1'
+    ScriptPath: './aibEntDesktop.ps1'
     
     azurePowerShellVersion: 'LatestVersion'
-  displayName: 'Run Azure Image Builder aibIHAGoodkidDesktop'
+  displayName: 'Run Azure Image Builder aibEntDesktop'
 
 
 
