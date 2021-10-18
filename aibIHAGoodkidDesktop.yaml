@@ -1,0 +1,31 @@
+# Build AzureImageBuilder Pipeline
+
+trigger:
+
+pool:
+  name: aib-ap
+
+steps:
+# PowerShell
+# Run a PowerShell script on Linux, macOS, or Windows
+- task: AzureFileCopy@4
+  inputs:
+    SourcePath: 'scripts/*'
+    TargetPath: ''
+    azureSubscription: 'WVD-Dev'
+    Destination: 'AzureBlob'
+    storage: 'aibdev'
+    ContainerName: 'scripts'
+- task: AzurePowerShell@5
+  inputs:
+    azureSubscription: 'WVD-Dev-SP' #This is the devops service connection name
+    ErrorActionPreference: 'Stop'
+    FailOnStandardError: true
+    ScriptType: 'FilePath'
+    ScriptPath: './aibIHAGoodkidDesktop.ps1'
+    
+    azurePowerShellVersion: 'LatestVersion'
+  displayName: 'Run Azure Image Builder aibIHAGoodkidDesktop'
+
+
+
