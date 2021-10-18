@@ -1,7 +1,5 @@
 # Build AzureImageBuilder Pipeline
 
-trigger:
-
 pool:
   name: aib-ap
 
@@ -18,7 +16,7 @@ steps:
     ContainerName: 'scripts'
 - task: AzurePowerShell@5
   inputs:
-    azureSubscription: 'WVD-Dev-SP' #This is the devops service connection name
+    azureSubscription: 'WVD-Dev' #This is the devops service connection name
     ErrorActionPreference: 'Stop'
     FailOnStandardError: true
     ScriptType: 'FilePath'
