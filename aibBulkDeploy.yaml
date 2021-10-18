@@ -1,33 +1,33 @@
 # Build AzureImageBuilder Pipeline
-# Build All Azure Image Builder Pipielines - calls all PS1 after EntDesktop
+
+
 trigger: none
 
-pool:
-  name: aib-ap
-
-steps:
 # PowerShell
 # Run a PowerShell script on Linux, macOS, or Windows
-- task: AzureFileCopy@4
-  inputs:
-    SourcePath: 'scripts/*'
-    TargetPath: ''
-    azureSubscription: 'WVD-Dev'
-    Destination: 'AzureBlob'
-    storage: 'aibdev'
-    ContainerName: 'scripts'
-- task: AzurePowerShell@5
+jobs:
+- job: AIB
+  pool:
+    name: aib-ap
   timeoutInMinutes: 360
-  inputs:
-    azureSubscription: 'WVD-Dev' #This is the devops service connection name
-    ErrorActionPreference: 'Stop'
-    FailOnStandardError: true
-    ScriptType: 'FilePath'
-    ScriptPath: './aibBulkDeploy.ps1'
-    
-    azurePowerShellVersion: 'LatestVersion'
-  displayName: 'Run Azure Image Builder aibBulkDeploy'
-
-
-
+  cancelTimeoutInMinutes: 10
+  steps:
+    - task: AzureFileCopy@4
+      inputs:
+        AdditionalArgumentsForBlobCopy: '--overwrite=true'
+        SourcePath: 'scripts/*'
+        TargetPath: ''
+        azureSubscription: 'WVD-Dev'
+        Destination: 'AzureBlob'
+        storage: 'aibdev'
+        ContainerName: 'scripts'
+    - task: AzurePowerShell@5
+      displayName: 'Run Azure Image Builder aibBulkDeploy'
+      inputs:
+        azureSubscription: 'WVD-Dev' #This is the devops service connection name
+        ErrorActionPreference: 'Stop'
+        FailOnStandardError: true
+        ScriptType: 'FilePath'
+        ScriptPath: './aibBulkDeploy.ps1'
+        azurePowerShellVersion: 'LatestVersion'
   
