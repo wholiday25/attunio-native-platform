@@ -1,6 +1,6 @@
 # Build AzureImageBuilder Pipeline
 
-trigger:
+trigger: none
 
 pool:
   name: aib-ap
@@ -28,4 +28,5 @@ steps:
   displayName: 'Run Azure Image Builder aibBulkDeploy'
 
 
-
+  timeoutInMinutes: 360
+  
