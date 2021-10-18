@@ -27,5 +27,5 @@ steps:
     azurePowerShellVersion: 'LatestVersion'
   displayName: 'Run Azure Image Builder aibEntDesktop'
 
-
+  timeoutInMinutes: 360
 
