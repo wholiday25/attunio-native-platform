@@ -126,31 +126,17 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "MFLRAnalysis12.60CMD",
+                        "name": "Install MFLRAnalysis12.60CMD",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MFLRAnalysis12.60.ps1"
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Download MFLRVUGen12.60CMD",
+                        "name": "Install  MFLRVUGen12.60CMD",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MFLRVUGen12.60.ps1"
-                    }, 
-                    
-                    {
-                        "type": "WindowsRestart",
-                        "restartCheckCommand": "write-output 'restarting post MFLRVUGen12.60, prior to MFLRVUG_00264 patch'",
-                        "restartTimeout": "5m"
-                    },
-                    
-                    {
-                        "type": "PowerShell",
-                        "name": "Install MFLRVUG_00264CMD",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MFLRVUG_00264.ps1"
                     },
                     {
                         "type": "PowerShell",
