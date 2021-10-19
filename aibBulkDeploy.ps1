@@ -33,6 +33,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
             Write-Output $acquiresku2
         }
         New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'Comcast' -Offer 'Windows' -Sku $acquiresku2
+        Write-Output "Current AIB Template $aibtemplate"
         Write-Output "SharedImageGallery $sharedimagegallery"
         Write-Output "ResourceGroupName $sharedimagegalleryRSG"
         Write-Output "Location $location"
