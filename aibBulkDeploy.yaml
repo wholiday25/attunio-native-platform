@@ -22,17 +22,12 @@ jobs:
         storage: 'aibdev'
         ContainerName: 'scripts'
     - task: AzurePowerShell@5
-      displayName: 'Run Azure Image Builder aibSupportNowDesktop'
+      displayName: 'Run Azure Image Builder aibBulkDeploy'
       inputs:
         azureSubscription: 'WVD-Dev' #This is the devops service connection name
         ErrorActionPreference: 'Stop'
         FailOnStandardError: true
         ScriptType: 'FilePath'
-        ScriptPath: './aibSupportNowDesktop.ps1'
+        ScriptPath: './aibBulkDeploy.ps1'
         azurePowerShellVersion: 'LatestVersion'
-
-
-
-
-
-
+  
