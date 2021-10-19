@@ -33,6 +33,11 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
             Write-Output $acquiresku2
         }
         New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'Comcast' -Offer 'Windows' -Sku $acquiresku2
+        Write-Output "SharedImageGallery $sharedimagegallery"
+        Write-Output "ResourceGroupName $sharedimagegalleryRSG"
+        Write-Output "Location $location"
+        Write-Output "ImageTemplateName $imageTemplateName"
+        Write-Output "Sku $acquiresku2"
 
     }
     catch {
@@ -61,11 +66,14 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
     
 }
 
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aibentdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json','*.yaml') {
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aibentdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json', '*.yaml') {
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageTemplateFileName = $imageTemplateName + ".json"
     $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json" 
     $getStatus = $(Get-AzImageBuilderTemplate -ResourceGroupName $ImageResourceGroup -Name $imageTemplateName).LastRunStatusRunState
+    Write-Output "AIB Template $aibtemplate"
+    Write-Output "GetImageStatus $getStatus"
+  
     while (($getStatus -ne "Failed") -and ($getstatus -ne "Succeeded")) {
         Start-Sleep -Seconds 30
         $getStatus = $(Get-AzImageBuilderTemplate -ResourceGroupName $ImageResourceGroup -Name $imageTemplateName).LastRunStatusRunState
