@@ -133,13 +133,6 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install  MFLRVUGen12.60CMD",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MFLRVUGen12.60.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
                         "name": "Install NotepadPP",
                         "runElevated": true,
                         "runAsSystem": true,
