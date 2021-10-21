@@ -1,13 +1,12 @@
 
-#aibBulkDeploy publish
+#aibDeveloperpublish
 #copy developer image to public image
 $region1 = @{Name = 'East US'; ReplicaCount = 1 }
 $region2 = @{Name = 'West US 2'; ReplicaCount = 1 }
 $resgroup1 = "NERDIO-DEV"
 $resgroup2 = "WVD-PROD-IMAGES"
 $targetRegions = @($region1, $region2)
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', '*publish*', 'aibentdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {
-
+{foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', '*publish*', 'aibentdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {
     try {
     
         Set-AzContext -Subscription "WVD-Dev"
@@ -25,7 +24,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
             -ResourceGroupName $resgroup2 `
             -Location $destinationgallery.Location `
             -TargetRegion $targetRegions `
-            -SourceImageId $newestVersion.Id -whatif
+            -SourceImageId $newestVersion.Id -Whatif
         Write-Host "$imageDefinitionName copyied from Source $sourcegallery Gallery with $Newestversion Version to Destination Gallery $destinationgallery"
     }
 
