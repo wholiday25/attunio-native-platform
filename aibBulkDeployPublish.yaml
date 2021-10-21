@@ -1,4 +1,4 @@
-# Build AzureImageBuilder Pipeline
+# Publish AzureImageBuilder Pipeline images from DEV to PROD
 
 
 trigger: none
