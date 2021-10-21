@@ -26,7 +26,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
         -ResourceGroupName $resgrouptarget `
         -Location $destinationgallery.Location `
         -TargetRegion $targetRegions `
-        -SourceImageId $newestVersion.Id -Whatif
+        -SourceImageId $newestVersion.Id
     Write-Output "$imageDefinitionName copyied from Source $sourcegallery Gallery with $Newestversion Version to Destination Gallery $destinationgallery"
 
 }
