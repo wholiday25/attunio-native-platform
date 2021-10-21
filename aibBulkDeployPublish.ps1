@@ -5,7 +5,7 @@
 $region1 = @{Name='East US';ReplicaCount=1}
 $region2 = @{Name='West US 2';ReplicaCount=1}
 $targetRegions = @($region1,$region2)
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', '*publish*', 'aibentdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json')
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', '*publish*', 'aibentdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {
 $imageTemplateName = $aibtemplate.Name -replace ".json", ""
 $imageDefinitionName = $imageTemplateName
 $sourcegallery = Get-AzGallery -Name "WVD_DEV"
@@ -20,6 +20,7 @@ New-AzGalleryImageVersion `
 -ResourceGroupName $destinationgallery.ResourceGroupName `
 -Location $destinationgallery.Location `
 -TargetRegion $targetRegions `
--SourceImageId $newestVersion.Id
+-SourceImageId $newestVersion.Id -Whatif
 Write-Output "$imageDefinitionName copyied from Source $sourcegallery Gallery with $Newestversion Version to Destination Gallery $destinationgallery"
 
+}
