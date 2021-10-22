@@ -32,6 +32,9 @@
         "MetasolvDEVInstallerURI": {
             "type": "string"
         },
+        "SupportNowLogmeInURI": {
+            "type": "string"
+        },
         "RSASecurIDTokenInstallerURI": {
             "type": "string"
         },
