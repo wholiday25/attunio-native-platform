@@ -80,9 +80,14 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
         $getStatus = $(Get-AzImageBuilderTemplate -ResourceGroupName $ImageResourceGroup -Name $imageTemplateName).LastRunStatusRunState
     }
     #be sure to modify parameters file to include [IMAGEID] under image for source location. this script rewrites the file.
+
     $gallery = Get-AzGallery -Name $galleryName
     $versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupName -GalleryName $gallery.Name -GalleryImageDefinitionName $imageTemplateName
     $oldestVersion = $versions | Sort-Object -Property Name | Select-Object -First 1
-    "Found oldest version $($oldestVersion.Name)...Deleting..."
-    $oldestVersion | Remove-AzGalleryImageVersion -Force
+    if ($versions.count -gt 1) {
+        "Found oldest version $($oldestVersion.Name)...Deleting..."
+        $oldestVersion | Remove-AzGalleryImageVersion -Force
+    
+    }
+    
 }
