@@ -32,6 +32,9 @@
         "MetasolvDEVInstallerURI": {
             "type": "string"
         },
+        "SupportNowLogmeInURI": {
+            "type": "string"
+        },
         "RSASecurIDTokenInstallerURI": {
             "type": "string"
         },
@@ -44,7 +47,8 @@
         "MetaSolvDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetaSolvInstallerURI'),'\", \"C:\\Comcast\\Install-MetasolvProd09172021.zip\")')]",
         "MetaSolvDEVDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetasolvDEVInstallerURI'),'\", \"C:\\Comcast\\Install-MetaSolvDEV.zip\")')]",
         "RSASecurIDTokenDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('RSASecurIDTokenInstallerURI'),'\", \"C:\\Comcast\\Install-RSASecurIDToken.zip\")')]",
-        "SAPGUIDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPGUIInstallerURI'),'\", \"C:\\Comcast\\Install-SAPGUI.zip\")')]"
+        "SAPGUIDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPGUIInstallerURI'),'\", \"C:\\Comcast\\Install-SAPGUI.zip\")')]",
+        "SupportNowLogmeInCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowLogmeInURI'),'\", \"C:\\Comcast\\Install-SupportNowLogmeIn.zip\")')]"
     },
 
 
@@ -120,6 +124,18 @@
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SQLManagementStudio.ps1",
                         "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download SupportNowLogmeInCMD",
+                        "inline": ["[variables('SupportNowLogmeInCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install SupportNowLogMeIn",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowLogmeIn.ps1"
                     },
                     {
                         "type": "PowerShell",
