@@ -2,7 +2,7 @@
 
 
 trigger: none
-
+pr: none
 # PowerShell
 # Run a PowerShell script on Linux, macOS, or Windows
 jobs:
