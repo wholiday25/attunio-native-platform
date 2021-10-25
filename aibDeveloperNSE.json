@@ -178,7 +178,7 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install JDK",
+                        "name": "Install oracle17jdk",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-oracle17jdk.ps1",
