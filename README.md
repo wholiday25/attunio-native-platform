@@ -13,7 +13,7 @@ Azure Image Builder ARM Templates for image creation for WVD
 ### Location:
 Dev, Stage, Prod
 ### Applications:
--AutoHotKey (added 9/21/202)
+-AutoHotKey 
 - Notepad++
 - Visual C++ Redistributable Runtime
 - BGInfo
@@ -28,7 +28,7 @@ Dev, Stage, Prod
 - Google Chrome
 - Adobe Acrobat Reader
 - Microsoft Visual Studio Code
-- Oracle Java JRE x86 and x64 (currently 1.8v291)
+- Oracle Java JRE x86 and x64 (currently 1.8v301)
 
   
 
@@ -44,24 +44,26 @@ Dev, Stage, Prod
 - Github Desktop
 - PyCharm
 - Java Development Kit 17
+ -Java Development Kit 1.8.211
 - Maven
 - Nuget
 - Gulp
--Node.JS - installed as part of Gulp
+ -Node.JS - installed as part of Gulp
 - Postman - available for user install. Creator has not provided system-wide installer yet, only user/personal
 - PuTTY
 - OpenSSL (x86 and x64)
 - Visual Studio 2019 Build Tools (C++ Desktop workload)
 - SOAP UI
 - Microsoft SQL Server Management Studio
+-MYSQL Workbench
 - DBeaver Community Edition
 - Azure Data Studio
 - MongoDB Compass
 - IntelliJ IDEA Community
 - AWS CLI 2.0  (added 9/21/2021)
-- Azure Powershell Module (added 9/21/2021)
-- Ginger 3.8.0 for AMDOCS (added 9/27/2021
-- MS Access 2010 Database Engine 32 bit (added 9/27/2021)
+- Azure Powershell Module 
+- Ginger 3.8.0 for AMDOCS 
+- MS Access 2010 Database Engine 32 bit 
 
 
 ### Name:  aibDeveloperNSE
@@ -69,7 +71,10 @@ Dev, Stage, Prod
 Dev, Stage, Prod
 ### Applications:
 *All from aibEntDesktop AND* aibDeveloper AND*
-- Java Development Kit 1.8.211
+- R Project for Statistical Computing 4.1.1
+- HeidiSQL 11.3
+- WireShark
+
 
 ### Name: aibRDSUnifiedDesktop
 ### Location:
@@ -88,6 +93,7 @@ Dev, Stage, Prod
 - MetaSolv Dev
 - RSA SecureID Softtoken
 - SAPGUI
+- LogMeIn 
 
 
 ### Name: aibIHAGoodkidDesktop
