@@ -276,7 +276,7 @@
                     },
                      {
                         "type": "PowerShell",
-                        "name": "MySQL Workbench",
+                        "name": "Install  MySQL Workbench",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MySQLWorkBench.ps1",
