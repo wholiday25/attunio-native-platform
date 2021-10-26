@@ -55,7 +55,7 @@ Dev, Stage, Prod
 - Visual Studio 2019 Build Tools (C++ Desktop workload)
 - SOAP UI
 - Microsoft SQL Server Management Studio
--MYSQL Workbench
+- MYSQL Workbench
 - DBeaver Community Edition
 - Azure Data Studio
 - MongoDB Compass
