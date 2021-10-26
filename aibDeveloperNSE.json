@@ -289,6 +289,30 @@
                         "validExitCodes": [0,3010]
                     },
                     {
+                        "type": "PowerShell",
+                        "name": "Install R  Statistical Computing",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-R.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install HiediSQL",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-HeidiSQL.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install WireShark",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-WireShark.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
                         "type": "WindowsRestart",
                         "restartCheckCommand": "Write-Output 'restarting post Developer apps installation'",
                         "restartTimeout": "15m"
