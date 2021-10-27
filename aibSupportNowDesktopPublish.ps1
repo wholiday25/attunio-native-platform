@@ -20,7 +20,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File '.\aibSup
     Write-Output "$imagedefinitionName $NewestVersion.Name $destinationgallery.Name $resgrouptarget $destinationgallery.location $targetRegions $newestVersion.Id"
 
     New-AzGalleryImageVersion `
-        -GalleryImageDefinitionName $imageDefinitionName`
+        -GalleryImageDefinitionName $imageDefinitionName `
     -GalleryImageVersionName $newestVersion.Name `
         -GalleryName $destinationgallery.Name `
         -ResourceGroupName $resgrouptarget `
