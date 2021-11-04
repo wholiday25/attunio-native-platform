@@ -70,7 +70,7 @@
                 "source": {
                     "type": "PlatformImage",
                     "publisher": "MicrosoftWindowsDesktop",
-                    "offer": "office-365",
+                    "offer": "Windows-10",
                     "sku": "21h1-evd-o365pp-g2",
                     "version": "latest"
                 },
