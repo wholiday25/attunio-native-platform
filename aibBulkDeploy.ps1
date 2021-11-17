@@ -13,7 +13,7 @@ $parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegal
 $hash = @{ imageVersionID = $parentversionid }
 
 
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', '*publish*', 'aibentdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aibEntDesktopV2*','*publish*', 'aibentdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageTemplateFileName = $imageTemplateName + ".json"
     $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json" 
