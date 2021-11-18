@@ -60,7 +60,8 @@ Dev, Stage, Prod
 - Azure Data Studio
 - MongoDB Compass
 - IntelliJ IDEA Community
-- AWS CLI 2.0  (added 9/21/2021)
+- AWS CLI 2.0 
+- AWS SAM CLI
 - Azure Powershell Module 
 - Ginger 3.8.0 for AMDOCS 
 - MS Access 2010 Database Engine 32 bit 
