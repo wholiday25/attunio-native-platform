@@ -35,6 +35,9 @@
         "MFLRVUG_00264URI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-MFLRVUG_00264.zip?sp=rl&st=2021-10-13T16:43:25Z&se=2031-11-14T16:43:00Z&sv=2020-08-04&sr=b&sig=9HQvzYSNVeI8XNFxE5gfg3Jxai%2FYJgt5QkGL0kY%2BFTQ%3D"
         },
+        "InstalledApplicationsURI": {
+            "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2021-11-15T13:31:51Z&se=2021-11-15T21:31:51Z&spr=https&sv=2020-08-04&sr=c&sig=bc8QPkBMRm%2FMDPL%2BtMYU0HrNjnc%2FFAJ9rEW%2Bw7P4xVg%3D"
+        },
         "imageVersionID": {
         "value": "[IMAGEID]"
         }
