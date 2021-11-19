@@ -151,7 +151,7 @@
                         "name": "AWS CLI 2.0",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AWSSAM.ps1",
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AWSCLI.ps1",
                         "validExitCodes": [
                             0,
                             3010
@@ -162,7 +162,7 @@
                         "name": "AWS SAM CLI ",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AWSSAMCLI2.ps1",
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AWSSAMCLI.ps1",
                         "validExitCodes": [
                             0,
                             3010
