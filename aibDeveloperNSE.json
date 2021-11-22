@@ -40,7 +40,7 @@
     "variables": {
 
         "AccessDatabaseEngineCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AccessDatabaseEngineURI'),'\", \"C:\\Comcast\\AccessDatabaseEngine.exe\")')]",
-        "Ginger.3.8.0.0_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Ginger.3.8.0.0_URI'),'\", \"C:\\Comcast\\Ginger.3.8.0.0.exe\")')]"
+        "Ginger.3.8.0.0_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Ginger.3.8.0.0_URI'),'\", \"C:\\Comcast\\Ginger.3.8.0.0.exe\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\aibDeveloperNSE.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 

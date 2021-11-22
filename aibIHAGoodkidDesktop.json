@@ -39,7 +39,7 @@
 
     "variables": {
         "AdobeCreativeCloudCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AdobeCreativeCloudURI'),'\", \"C:\\Comcast\\Install-AdobeCreativeCloud.zip\")')]",
-        "IBMAsperaConnectCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('IBMAsperaConnectURI'),'\", \"C:\\Comcast\\Install-IBMAsperaConnect.zip\")')]"
+        "IBMAsperaConnectCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('IBMAsperaConnectURI'),'\", \"C:\\Comcast\\Install-IBMAsperaConnect.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\aibIHAGoodkidDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 

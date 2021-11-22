@@ -51,7 +51,7 @@
         "MetaSolvDEVDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetasolvDEVInstallerURI'),'\", \"C:\\Comcast\\Install-MetaSolvDEV.zip\")')]",
         "RSASecurIDTokenDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('RSASecurIDTokenInstallerURI'),'\", \"C:\\Comcast\\Install-RSASecurIDToken.zip\")')]",
         "SAPGUIDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPGUIInstallerURI'),'\", \"C:\\Comcast\\Install-SAPGUI.zip\")')]",
-        "SupportNowLogmeInCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowLogmeInURI'),'\", \"C:\\Comcast\\Install-SupportNowLogmeIn.zip\")')]"
+        "SupportNowLogmeInCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowLogmeInURI'),'\", \"C:\\Comcast\\Install-SupportNowLogmeIn.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\aibRDSUnifiedDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 

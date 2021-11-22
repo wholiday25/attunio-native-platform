@@ -50,7 +50,7 @@
         "Ginger.3.8.0.0_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Ginger.3.8.0.0_URI'),'\", \"C:\\Comcast\\Ginger.3.8.0.0.exe\")')]",
         "MFLRAnalysis12.60CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRAnalysis12.60URI'),'\", \"C:\\Comcast\\Install-MFLRAnalysis12.60.zip\")')]",
         "MFLRVUGen12.60CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUGen12.60URI'),'\", \"C:\\Comcast\\Install-MFLRVUGen12.60.zip\")')]",
-        "MFLRVUG_00264CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUG_00264URI'),'\", \"C:\\Comcast\\Install-MFLRVUG_00264.zip\")')]"
+        "MFLRVUG_00264CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUG_00264URI'),'\", \"C:\\Comcast\\Install-MFLRVUG_00264.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\aibDeveloper.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
     "resources": [
