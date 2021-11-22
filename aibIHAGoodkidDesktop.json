@@ -5,6 +5,9 @@
         "imageTemplateName": {
             "type": "string"
         },
+        "InstalledApplicationsURI": {
+            "type": "string"
+        },
         "api-version": {
             "type": "string"
         },
@@ -37,7 +40,7 @@
     "variables": {
         "AdobeCreativeCloudCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AdobeCreativeCloudURI'),'\", \"C:\\Comcast\\Install-AdobeCreativeCloud.zip\")')]",
         "IBMAsperaConnectCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('IBMAsperaConnectURI'),'\", \"C:\\Comcast\\Install-IBMAsperaConnect.zip\")')]"
-
+        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\aibIHAGoodkidDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 
 
@@ -96,6 +99,13 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-IBMAsperaConnect.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "CollectInstalledApps",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["Get-ItemProperty HKLM:\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*,HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate -Unique | Where-Object {$_.DisplayName -ne \"\"} | Sort-Object -Property DisplayName | Export-CSV C:\\Comcast\\aibIHAGoodkidDesktop.csv -NoTypeInformation","choco install azcopy10 -y --no-progress","[variables('InstalledApplicationsAzcopy')]"]           
                     },
                     {
                         "type": "WindowsRestart",

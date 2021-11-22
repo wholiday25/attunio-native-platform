@@ -35,6 +35,9 @@
         "SupportNowLogmeInURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-SupportNowLogmeIn.zip?sp=rl&st=2021-06-14T18:50:00Z&se=2031-11-15T18:50:00Z&sv=2020-02-10&sr=b&sig=%2FSaJOjH5wbSCbslI4EjUUq1EAH7yNHn%2FYTnAMEE8B0s%3D"
         },
+        "InstalledApplicationsURI": {
+            "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2021-11-19T19:29:52Z&se=2022-11-20T03:29:52Z&spr=https&sv=2020-08-04&sr=c&sig=zDeYCTSKX45iqatZXFTPEu3Xrv%2Ft38nNxAB4hSScT90%3D"
+        },
         "imageVersionID": {
             "value": "[IMAGEID]"
         }

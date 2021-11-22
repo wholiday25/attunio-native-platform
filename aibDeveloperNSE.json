@@ -5,6 +5,9 @@
         "imageTemplateName": {
             "type": "string"
         },
+        "InstalledApplicationsURI": {
+            "type": "string"
+        },
         "api-version": {
             "type": "string"
         },
@@ -38,7 +41,7 @@
 
         "AccessDatabaseEngineCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AccessDatabaseEngineURI'),'\", \"C:\\Comcast\\AccessDatabaseEngine.exe\")')]",
         "Ginger.3.8.0.0_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Ginger.3.8.0.0_URI'),'\", \"C:\\Comcast\\Ginger.3.8.0.0.exe\")')]"
-
+        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\aibDeveloperNSE.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 
 
@@ -319,6 +322,13 @@
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-WireShark.ps1",
                         "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "CollectInstalledApps",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["Get-ItemProperty HKLM:\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*,HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate -Unique | Where-Object {$_.DisplayName -ne \"\"} | Sort-Object -Property DisplayName | Export-CSV C:\\Comcast\\aibDeveloperNSE.csv -NoTypeInformation","choco install azcopy10 -y --no-progress","[variables('InstalledApplicationsAzcopy')]"]           
                     },
                     {
                         "type": "WindowsRestart",

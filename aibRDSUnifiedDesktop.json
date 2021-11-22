@@ -5,6 +5,9 @@
         "imageTemplateName": {
             "type": "string"
         },
+        "InstalledApplicationsURI": {
+            "type": "string"
+        },
         "api-version": {
             "type": "string"
         },
@@ -49,6 +52,7 @@
         "RSASecurIDTokenDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('RSASecurIDTokenInstallerURI'),'\", \"C:\\Comcast\\Install-RSASecurIDToken.zip\")')]",
         "SAPGUIDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPGUIInstallerURI'),'\", \"C:\\Comcast\\Install-SAPGUI.zip\")')]",
         "SupportNowLogmeInCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowLogmeInURI'),'\", \"C:\\Comcast\\Install-SupportNowLogmeIn.zip\")')]"
+        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\aibRDSUnifiedDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 
 
@@ -200,6 +204,13 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SAPGUI.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "CollectInstalledApps",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["Get-ItemProperty HKLM:\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*,HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate -Unique | Where-Object {$_.DisplayName -ne \"\"} | Sort-Object -Property DisplayName | Export-CSV C:\\Comcast\\aibRDSUnifiedDesktop.csv -NoTypeInformation","choco install azcopy10 -y --no-progress","[variables('InstalledApplicationsAzcopy')]"]           
                     },
                     {
                         "type": "WindowsRestart",
