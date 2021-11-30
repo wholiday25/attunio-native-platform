@@ -1,0 +1,145 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "imageTemplateName": {
+            "type": "string"
+        },
+        "InstalledApplicationsURI": {
+            "type": "string"
+        },
+        "api-version": {
+            "type": "string"
+        },
+        "svclocation": {
+            "type": "string"
+        },
+        "ManagedIdentityID": {
+            "type": "string"
+        },
+        "SharedImageGalleryID": {
+            "type": "string"
+        },
+        "SubnetID": {
+            "type": "string"
+        },
+        "CrowdStrikeInstallerURI": {
+            "type": "string"
+        }
+    },
+
+    "variables": {
+"CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-WVD.zip\")')]"
+    },
+
+
+    "resources": [
+        {
+            "name": "[parameters('imageTemplateName')]",
+            "type": "Microsoft.VirtualMachineImages/imageTemplates",
+            "apiVersion": "[parameters('api-version')]",
+            "location": "[parameters('svclocation')]",
+            "dependsOn": [],
+            "tags": {
+                "userIdentity": "enabled"
+            },
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[parameters('ManagedIdentityID')]": {}
+                }
+            },
+
+            "properties": {
+                "buildTimeoutInMinutes": 240,
+
+                "vmProfile": {
+                    "vmSize": "Standard_D4s_v4",
+                    "osDiskSizeGB": 128,
+                    "vnetConfig": {
+                        "subnetId": "[parameters('SubnetID')]"
+                    }
+                },
+                "source": {
+                    "type": "PlatformImage",
+                    "publisher": "MicrosoftWindowsDesktop",
+                    "offer": "office-365",
+                    "sku": "21h1-evd-o365pp",
+                    "version": "latest"
+                },
+
+                "customize": [
+                    {
+                        "type": "PowerShell",
+                        "name": "Create workd",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["New-Item -ItemType Directory -Force -Path C:\\Comcast\\"]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "OptimizeOS",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Optimize-AVDv2.ps1",
+                        "validExitCodes": [0,16001]
+                    },
+                    {
+
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "Write-Output 'restarting post Optimizations'",
+                        "restartTimeout": "5m"
+                    },
+                    {
+
+                        "type": "File",
+                        "name": "Download BGInfo",
+                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/BGInfo.zip",
+                        "destination": "C:\\Comcast\\BGInfo.zip"                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Configure BGInfo",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-BGInfo.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download Crowdstrike",
+                        "inline": ["[variables('CrowdStrikeDownloadCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Crowdstrike",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CrowdStrike.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Pause to fix SysPrep",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["Start-Sleep -Seconds 300"]
+                    }
+
+                ],
+                "distribute": [
+                    {
+                        "type": "SharedImage",
+                        "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
+                        "runOutputName": "sigOutput",
+                        "artifactTags": {
+                            "source": "wvd10-o365pp",
+                            "baseosimg": "windows10-office365pp"
+                        },
+                        "replicationRegions": [
+                            "eastus"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
