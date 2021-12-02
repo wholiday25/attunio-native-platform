@@ -30,7 +30,7 @@
 
     "variables": {
 "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-WVD.zip\")')]",
-"SecureCRTDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\Install-SecureCRT.zip\")')]"
+"SecureCRTDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SecureCRTInstallerURI'),'\", \"C:\\Comcast\\Install-SecureCRT.zip\")')]"
     },
 
 
