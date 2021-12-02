@@ -5,9 +5,6 @@
         "imageTemplateName": {
             "type": "string"
         },
-        "InstalledApplicationsURI": {
-            "type": "string"
-        },
         "api-version": {
             "type": "string"
         },
@@ -25,11 +22,15 @@
         },
         "CrowdStrikeInstallerURI": {
             "type": "string"
+        },
+        "SecureCRTInstallerURI": {
+            "type": "string"
         }
     },
 
     "variables": {
-"CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-WVD.zip\")')]"
+"CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-WVD.zip\")')]",
+"SecureCRTDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\Install-SecureCRT.zip\")')]"
     },
 
 
@@ -115,6 +116,18 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CrowdStrike.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download SecureCRT",
+                        "inline": ["[variables('SecureCRTDownloadCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install SecureCRT",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SecureCRT.ps1"
                     },
                     {
                         "type": "PowerShell",
