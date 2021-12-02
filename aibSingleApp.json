@@ -119,6 +119,18 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download SecureCRT",
+                        "inline": ["[variables('SecureCRTDownloadCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install SecureCRT",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SecureCRT.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Pause to fix SysPrep",
                         "runElevated": true,
                         "runAsSystem": true,
