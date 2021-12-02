@@ -52,6 +52,7 @@
         "RSASecurIDTokenDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('RSASecurIDTokenInstallerURI'),'\", \"C:\\Comcast\\Install-RSASecurIDToken.zip\")')]",
         "SAPGUIDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPGUIInstallerURI'),'\", \"C:\\Comcast\\Install-SAPGUI.zip\")')]",
         "SupportNowLogmeInCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowLogmeInURI'),'\", \"C:\\Comcast\\Install-SupportNowLogmeIn.zip\")')]",
+        "SecureCRTDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SecureCRTInstallerURI'),'\", \"C:\\Comcast\\Install-SecureCRT.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\aibRDSUnifiedDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 
@@ -113,6 +114,18 @@
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Putty.ps1",
                         "validExitCodes": [0,3010]
                     }, 
+                    {
+                        "type": "PowerShell",
+                        "name": "Download SecureCRT",
+                        "inline": ["[variables('SecureCRTDownloadCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install SecureCRT",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SecureCRT.ps1"
+                    },
                     {
                         "type": "PowerShell",
                         "name": "Install SOAP UI",
