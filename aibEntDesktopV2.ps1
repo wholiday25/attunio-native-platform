@@ -16,7 +16,7 @@ try {
     if ($acquiresku2 -eq "") {
         $acquiresku2 = "10windows" + $ImageTemplateName
     }
-    New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'MicrosoftWindowsDesktop' -Offer 'Windows-10' -Sku '21h1-evd-o365pp-g2' -HyperVGeneration "V2"
+    New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'MicrosoftWindowsDesktop' -Offer 'Windows-10' -Sku 'win10-21h2-ent-g2' -HyperVGeneration "V2"
 
 }
 catch {
