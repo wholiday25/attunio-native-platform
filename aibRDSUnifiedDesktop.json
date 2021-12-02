@@ -38,6 +38,9 @@
         "SupportNowLogmeInURI": {
             "type": "string"
         },
+        "SecureCRTInstallerURI": {
+            "type": "string"
+        },
         "RSASecurIDTokenInstallerURI": {
             "type": "string"
         },
