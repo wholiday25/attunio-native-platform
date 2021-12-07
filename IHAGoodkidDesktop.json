@@ -1,0 +1,140 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "imageTemplateName": {
+            "type": "string"
+        },
+        "InstalledApplicationsURI": {
+            "type": "string"
+        },
+        "api-version": {
+            "type": "string"
+        },
+        "svclocation": {
+            "type": "string"
+        },
+        "ManagedIdentityID": {
+            "type": "string"
+        },
+        "SharedImageGalleryID": {
+            "type": "string"
+        },
+        "SubnetID": {
+            "type": "string"
+        },
+        "imageVersionID": {
+            "type": "string",
+            "metadata": {
+                "description": "URL for Shared Image Gallery for Enterprise Desktop"
+            }
+        },
+        "AdobeCreativeCloudURI": {
+            "type": "string"
+        },
+        "IBMAsperaConnectURI": {
+            "type": "string"
+        }
+    },
+
+    "variables": {
+        "AdobeCreativeCloudCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AdobeCreativeCloudURI'),'\", \"C:\\Comcast\\Install-AdobeCreativeCloud.zip\")')]",
+        "IBMAsperaConnectCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('IBMAsperaConnectURI'),'\", \"C:\\Comcast\\Install-IBMAsperaConnect.zip\")')]",
+        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\IHAGoodkidDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
+    },
+
+
+    "resources": [
+        {
+            "name": "[parameters('imageTemplateName')]",
+            "type": "Microsoft.VirtualMachineImages/imageTemplates",
+            "apiVersion": "[parameters('api-version')]",
+            "location": "[parameters('svclocation')]",
+            "dependsOn": [],
+            "tags": {
+                "userIdentity": "enabled"
+            },
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[parameters('ManagedIdentityID')]": {}
+                }
+            },
+
+            "properties": {
+                "buildTimeoutInMinutes": 240,
+
+                "vmProfile": {
+                    "vmSize": "Standard_D4s_v4",
+                    "osDiskSizeGB": 128,
+                    "vnetConfig": {
+                        "subnetId": "[parameters('SubnetID')]"
+                    }
+                },
+                "source": {
+                    "type": "SharedImageVersion",
+                    "imageVersionID": "[parameters('imageVersionID')]"
+                },
+
+                "customize": [
+                    {
+                        "type": "PowerShell",
+                        "name": "Download AdobeCreativeCloudCMD",
+                        "inline": ["[variables('AdobeCreativeCloudCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download IBMAsperaConnectCMD",
+                        "inline": ["[variables('IBMAsperaConnectCMD')]"]           
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install AdobeCreativeCloud",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AdobeCreativeCloud.ps1"
+                    },                    {
+                        "type": "PowerShell",
+                        "name": "Install IBMAsperaConnect",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-IBMAsperaConnect.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "CollectInstalledApps",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["Get-ItemProperty HKLM:\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*,HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate -Unique | Where-Object {$_.DisplayName -ne \"\"} | Sort-Object -Property DisplayName | Export-CSV C:\\Comcast\\IHAGoodkidDesktop.csv -NoTypeInformation","choco install azcopy10 -y --no-progress","[variables('InstalledApplicationsAzcopy')]"]           
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "Write-Output 'restarting post SupportNow Installation'",
+                        "restartTimeout": "10m"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Pause to fix SysPrep",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["Start-Sleep -Seconds 300"]
+                    }
+                ],
+                "distribute": [
+                    {
+                        "type": "SharedImage",
+                        "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
+                        "runOutputName": "sigOutput",
+                        "artifactTags": {
+                            "source": "win10-21h2-avd-m365-g2",
+                            "baseosimg": "win10-21h2-avd-m365-g2"
+                        },
+                        "replicationRegions": [
+                            "eastus"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}

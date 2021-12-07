@@ -1,0 +1,45 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "imageTemplateName": {
+            "value": "RDSUnifiedDesktop"
+        },
+        "api-version": {
+            "value": "2020-02-14"
+        },
+        "svclocation": {
+            "value": "eastus"
+        },
+        "ManagedIdentityID": {
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourcegroups/AzureImageBuilder-Dev/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aibIdentityDev"
+        },
+        "SharedImageGalleryID": {
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV"
+        },
+        "SubnetID": {
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/aib"
+        },
+        "MetasolvInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-MetasolvProd09172021.zip?sp=rl&st=2021-09-16T17:52:57Z&se=2031-11-17T17:52:00Z&sv=2020-08-04&sr=b&sig=fAG6QJW1AAQTx40TtmCotHSTEPXc2tI%2BCS8oV7taJvQ%3D"
+        },
+        "MetasolvDEVInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-MetasolvDEV.zip?sp=rl&st=2021-08-17T15:08:37Z&se=2031-11-18T15:08:00Z&sv=2020-08-04&sr=b&sig=2UkThRsI4AmT5pb%2BEeMSOCo9i7Oa7DMhh8b0UHxHzj4%3D"
+        },
+        "RSASecurIDTokenInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-RSASecurIDToken.zip?sp=rl&st=2021-08-10T18:47:38Z&se=2031-11-11T18:47:00Z&sv=2020-08-04&sr=b&sig=OtdouhJ2ANt3xP1rVu42Bcz3V%2BOWxlVqFYkRJ9TGabQ%3D"
+        },
+        "SAPGUIInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-SAPGUI.zip?sp=rl&st=2021-08-11T19:14:50Z&se=2031-11-12T19:14:00Z&sv=2020-08-04&sr=b&sig=ANo8%2BqcVdHO8bSXicJeto1bbQzxngSwAgw9vctvMcfE%3D"
+        },
+        "SupportNowLogmeInURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-SupportNowLogmeIn.zip?sp=rl&st=2021-06-14T18:50:00Z&se=2031-11-15T18:50:00Z&sv=2020-02-10&sr=b&sig=%2FSaJOjH5wbSCbslI4EjUUq1EAH7yNHn%2FYTnAMEE8B0s%3D"
+        },
+        "InstalledApplicationsURI": {
+            "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2021-11-19T19:29:52Z&se=2022-11-20T03:29:52Z&spr=https&sv=2020-08-04&sr=c&sig=zDeYCTSKX45iqatZXFTPEu3Xrv%2Ft38nNxAB4hSScT90%3D"
+        },
+        "imageVersionID": {
+            "value": "[IMAGEID]"
+        }
+    }
+}

@@ -1,0 +1,245 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "imageTemplateName": {
+            "type": "string"
+        },
+        "InstalledApplicationsURI": {
+            "type": "string"
+        },
+        "api-version": {
+            "type": "string"
+        },
+        "svclocation": {
+            "type": "string"
+        },
+        "ManagedIdentityID": {
+            "type": "string"
+        },
+        "SharedImageGalleryID": {
+            "type": "string"
+        },
+        "SubnetID": {
+            "type": "string"
+        },
+        "imageVersionID": {
+            "type": "string",
+            "metadata": {
+                "description": "URL for Shared Image Gallery for Enterprise Desktop"
+            }
+        },
+        "MetasolvInstallerURI": {
+            "type": "string"
+        },
+        "MetasolvDEVInstallerURI": {
+            "type": "string"
+        },
+        "SupportNowLogmeInURI": {
+            "type": "string"
+        },
+        "RSASecurIDTokenInstallerURI": {
+            "type": "string"
+        },
+        "SAPGUIInstallerURI": {
+            "type": "string"
+        }
+    },
+
+    "variables": {
+        "MetaSolvDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetaSolvInstallerURI'),'\", \"C:\\Comcast\\Install-MetasolvProd09172021.zip\")')]",
+        "MetaSolvDEVDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetasolvDEVInstallerURI'),'\", \"C:\\Comcast\\Install-MetaSolvDEV.zip\")')]",
+        "RSASecurIDTokenDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('RSASecurIDTokenInstallerURI'),'\", \"C:\\Comcast\\Install-RSASecurIDToken.zip\")')]",
+        "SAPGUIDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPGUIInstallerURI'),'\", \"C:\\Comcast\\Install-SAPGUI.zip\")')]",
+        "SupportNowLogmeInCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowLogmeInURI'),'\", \"C:\\Comcast\\Install-SupportNowLogmeIn.zip\")')]",
+        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\RDSUnifiedDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
+    },
+
+
+    "resources": [
+        {
+            "name": "[parameters('imageTemplateName')]",
+            "type": "Microsoft.VirtualMachineImages/imageTemplates",
+            "apiVersion": "[parameters('api-version')]",
+            "location": "[parameters('svclocation')]",
+            "dependsOn": [],
+            "tags": {
+                "userIdentity": "enabled"
+            },
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[parameters('ManagedIdentityID')]": {}
+                }
+            },
+
+            "properties": {
+                "buildTimeoutInMinutes": 120,
+
+                "vmProfile": {
+                    "vmSize": "Standard_D4s_v5",
+                    "osDiskSizeGB": 128,
+                    "vnetConfig": {
+                        "subnetId": "[parameters('SubnetID')]"
+                    }
+                },
+                "source": {
+                    "type": "SharedImageVersion",
+                    "imageVersionID": "[parameters('imageVersionID')]"
+                },
+
+                "customize": [
+                    {
+                        "type": "PowerShell",
+                        "name": "Install NotepadPP",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-NotepadPP.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                   {
+                        "type": "PowerShell",
+                        "name": "Install FireFox",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-FireFox.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Putty",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Putty.ps1",
+                        "validExitCodes": [0,3010]
+                    }, 
+                    {
+                        "type": "PowerShell",
+                        "name": "Install SOAP UI",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SOAPUI.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                     {
+                        "type": "PowerShell",
+                        "name": "Install SQL Management Studio",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SQLManagementStudio.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download SupportNowLogmeInCMD",
+                        "inline": ["[variables('SupportNowLogmeInCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install SupportNowLogMeIn",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowLogmeIn.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install UltraVNC",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-UltraVNC.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install WinSCP",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-WinSCP.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download MetaSolvDownloadCMD",
+                        "inline": ["[variables('MetaSolvDownloadCMD')]"]               
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download MetaSolvDEVDownloadCMD",
+                        "inline": ["[variables('MetaSolvDEVDownloadCMD')]"]               
+                    }
+                    ,{
+                        "type": "PowerShell",
+                        "name": "Install MetasolvDEV",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Metasolv-Dev.ps1"
+                    },
+                              {
+                        "type": "PowerShell",
+                        "name": "Install Metasolv",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MetasolvProd09172021.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download RSASecurIDTokenCMD",
+                        "inline": ["[variables('RSASecurIDTokenDownloadCMD')]"]               
+                    },
+                              {
+                        "type": "PowerShell",
+                        "name": "Install RSASecurIDToken",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-RSASecurIDToken.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download SAPGUIDownloadCMD",
+                        "inline": ["[variables('SAPGUIDownloadCMD')]"]               
+                    },
+                              {
+                        "type": "PowerShell",
+                        "name": "Install SAPGUI",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SAPGUI.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "CollectInstalledApps",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["Get-ItemProperty HKLM:\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*,HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate -Unique | Where-Object {$_.DisplayName -ne \"\"} | Sort-Object -Property DisplayName | Export-CSV C:\\Comcast\\RDSUnifiedDesktop.csv -NoTypeInformation","choco install azcopy10 -y --no-progress","[variables('InstalledApplicationsAzcopy')]"]           
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "Write-Output 'restarting post Developer apps installation'",
+                        "restartTimeout": "10m"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Pause to fix SysPrep",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["Start-Sleep -Seconds 300"]
+                    }                 
+                ],
+                "distribute": [
+                    {
+                        "type": "SharedImage",
+                        "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
+                        "runOutputName": "sigOutput",
+                        "artifactTags": {
+                            "source": "win10-21h2-avd-m365-g2",
+                            "baseosimg": "win10-21h2-avd-m365-g2"
+                        },
+                        "replicationRegions": [
+                            "eastus"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}

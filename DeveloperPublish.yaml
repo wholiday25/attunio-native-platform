@@ -1,0 +1,33 @@
+# Publish AzureImageBuilder Pipeline images from DEV to PROD
+
+
+trigger: none
+pr: none
+# PowerShell
+# Run a PowerShell script on Linux, macOS, or Windows
+jobs:
+- job: AIB Publish from Developer to Production
+  pool:
+    name: aib-ap
+  timeoutInMinutes: 360
+  cancelTimeoutInMinutes: 10
+  steps:
+    - task: AzureFileCopy@4
+      inputs:
+        AdditionalArgumentsForBlobCopy: '--overwrite=true'
+        SourcePath: 'scripts/*'
+        TargetPath: ''
+        azureSubscription: 'WVD-Dev'
+        Destination: 'AzureBlob'
+        storage: 'aibdev'
+        ContainerName: 'scripts'
+    - task: AzurePowerShell@5
+      displayName: 'Clone Azure Image Builder developer to production'
+      inputs:
+        azureSubscription: 'WVD-Dev' #This is the devops service connection name
+        ErrorActionPreference: 'Stop'
+        FailOnStandardError: true
+        ScriptType: 'FilePath'
+        ScriptPath: './DeveloperPublish.ps1'
+        azurePowerShellVersion: 'LatestVersion'
+
