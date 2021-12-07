@@ -3,7 +3,7 @@
 #Then Cycle through all builds
 #be sure all .parameters files have [IMAGEID] to support the script function
 
-#.\EntDesktop.ps1
+.\EntDesktop.ps1
 $ImageResourceGroup = "AzureImageBuilder-DEV"
 $galleryName = "WVD_DEV"
 $sharedimagegallery = "WVD_DEV"
@@ -13,7 +13,7 @@ $parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegal
 $hash = @{ imageVersionID = $parentversionid }
 
 
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'EntDesktop*','*publish*', 'entdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aib*', 'EntDesktop*','*publish*', 'entdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageTemplateFileName = $imageTemplateName + ".json"
     $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json" 
@@ -32,7 +32,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
             $acquiresku2 = "10windows" + $ImageTemplateName 
             Write-Output $acquiresku2
         }
-        New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'Comcast' -Offer 'Windows' -Sku $acquiresku2
+        New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'Comcast' -Offer 'Windows' -Sku $acquiresku2 -HyperVGeneration "V2"
         Write-Output "Current AIB Template $aibtemplate"
         Write-Output "SharedImageGallery $sharedimagegallery"
         Write-Output "ResourceGroupName $sharedimagegalleryRSG"
@@ -67,7 +67,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
     
 }
 
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'EntDesktop*','entdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json', '*.yaml') {
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aib*', 'EntDesktop*','entdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json', '*.yaml') {
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageTemplateFileName = $imageTemplateName + ".json"
     $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json" 
