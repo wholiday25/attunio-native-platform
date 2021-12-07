@@ -1,5 +1,5 @@
 $ImageResourceGroup = "AzureImageBuilder-DEV"
-$ImageTemplateName = "aibIHAGoodkidDesktop"
+$ImageTemplateName = "IHAGoodkidDesktop"
 $imageTemplateFileName = $imageTemplateName + ".json"
 $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json"
 $sharedimagegallery = "WVD_DEV"
@@ -18,7 +18,9 @@ try {
     if ($acquiresku2 -eq "") {
         $acquiresku2 = "10windows" + $ImageTemplateName
     }
-    New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'Comcast' -Offer 'Windows' -Sku $acquiresku2 -HyperVGeneration "V2"
+    New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'Comcast' -Offer 'Windows' -Sku $acquiresku2 -HyperVGeneration "V2"S
+
+}
 catch {
     $ErrorMessage = $_.Exception.Message
     Write-Output "Exception: $ErrorMessage"
