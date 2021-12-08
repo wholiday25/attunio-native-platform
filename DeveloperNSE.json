@@ -350,8 +350,8 @@
                         "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
                         "runOutputName": "sigOutput",
                         "artifactTags": {
-                            "source": "win11-21h2-avd-m365",
-                            "baseosimg": "win11-21h2-avd-m365p"
+                            "source": "win10-21h2-avd-m365",
+                            "baseosimg": "win10-21h2-avd-m365p"
                         },
                         "replicationRegions": [
                             "eastus"

@@ -16,7 +16,7 @@ try {
     if ($acquiresku2 -eq "") {
         $acquiresku2 = "10windows" + $ImageTemplateName
     }
-    New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'Comcast' -Offer 'Windows' -Sku $acquiresku2 -HyperVGeneration "V2"
+    New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'MicrosoftWindowsDesktop' -Offer 'office-365' -Sku 'win10-21h2-avd-m365-g2' -HyperVGeneration "V2"
 
 }
 catch {
@@ -34,13 +34,13 @@ catch {
     Write-Output "Exception: $ErrorMessage" 
 }
 Write-Output "Creating New AzureImageBuilder Template Image Deployment for $imagetemplatefilename"
-New-AzResourceGroupDeployment -ResourceGroupName $imageResourceGroup -TemplateFile $imagetemplateFileName -TemplateParameterFile $imageTemplateFileNameParameters -Mode Incremental -debug -whatif
+New-AzResourceGroupDeployment -ResourceGroupName $imageResourceGroup -TemplateFile $imagetemplateFileName -TemplateParameterFile $imageTemplateFileNameParameters -Mode Incremental
 Write-Output "Starting Azure ImageBuilder Build for $imageTemplateName"
-Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName -whatif
+Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName
 
 
 $gallery = Get-AzGallery -Name $galleryName
-$versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupName -GalleryName $gallery.Name -GalleryImageDefinitionName $imageTemplateName -whatif
+$versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupName -GalleryName $gallery.Name -GalleryImageDefinitionName $imageTemplateName
 $oldestVersion = $versions | Sort-Object -Property Name | Select-Object -First 1
 if ($versions.count -gt 1) {
     "Found oldest version $($oldestVersion.Name)...Deleting..."
