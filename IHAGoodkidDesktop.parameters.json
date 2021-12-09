@@ -30,7 +30,7 @@
             "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2021-11-19T19:29:52Z&se=2022-11-20T03:29:52Z&spr=https&sv=2020-08-04&sr=c&sig=zDeYCTSKX45iqatZXFTPEu3Xrv%2Ft38nNxAB4hSScT90%3D"
         },
         "imageVersionID": {
-        "value": ""
+        "value": "[IMAGEID]"
         }
     }
 }
