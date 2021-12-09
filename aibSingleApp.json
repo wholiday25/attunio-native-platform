@@ -23,14 +23,14 @@
         "CrowdStrikeInstallerURI": {
             "type": "string"
         },
-        "SecureCRTInstallerURI": {
+        "UC4UserInterfaceInstallerURI": {
             "type": "string"
         }
     },
 
     "variables": {
 "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-WVD.zip\")')]",
-"SecureCRTDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SecureCRTInstallerURI'),'\", \"C:\\Comcast\\Install-SecureCRT.zip\")')]"
+"UC4UserInterfaceDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('UC4UserInterfaceInstallerURI'),'\", \"C:\\Comcast\\Install-UC4UserInterface.zip\")')]"
     },
 
 
@@ -119,15 +119,22 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Download SecureCRT",
-                        "inline": ["[variables('SecureCRTDownloadCMD')]"]                    
+                        "name": "Install Java x86",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86.ps1"
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install SecureCRT",
+                        "name": "Download UC4UserInterface",
+                        "inline": ["[variables('UC4UserInterfaceDownloadCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install UC4UserInterface",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SecureCRT.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-UC4UserInterface.ps1"
                     },
                     {
                         "type": "PowerShell",
