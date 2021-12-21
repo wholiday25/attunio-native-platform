@@ -13,7 +13,7 @@ $parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegal
 $hash = @{ imageVersionID = $parentversionid }
 
 
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aib*', 'EntDesktop*','*publish*', 'entdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aib*', 'SingleApp*','EntDesktop*','*publish*', 'entdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageTemplateFileName = $imageTemplateName + ".json"
     $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json" 
@@ -84,7 +84,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
     $gallery = Get-AzGallery -Name $galleryName
     $versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupName -GalleryName $gallery.Name -GalleryImageDefinitionName $imageTemplateName
     $oldestVersion = $versions | Sort-Object -Property Name | Select-Object -First 1
-    if ($versions.count -gt 1) {
+    if ($versions.count -gt 3) {
         "Found oldest version $($oldestVersion.Name)...Deleting..."
         $oldestVersion | Remove-AzGalleryImageVersion -Force
     
