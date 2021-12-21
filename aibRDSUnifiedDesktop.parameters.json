@@ -32,6 +32,15 @@
         "SAPGUIInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-SAPGUI.zip?sp=rl&st=2021-08-11T19:14:50Z&se=2031-11-12T19:14:00Z&sv=2020-08-04&sr=b&sig=ANo8%2BqcVdHO8bSXicJeto1bbQzxngSwAgw9vctvMcfE%3D"
         },
+        "SupportNowLogmeInURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-SupportNowLogmeIn.zip?sp=rl&st=2021-06-14T18:50:00Z&se=2031-11-15T18:50:00Z&sv=2020-02-10&sr=b&sig=%2FSaJOjH5wbSCbslI4EjUUq1EAH7yNHn%2FYTnAMEE8B0s%3D"
+        },
+        "SecureCRTInstallerURI": {
+               "value": "https://aibdev.blob.core.windows.net/installers/Install-SecureCRT.zip?sp=r&st=2021-12-01T20:00:15Z&se=2031-12-02T04:00:15Z&spr=https&sv=2020-08-04&sr=b&sig=hl5D5KJQnW7IhuFbh9ldhJouEKWfZUojPo%2BMGUSsZGY%3D"
+        },
+        "InstalledApplicationsURI": {
+            "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2021-11-19T19:29:52Z&se=2022-11-20T03:29:52Z&spr=https&sv=2020-08-04&sr=c&sig=zDeYCTSKX45iqatZXFTPEu3Xrv%2Ft38nNxAB4hSScT90%3D"
+        },
         "imageVersionID": {
             "value": "[IMAGEID]"
         }

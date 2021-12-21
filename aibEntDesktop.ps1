@@ -31,7 +31,7 @@ try {
 }
 catch {
     $ErrorMessage = $_.Exception.Message
-    Write-OUtput "Exception: $ErrorMessage" 
+    Write-Output "Exception: $ErrorMessage" 
 }
 Write-Output "Creating New AzureImageBuilder Template Image Deployment for $imagetemplatefilename"
 New-AzResourceGroupDeployment -ResourceGroupName $imageResourceGroup -TemplateFile $imagetemplateFileName -TemplateParameterFile $imageTemplateFileNameParameters -Mode Incremental
@@ -42,7 +42,9 @@ Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $image
 $gallery = Get-AzGallery -Name $galleryName
 $versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupName -GalleryName $gallery.Name -GalleryImageDefinitionName $imageTemplateName
 $oldestVersion = $versions | Sort-Object -Property Name | Select-Object -First 1
-"Found oldest version $($oldestVersion.Name)...Deleting..."
-$oldestVersion | Remove-AzGalleryImageVersion -Force
+if ($versions.count -gt 3) {
+    "Found oldest version $($oldestVersion.Name)...Deleting..."
+    $oldestVersion | Remove-AzGalleryImageVersion -Force
 
+}
 

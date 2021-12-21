@@ -7,7 +7,6 @@ $sharedimagegalleryRSG = "Nerdio-Dev"
 $location = "eastus"
 $parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName "AibEntDesktop").Id | Sort-Object -Descending | select-object -First 1
 $hash = @{ imageVersionID = $parentversionid }
-
 #be sure to modify parameters file to include [IMAGEID] under image for source location. this script rewrites the file.
 (Get-Content $imageTemplateFileNameParameters).replace('[IMAGEID]', $parentversionid) | Set-Content $imageTemplateFileNameParameters
 
@@ -33,11 +32,21 @@ try {
 }
 catch {
     $ErrorMessage = $_.Exception.Message
-    Write-OUtput "Exception: $ErrorMessage" 
+    Write-Output "Exception: $ErrorMessage" 
 }
 Write-Output "Creating New AzureImageBuilder Template Image Deployment for $imagetemplatefilename"
 New-AzResourceGroupDeployment -ResourceGroupName $imageResourceGroup -TemplateFile $imagetemplateFileName -TemplateParameterFile $imageTemplateFileNameParameters -Mode Incremental
 Write-Output "Starting Azure ImageBuilder Build for $imageTemplateName"
-Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName -NoWait
+Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName
 (Get-Content $imageTemplateFileNameParameters).replace($parentversionid, '[IMAGEID]') | Set-Content $imageTemplateFileNameParameters
 
+
+
+$gallery = Get-AzGallery -Name $galleryName
+$versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupName -GalleryName $gallery.Name -GalleryImageDefinitionName $imageTemplateName
+$oldestVersion = $versions | Sort-Object -Property Name | Select-Object -First 1
+if ($versions.count -gt 3) {
+    "Found oldest version $($oldestVersion.Name)...Deleting..."
+    $oldestVersion | Remove-AzGalleryImageVersion -Force
+
+}

@@ -13,7 +13,7 @@ $parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegal
 $hash = @{ imageVersionID = $parentversionid }
 
 
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aibentdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aibEntDesktopV2*','*publish*', 'aibentdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageTemplateFileName = $imageTemplateName + ".json"
     $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json" 
@@ -33,6 +33,12 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
             Write-Output $acquiresku2
         }
         New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'Comcast' -Offer 'Windows' -Sku $acquiresku2
+        Write-Output "Current AIB Template $aibtemplate"
+        Write-Output "SharedImageGallery $sharedimagegallery"
+        Write-Output "ResourceGroupName $sharedimagegalleryRSG"
+        Write-Output "Location $location"
+        Write-Output "ImageTemplateName $imageTemplateName"
+        Write-Output "Sku $acquiresku2"
 
     }
     catch {
@@ -41,7 +47,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
     }
 
     try {
-        WRITE-OUTPUT "Removing existing AIB Template $imageTemplateName"
+        Write-Output "Removing existing AIB Template $imageTemplateName"
         Remove-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName
 
     }
@@ -61,19 +67,27 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
     
 }
 
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aibentdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aibEntDesktopV2*','aibentdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json', '*.yaml') {
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageTemplateFileName = $imageTemplateName + ".json"
     $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json" 
     $getStatus = $(Get-AzImageBuilderTemplate -ResourceGroupName $ImageResourceGroup -Name $imageTemplateName).LastRunStatusRunState
+    Write-Output "AIB Template $aibtemplate"
+    Write-Output "GetImageStatus $getStatus"
+  
     while (($getStatus -ne "Failed") -and ($getstatus -ne "Succeeded")) {
         Start-Sleep -Seconds 30
         $getStatus = $(Get-AzImageBuilderTemplate -ResourceGroupName $ImageResourceGroup -Name $imageTemplateName).LastRunStatusRunState
     }
     #be sure to modify parameters file to include [IMAGEID] under image for source location. this script rewrites the file.
+
     $gallery = Get-AzGallery -Name $galleryName
     $versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupName -GalleryName $gallery.Name -GalleryImageDefinitionName $imageTemplateName
     $oldestVersion = $versions | Sort-Object -Property Name | Select-Object -First 1
-    "Found oldest version $($oldestVersion.Name)...Deleting..."
-    $oldestVersion | Remove-AzGalleryImageVersion -Force
+    if ($versions.count -gt 3) {
+        "Found oldest version $($oldestVersion.Name)...Deleting..."
+        $oldestVersion | Remove-AzGalleryImageVersion -Force
+    
+    }
+    
 }

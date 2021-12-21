@@ -5,6 +5,9 @@
         "imageTemplateName": {
             "type": "string"
         },
+        "InstalledApplicationsURI": {
+            "type": "string"
+        },
         "api-version": {
             "type": "string"
         },
@@ -34,9 +37,8 @@
     "variables": {
 "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-WVD.zip\")')]",
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
-        "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]"
-
-
+        "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
+        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\aibEntDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 
 
@@ -94,7 +96,7 @@
                     {
 
                         "type": "WindowsRestart",
-                        "restartCheckCommand": "write-output 'restarting post Optimizations'",
+                        "restartCheckCommand": "Write-Output 'restarting post Optimizations'",
                         "restartTimeout": "5m"
                     },
                     {
@@ -215,7 +217,7 @@
                     },
                     {
                         "type": "WindowsRestart",
-                        "restartCheckCommand": "write-output 'restarting post JREx86 Install'",
+                        "restartCheckCommand": "Write-Output 'restarting post JREx86 Install'",
                         "restartTimeout": "10m"
                     },
                     {
@@ -226,8 +228,15 @@
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64.ps1"
                     },
                     {
+                        "type": "PowerShell",
+                        "name": "CollectInstalledApps",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["Get-ItemProperty HKLM:\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*,HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate -Unique | Where-Object {$_.DisplayName -ne \"\"} | Sort-Object -Property DisplayName | Export-CSV C:\\Comcast\\aibEntDesktop.csv -NoTypeInformation","choco install azcopy10 -y --no-progress","[variables('InstalledApplicationsAzcopy')]"]           
+                    },
+                    {
                         "type": "WindowsRestart",
-                        "restartCheckCommand": "write-output 'restarting post JREx64 Install'",
+                        "restartCheckCommand": "Write-Output 'restarting post JREx64 Install'",
                         "restartTimeout": "10m"
                     },
                     {
