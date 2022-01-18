@@ -214,7 +214,7 @@
                     {
                         "type": "File",
                         "name": "Download VSBuildTools",
-                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/vs_buildtools.exe",
+                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/vs_professional__2019.exe",
                         "destination": "C:\\Comcast\\vs_buildtools.exe"
                     },
                     {
@@ -222,7 +222,7 @@
                         "name": "Configure VSBuildTools",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSBuildTools.ps1",
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSPro2019.ps1",
                         "validExitCodes": [
                             0,
                             3010
