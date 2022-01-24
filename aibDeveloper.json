@@ -229,6 +229,23 @@
                         ]
                     },
                     {
+                        "type": "File",
+                        "name": "Download VS Professional 2019",
+                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/vs_professional__2019.exe",
+                        "destination": "C:\\Comcast\\vs_professional__2019.exe"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Configure  VS Professional 2019",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSPro2019.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
                         "type": "PowerShell",
                         "name": "Install OpenSSL",
                         "runElevated": true,
