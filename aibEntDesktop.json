@@ -23,6 +23,9 @@
         "SubnetID": {
             "type": "string"
         },
+        "TeammateInstallerURI": {
+            "type": "string"
+        },
         "CrowdStrikeInstallerURI": {
             "type": "string"
         },
@@ -35,7 +38,8 @@
     },
 
     "variables": {
-"CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-AVD.zip\")')]",
+        "TeammateDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TeammateInstallerURI'),'\", \"C:\\Comcast\\Install-Teammate.zip\")')]",
+        "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-AVD.zip\")')]",
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
         "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\aibEntDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"

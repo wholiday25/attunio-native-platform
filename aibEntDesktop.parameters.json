@@ -20,6 +20,9 @@
         "SubnetID": {
             "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/aib"
         },
+        "TeammateInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-Teammate.zip?sp=r&st=2022-01-24T21:35:40Z&se=2032-01-25T05:35:40Z&spr=https&sv=2020-08-04&sr=b&sig=ExyEgMBPX55f6Nnmyr3%2BK%2BDRQNEK7Sb6RIEv%2Fy4hyXM%3D"
+        },
         "CrowdStrikeInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/InstallCrowdStrike-AVD.zip?sp=r&st=2022-01-14T15:43:21Z&se=2042-01-14T23:43:21Z&spr=https&sv=2020-08-04&sr=b&sig=ARPZHV6p2CAEOaraZ0vi9h%2BVNxAKPD2oH4rawXwgYuI%3D"
         },
