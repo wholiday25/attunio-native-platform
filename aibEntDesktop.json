@@ -117,6 +117,11 @@
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-BGInfo.ps1"
                     },
+					{
+                        "type": "PowerShell",
+                        "name": "Download Teammate",
+                        "inline": ["[variables('TeammateDownloadCMD')]"]                    
+                    },
                     {
                         "type": "PowerShell",
                         "name": "Download Crowdstrike",
@@ -230,6 +235,13 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSCode.ps1"
+                    },
+					{
+                        "type": "PowerShell",
+                        "name": "Install Teammate",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Teammate.ps1"
                     },
                     {
                         "type": "PowerShell",
