@@ -73,7 +73,7 @@
                     "type": "PlatformImage",
                     "publisher": "MicrosoftWindowsDesktop",
                     "offer": "office-365",
-                    "sku": "win10-21h2-avd-m365-g2",
+                    "sku": "21h1-evd-o365pp-g2",
                     "version": "latest"
                 },
 
@@ -254,8 +254,8 @@
                         "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
                         "runOutputName": "sigOutput",
                         "artifactTags": {
-                            "source": "win10-21h2-avd-m365-g2",
-                            "baseosimg": "win10-21h2-avd-m365-g2"
+                            "source": "21h1-evd-o365pp-g2",
+                            "baseosimg": "21h1-evd-o365pp-g2"
                         },
                         "replicationRegions": [
                             "eastus"
