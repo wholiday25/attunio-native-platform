@@ -8,8 +8,15 @@ $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json"
 $sharedimagegallery = "WVD_DEV"
 $sharedimagegalleryRSG = "Nerdio-Dev"
 $location = "eastus"
+$searchstr = "IT_AzureImageBuilder-DEV_"+$imagetemplateName+"_*"
 
 try {
+    Write-Output "Clean up Previous Image Builders Image Creation Process"
+
+        $azurergremove = get-azresourcegroup $searchstr        
+        Write-Output "Removing Image Resource Group $($azurergremove.ResourceId)"
+        remove-azresourcegroup $azurergremove -Force
+        
     Write-Output "Create ImageDefinition $imageTemplateName in $sharedimagegallery in the $location location"
     $acquiresku = (Get-AzGalleryImageDefinition -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName $imageTemplateName)
     $acquiresku2 = ($acquiresku | Select-Object -ExpandProperty Identifier).sku
