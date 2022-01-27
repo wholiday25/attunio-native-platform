@@ -14,7 +14,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File '.\aibRDS
     Set-AzContext -Subscription "WVD-Dev"
     $sourcegallery = Get-AzGallery -Name "WVD_DEV" -ResourceGroupName $resgroupsource
     $versions = Get-AzGalleryImageVersion -ResourceGroupName $resgroupsource -GalleryName $sourcegallery.Name -GalleryImageDefinitionName $imageDefinitionName
-    $newestVersion = $versions | Sort-Object -Property Name | Select-Object -First 1
+    $newestVersion = $versions | Sort-Object -Property PublishedDate | Select-Object -First 1
     Set-AzContext -Subscription "WVD-Prod"
     $destinationgallery = Get-AzGallery -Name "WVD_PROD2"
     Write-Output "$imagedefinitionName $NewestVersion.Name $destinationgallery.Name $resgrouptarget $destinationgallery.location $targetRegions $newestVersion.Id"
