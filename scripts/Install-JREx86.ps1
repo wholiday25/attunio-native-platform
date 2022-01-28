@@ -21,8 +21,8 @@ NOSTARTMENU=Enable
 $text | Set-Content "$workd\JREconfig32bit.cfg"
     
 #download executable, this is the small online installer
-#Source for 32-bit can be found here -   https://java.com/en/download/win10.jsp -- and copying button link. It should be about 2 MB.
-$source = "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=245448_4d5417147a92418ea8b615e228bb6935"
+#Source for 32-bit can be found here on the "Manual" page - https://java.com/en/download/manual.jsp . Look for "Windows Offline". It is about 71 MB
+$source = "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=245805_df5ad55fdd604472a86a45a217032c7d"
 $destination = "$workd\jreInstall32bit.exe"
 $client = New-Object System.Net.WebClient
 $client.DownloadFile($source, $destination)

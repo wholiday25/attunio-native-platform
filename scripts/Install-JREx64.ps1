@@ -21,8 +21,8 @@ NOSTARTMENU=Enable
 $text | Set-Content "$workd\JREconfig64bit.cfg"
     
 #download executable, this is the small online installer
-#Source for 64-bit can be found here on the "Manual" page - https://java.com/en/download/manual.jsp . Look for "Windows Offline (64-bit)". it is about 80 MB
-$source = "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=245479_4d5417147a92418ea8b615e228bb6935"
+#Source for 64-bit can be found here on the "Manual" page - https://java.com/en/download/manual.jsp . Look for "Windows Offline (64-bit)". It is about 80 MB
+$source = "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=245807_df5ad55fdd604472a86a45a217032c7d"
 $destination = "$workd\jreInstall64bit.exe"
 $client = New-Object System.Net.WebClient
 $client.DownloadFile($source, $destination)
