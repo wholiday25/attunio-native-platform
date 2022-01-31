@@ -8,13 +8,13 @@ $targetRegions = @($region1, $region2)
 $resgroupsource = "NERDIO-DEV"
 $resgrouptarget = "WVD-PROD-IMAGES"
 Set-AzContext -Subscription "WVD-Dev"
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aibEntDesktopV2*','*publish*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aibEntDesktopV2*','*publish*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json','SingleApp') {
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageDefinitionName = $imageTemplateName
     Set-AzContext -Subscription "WVD-Dev"
     $sourcegallery = Get-AzGallery -Name "WVD_DEV" -ResourceGroupName $resgroupsource
     $versions = Get-AzGalleryImageVersion -ResourceGroupName $resgroupsource -GalleryName $sourcegallery.Name -GalleryImageDefinitionName $imageDefinitionName
-    $newestVersion = $versions | Sort-Object -Property Name | Select-Object -First 1
+    $newestVersion = $versions | Sort-Object -Property PublishedDate | Select-Object -First 1
     Set-AzContext -Subscription "WVD-Prod"
     $destinationgallery = Get-AzGallery -Name "WVD_PROD2"
     Write-Output "$imagedefinitionName $NewestVersion.Name $destinationgallery.Name $resgrouptarget $destinationgallery.location $targetRegions $newestVersion.Id"

@@ -38,6 +38,9 @@
         "InstalledApplicationsURI": {
             "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2021-11-19T19:29:52Z&se=2022-11-20T03:29:52Z&spr=https&sv=2020-08-04&sr=c&sig=zDeYCTSKX45iqatZXFTPEu3Xrv%2Ft38nNxAB4hSScT90%3D"
         },
+        "UC4UserInterfaceInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-UC4UserInterface.zip?sv=2020-04-08&st=2021-12-09T02%3A26%3A32Z&se=2031-12-10T02%3A26%3A00Z&sr=b&sp=r&sig=YY909YuIsjSLWttY5ULOcAczvTHf7ITarbY86mhH8As%3D"
+        },
         "imageVersionID": {
         "value": "[IMAGEID]"
         }
