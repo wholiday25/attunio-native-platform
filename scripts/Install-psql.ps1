@@ -1,5 +1,5 @@
 <#
-This script installs psql via Chocolatey
+This script installs psql  and pgadmin (since it is NOT disabled ) via Chocolatey
 note that this is only the commandline tools install of POSTgresSQL, since we do not want the DB engine on AVD
 #>
 
