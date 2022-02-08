@@ -13,21 +13,21 @@ $computersys.Put();
 #querying the page file settings
 $pagefile = Get-WmiObject -Query "Select * From Win32_PageFileSetting Where Name like '%pagefile.sys'";
 #providing initial size
-$pagefile.InitialSize = 1024;
+$pagefile.InitialSize = 4096;
 #providing maximum size
-$pagefile.MaximumSize = $Physicalmem1*1.5;
+$pagefile.MaximumSize = 8192;
 #storing the values
 $newpagefile=$pagefile.Put();
-$confirmation=Read-host "Do you want to Restart the server (Y/N)"
-if($confirmation -eq 'N'){
+#$confirmation=Read-host "Do you want to Restart the server (Y/N)"
+#if($confirmation -eq 'N'){
 
-Write-host "The system restart is skipped by the user" -BackgroundColor DarkRed
+#Write-host "The system restart is skipped by the user" -BackgroundColor DarkRed
 
-}
+#}
 
-Else{
+#Else{
 
-Write-Host "The system will be restarting ...." -BackgroundColor DarkGreen
+#Write-Host "The system will be restarting ...." -BackgroundColor DarkGreen
 
-Restart-Computer -Force
-}
+#Restart-Computer -Force
+#}
