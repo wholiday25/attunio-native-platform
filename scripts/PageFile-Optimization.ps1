@@ -8,16 +8,16 @@ $Physicalmem1=[math]::Round($physicalmem / 1048576)
 #-EnableAllPrivileges Before the command makes the WMI call, enable all of the current user's privileges.
 $computersys = Get-WmiObject Win32_ComputerSystem -EnableAllPrivileges;
 #unchecks the Automatic maaged page file
-$computersys.AutomaticManagedPagefile = $False;
+$computersys.AutomaticManagedPagefile = $true;
 $computersys.Put();
 #querying the page file settings
-$pagefile = Get-WmiObject -Query "Select * From Win32_PageFileSetting Where Name like '%pagefile.sys'";
+#$pagefile = Get-WmiObject -Query "Select * From Win32_PageFileSetting Where Name like '%pagefile.sys'";
 #providing initial size
-$pagefile.InitialSize = 4096;
+#$pagefile.InitialSize = 4096;
 #providing maximum size
-$pagefile.MaximumSize = 8192;
+#$pagefile.MaximumSize = 8192;
 #storing the values
-$newpagefile=$pagefile.Put();
+#$newpagefile=$pagefile.Put();
 #$confirmation=Read-host "Do you want to Restart the server (Y/N)"
 #if($confirmation -eq 'N'){
 
