@@ -274,7 +274,7 @@
                         "name": "Pagefile Optimization",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/PageFile-Optimization.ps11"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/PageFile-Optimization.ps1"
                     },
                     {
                         "type": "PowerShell",
