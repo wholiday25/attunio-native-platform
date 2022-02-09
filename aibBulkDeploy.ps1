@@ -17,6 +17,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageTemplateFileName = $imageTemplateName + ".json"
     $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json" 
+    $searchstr = "IT_AzureImageBuilder-DEV_"+$imagetemplateName+"_*" 
     #be sure to modify parameters file to include [IMAGEID] under image for source location. this script rewrites the file.
 (Get-Content $imageTemplateFileNameParameters).replace('[IMAGEID]', $parentversionid) | Set-Content $imageTemplateFileNameParameters
 
