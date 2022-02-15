@@ -31,15 +31,20 @@ try {
     $azurergremove = get-azresourcegroup $searchstr        
     Write-Output "Removing Image Resource Group $($azurergremove.ResourceId)"
     remove-azresourcegroup $azurergremove -Force
-
-    Write-Output "Removing existing AIB Template $imageTemplateName"
-    Remove-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName 
-
-}
+   }
 catch {
     $ErrorMessage = $_.Exception.Message
     Write-Output "Exception: $ErrorMessage" 
 }
+try{
+     Write-Output "Removing existing AIB Template $imageTemplateName"
+    Remove-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName 
+    }
+catch {
+    $ErrorMessage = $_.Exception.Message
+    Write-Output "Exception: $ErrorMessage" 
+}
+
 Write-Output "Creating New AzureImageBuilder Template Image Deployment for $imagetemplatefilename"
 New-AzResourceGroupDeployment -ResourceGroupName $imageResourceGroup -TemplateFile $imagetemplateFileName -TemplateParameterFile $imageTemplateFileNameParameters -Mode Incremental
 Write-Output "Starting Azure ImageBuilder Build for $imageTemplateName"
