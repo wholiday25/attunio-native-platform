@@ -43,7 +43,10 @@
         },
         "MFLRVUG_00264URI": {
             "type": "string"
-        }
+        },
+            "UC4UserInterfaceInstallerURI": {
+                "type": "string"
+            }
     },
     "variables": {
         "AccessDatabaseEngineCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AccessDatabaseEngineURI'),'\", \"C:\\Comcast\\AccessDatabaseEngine.exe\")')]",
@@ -51,7 +54,9 @@
         "MFLRAnalysis12.60CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRAnalysis12.60URI'),'\", \"C:\\Comcast\\Install-MFLRAnalysis12.60.zip\")')]",
         "MFLRVUGen12.60CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUGen12.60URI'),'\", \"C:\\Comcast\\Install-MFLRVUGen12.60.zip\")')]",
         "MFLRVUG_00264CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUG_00264URI'),'\", \"C:\\Comcast\\Install-MFLRVUG_00264.zip\")')]",
+        "UC4UserInterfaceDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('UC4UserInterfaceInstallerURI'),'\", \"C:\\Comcast\\Install-UC4UserInterface.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\Developer.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
+    
     },
     "resources": [
         {
@@ -119,7 +124,19 @@
                         ]
                     },
                     {
+                        "type": "PowerShell", 
+                        "name": "Download UC4UserInterface",
+                        "inline": ["[variables('UC4UserInterfaceDownloadCMD')]"]                    
+                    },
+                    {
                         "type": "PowerShell",
+                        "name": "Install UC4UserInterface",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-UC4UserInterface.ps1"
+                    },
+                    {
+                        "type": "PowerShell",                        
                         "name": "Install AccessDatabaseEngineCMD",
                         "runElevated": true,
                         "runAsSystem": true,
@@ -212,6 +229,23 @@
                         ]
                     },
                     {
+                        "type": "File",
+                        "name": "Download VS Professional 2019",
+                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/vs_professional__2019.exe",
+                        "destination": "C:\\Comcast\\vs_professional__2019.exe"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Configure  VS Professional 2019",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSPro2019.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
                         "type": "PowerShell",
                         "name": "Install OpenSSL",
                         "runElevated": true,
@@ -228,17 +262,6 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Python.ps1",
-                        "validExitCodes": [
-                            0,
-                            3010
-                        ]
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install Github Desktop",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-GithubDesktop.ps1",
                         "validExitCodes": [
                             0,
                             3010

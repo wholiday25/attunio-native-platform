@@ -23,7 +23,10 @@
         "SubnetID": {
             "type": "string"
         },
-        "CrowdStrikeInstallerURI": {
+        "TeammateInstallerURI": {
+            "type": "string"
+        },
+            "CrowdStrikeInstallerURI": {
             "type": "string"
         },
         "ProjectInstallerURI": {
@@ -35,7 +38,8 @@
     },
 
     "variables": {
-"CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-WVD.zip\")')]",
+        "TeammateDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TeammateInstallerURI'),'\", \"C:\\Comcast\\Install-Teammate.zip\")')]",
+        "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-AVD.zip\")')]",
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
         "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\EntDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
@@ -115,6 +119,11 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download Teammate",
+                        "inline": ["[variables('TeammateDownloadCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Download Crowdstrike",
                         "inline": ["[variables('CrowdStrikeDownloadCMD')]"]                    
                     },
@@ -181,11 +190,30 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Install MS PowerBI",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MSPowerBI.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Install AutoHotKey",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AutoHotKey.ps1",
                         "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Github Desktop",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-GithubDesktop.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
@@ -208,6 +236,13 @@
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSCode.ps1"
                     },
+					{
+                        "type": "PowerShell",
+                        "name": "Install Teammate",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Teammate.ps1"
+                    },
                     {
                         "type": "PowerShell",
                         "name": "Install Java x86",
@@ -226,6 +261,13 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "PageFile Optimization",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/PageFile-Optimization.ps1"
                     },
                     {
                         "type": "PowerShell",

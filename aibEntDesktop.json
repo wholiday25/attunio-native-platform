@@ -67,7 +67,7 @@
                 "buildTimeoutInMinutes": 240,
 
                 "vmProfile": {
-                    "vmSize": "Standard_D4s_v4",
+                    "vmSize": "Standard_D4s_v5",
                     "osDiskSizeGB": 128,
                     "vnetConfig": {
                         "subnetId": "[parameters('SubnetID')]"
@@ -261,6 +261,13 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Pagefile Optimization",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/PageFile-Optimization.ps1"
                     },
                     {
                         "type": "PowerShell",
