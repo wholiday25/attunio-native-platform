@@ -25,6 +25,15 @@ catch {
     Write-Output "Exception: $ErrorMessage"
 }
 
+try{
+     Write-Output "Removing existing AIB Template $imageTemplateName"
+    Remove-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName 
+    }
+catch {
+    $ErrorMessage = $_.Exception.Message
+    Write-Output "Exception: $ErrorMessage" 
+}
+
 try {
     Write-Output "Clean up Previous Image Builders Image Creation Process"
 
@@ -36,15 +45,6 @@ catch {
     $ErrorMessage = $_.Exception.Message
     Write-Output "Exception: $ErrorMessage" 
 }
-try{
-     Write-Output "Removing existing AIB Template $imageTemplateName"
-    Remove-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName 
-    }
-catch {
-    $ErrorMessage = $_.Exception.Message
-    Write-Output "Exception: $ErrorMessage" 
-}
-
 Write-Output "Creating New AzureImageBuilder Template Image Deployment for $imagetemplatefilename"
 New-AzResourceGroupDeployment -ResourceGroupName $imageResourceGroup -TemplateFile $imagetemplateFileName -TemplateParameterFile $imageTemplateFileNameParameters -Mode Incremental
 Write-Output "Starting Azure ImageBuilder Build for $imageTemplateName"
