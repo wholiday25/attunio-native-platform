@@ -26,12 +26,22 @@ catch {
     $ErrorMessage = $_.Exception.Message
     Write-Output "Exception: $ErrorMessage"
 }
+try{
+     Write-Output "Removing existing AIB Template $imageTemplateName"
+    Remove-AzImageBuilderTemplate -ResourIceGroupName $imageResourceGroup -Name $imageTemplateName 
+    }
+catch {
+    $ErrorMessage = $_.Exception.Message
+    Write-Output "Exception: $ErrorMessage" 
+}
 
 try {
-    Write-Output "Removing existing AIB Template $imageTemplateName"
-    Remove-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName 
+    Write-Output "Clean up Previous Image Builders Image Creation Process"
 
-}
+    $azurergremove = get-azresourcegroup $searchstr        
+    Write-Output "Removing Image Resource Group $($azurergremove.ResourceId)"
+    remove-azresourcegroup $azurergremove -Force
+   }
 catch {
     $ErrorMessage = $_.Exception.Message
     Write-Output "Exception: $ErrorMessage" 
