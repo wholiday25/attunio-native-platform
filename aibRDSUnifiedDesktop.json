@@ -190,6 +190,13 @@
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Metasolv-Dev.ps1"
                     },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install AccessDatabaseEngineCMD",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AccessDatabaseEngine.ps1"
+                    },
                               {
                         "type": "PowerShell",
                         "name": "Install Metasolv",
