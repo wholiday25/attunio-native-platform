@@ -196,6 +196,11 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download AccessDatabaseEngineCMD",
+                        "inline": ["[variables('AccessDatabaseEngineCMD')]"]               
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Install AccessDatabaseEngineCMD",
                         "runElevated": true,
                         "runAsSystem": true,
