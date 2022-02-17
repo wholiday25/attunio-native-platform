@@ -283,7 +283,7 @@
                         "name": "Install Microsoft Build- openjdk11microsoft",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-openjdk11microsoft.ps1",
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-openjdk11.ps1",
                         "validExitCodes": [
                             0,
                             3010
