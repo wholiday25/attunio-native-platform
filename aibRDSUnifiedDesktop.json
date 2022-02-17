@@ -44,6 +44,9 @@
         "RSASecurIDTokenInstallerURI": {
             "type": "string"
         },
+        "AccessDatabaseEngineURI": {
+            "type": "string"
+        },
         "SAPGUIInstallerURI": {
             "type": "string"
         }
