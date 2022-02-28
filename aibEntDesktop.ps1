@@ -8,6 +8,7 @@ $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json"
 $sharedimagegallery = "WVD_DEV"
 $sharedimagegalleryRSG = "Nerdio-Dev"
 $location = "eastus"
+$searchstr = "IT_AzureImageBuilder-DEV_"+$imagetemplateName+"_*" 
 
 try {
     Write-Output "Create ImageDefinition $imageTemplateName in $sharedimagegallery in the $location location"
@@ -26,7 +27,7 @@ catch {
 
 try{
      Write-Output "Removing existing AIB Template $imageTemplateName"
-    Remove-AzImageBuilderTemplate -ResourIceGroupName $imageResourceGroup -Name $imageTemplateName 
+    Remove-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName 
     }
 catch {
     $ErrorMessage = $_.Exception.Message
@@ -52,7 +53,7 @@ Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $image
 
 $gallery = Get-AzGallery -Name $galleryName
 $versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupName -GalleryName $gallery.Name -GalleryImageDefinitionName $imageTemplateName
-$oldestVersion = $versions | Sort-Object -Property PublishedDate | Select-Object -First 1
+$oldestVersion = $versions | Sort-Object -Property {$_.PublishingProfile.PublishedDate} -Descending | Select-Object -First 1
 if ($versions.count -gt 3) {
     "Found oldest version $($oldestVersion.Name)...Deleting..."
     $oldestVersion | Remove-AzGalleryImageVersion -Force

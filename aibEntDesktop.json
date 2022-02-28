@@ -245,6 +245,13 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Install Slack Client",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Slack.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Install Java x86",
                         "runElevated": true,
                         "runAsSystem": true,

@@ -1,5 +1,7 @@
 <#
-This script installs JDK 8 via Chocolatey
+This script installs JDK 17.02,  via Chocolatey
+Oracle JDK is a distribution of OpenJDK provided by Oracle
+Latest End Of Life  see https://endoflife.date/java
 #>
 
 # Install Chocolatey if it isn't already installed

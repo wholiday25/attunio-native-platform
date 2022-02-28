@@ -1,5 +1,7 @@
 <#
-This script installs JDK 8 via Chocolatey
+This script installs JDK SE 8.0.211 via Chocolatey
+The Java Development Kit (JDK) version 8.0.211 
+Note that 8.231 would be better -- See choco install openjdk8
 #>
 
 # Install Chocolatey if it isn't already installed

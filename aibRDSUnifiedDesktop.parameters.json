@@ -29,6 +29,9 @@
         "RSASecurIDTokenInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-RSASecurIDToken.zip?sp=rl&st=2021-08-10T18:47:38Z&se=2031-11-11T18:47:00Z&sv=2020-08-04&sr=b&sig=OtdouhJ2ANt3xP1rVu42Bcz3V%2BOWxlVqFYkRJ9TGabQ%3D"
         },
+        "AccessDatabaseEngineURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/AccessDatabaseEngine.exe?sp=rl&st=2021-09-23T19:14:48Z&se=2031-11-24T19:14:00Z&sv=2020-08-04&sr=b&sig=FKKxmpSizkP38bkbWINM7AoaaXpJeAqIVBLbao4sSR8%3D"
+        },
         "SAPGUIInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-SAPGUI.zip?sp=rl&st=2021-08-11T19:14:50Z&se=2031-11-12T19:14:00Z&sv=2020-08-04&sr=b&sig=ANo8%2BqcVdHO8bSXicJeto1bbQzxngSwAgw9vctvMcfE%3D"
         },
