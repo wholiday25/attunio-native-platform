@@ -202,10 +202,10 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install ActiveDirectory RSAT",
+                        "name": "Install SuuportNow RSAT",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-ActiveDirectory-DS.Tools.ps1",
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowRSAT.ps1",
                         "validExitCodes": [
                             0,
                             3010
@@ -273,6 +273,17 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-PyCharm.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Microsoft Build- openjdk11microsoft",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-openjdk11.ps1",
                         "validExitCodes": [
                             0,
                             3010
