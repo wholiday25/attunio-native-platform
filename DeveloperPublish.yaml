@@ -8,7 +8,7 @@ pr: none
 jobs:
 - job: AIB Publish from Developer to Production
   pool:
-    name: aib-ap
+    name: aibBuildServer
   timeoutInMinutes: 360
   cancelTimeoutInMinutes: 10
   steps:

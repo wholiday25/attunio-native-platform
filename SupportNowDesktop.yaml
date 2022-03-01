@@ -9,7 +9,7 @@ pr: none
 jobs:
 - job: AIB
   pool:
-    name: aib-ap
+    name: aibBuildServer
   timeoutInMinutes: 360
   cancelTimeoutInMinutes: 10
   steps:
