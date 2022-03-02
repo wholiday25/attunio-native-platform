@@ -210,10 +210,7 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-GithubDesktop.ps1",
-                        "validExitCodes": [
-                            0,
-                            3010
-                        ]
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
@@ -295,7 +292,7 @@
                         "runAsSystem": true,
                         "inline": ["Start-Sleep -Seconds 300"]
                     }
-
+                    
                 ],
                 "distribute": [
                     {
