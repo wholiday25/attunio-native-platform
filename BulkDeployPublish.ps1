@@ -1,4 +1,4 @@
-#aibDeveloper publish
+#aibBulkDeploy publish
 #copy developer image to public image
 
 
@@ -8,7 +8,7 @@ $targetRegions = @($region1, $region2)
 $resgroupsource = "NERDIO-DEV"
 $resgrouptarget = "WVD-PROD-IMAGES"
 Set-AzContext -Subscription "WVD-Dev"
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File '.\aibDeveloper.json') {
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aib*','*publish*', 'Readme.md', 'scripts', '*parameters*', 'singleApp*', '*.ps1', 'RoleDefinition.json') {
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageDefinitionName = $imageTemplateName
     Set-AzContext -Subscription "WVD-Dev"
