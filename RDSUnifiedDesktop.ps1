@@ -28,7 +28,7 @@ catch {
 
 try{
      Write-Output "Removing existing AIB Template $imageTemplateName"
-    Remove-AzImageBuilderTemplate -ResourIceGroupName $imageResourceGroup -Name $imageTemplateName 
+    Remove-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName 
     }
 catch {
     $ErrorMessage = $_.Exception.Message
