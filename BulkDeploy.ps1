@@ -9,8 +9,8 @@ $galleryName = "WVD_DEV"
 $sharedimagegallery = "WVD_DEV"
 $sharedimagegalleryRSG = "Nerdio-Dev"
 $location = "eastus"
-$parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName "EntDesktop").Id | Sort-Object -Descending | select-object -First 1
-$hash = @{ imageVersionID = $parentversionid }
+$parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName "EntDesktop").Id | Sort-Object -Property {$_.PublishingProfile.PublishedDate}  -Descending| Select-Object -First 1
+
 
 
 foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aib*', 'SingleApp*','EntDesktop*','*publish*', 'entdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {

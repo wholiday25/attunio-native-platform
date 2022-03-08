@@ -1,6 +1,3 @@
-
-
-
 $ImageResourceGroup = "AzureImageBuilder-DEV"
 $ImageTemplateName = "SupportNowDesktop"
 $imageTemplateFileName = $imageTemplateName + ".json"
@@ -8,8 +5,8 @@ $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json"
 $sharedimagegallery = "WVD_DEV"
 $sharedimagegalleryRSG = "Nerdio-Dev"
 $location = "eastus"
-$parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName "EntDesktop").Id | Sort-Object -Descending | select-object -First 1
-$hash = @{ imageVersionID = $parentversionid }
+$parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName "EntDesktop").Id | Sort-Object -Property {$_.PublishingProfile.PublishedDate}  -Descending| Select-Object -First 1
+
 #be sure to modify parameters file to include [IMAGEID] under image for source location. this script rewrites the file.
 (Get-Content $imageTemplateFileNameParameters).replace('[IMAGEID]', $parentversionid) | Set-Content $imageTemplateFileNameParameters
 
@@ -30,7 +27,7 @@ catch {
 
 try{
      Write-Output "Removing existing AIB Template $imageTemplateName"
-    Remove-AzImageBuilderTemplate -ResourIceGroupName $imageResourceGroup -Name $imageTemplateName 
+    Remove-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName 
     }
 catch {
     $ErrorMessage = $_.Exception.Message
@@ -60,7 +57,7 @@ $gallery = Get-AzGallery -Name $galleryName
 $versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupName -GalleryName $gallery.Name -GalleryImageDefinitionName $imageTemplateName
 $oldestVersion = $versions | Sort-Object -Property PublishedDate | Select-Object -First 1
 if ($versions.count -gt 3) {
-    "Found oldest version $($oldestVersion.Name)...Deleting..."
+    Write-Output "Found oldest version $($oldestVersion.Name)...Deleting..."
     $oldestVersion | Remove-AzGalleryImageVersion -Force
 
 }

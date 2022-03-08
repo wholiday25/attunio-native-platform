@@ -1,4 +1,3 @@
-
 $ImageResourceGroup = "AzureImageBuilder-DEV"
 $ImageTemplateName = "RDSUnifiedDesktop"
 $imageTemplateFileName = $imageTemplateName + ".json"
@@ -6,8 +5,8 @@ $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json"
 $sharedimagegallery = "WVD_DEV"
 $sharedimagegalleryRSG = "Nerdio-Dev"
 $location = "eastus"
-$parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName "EntDesktop").Id | Sort-Object -Descending | select-object -First 1
-$hash = @{ imageVersionID = $parentversionid }
+$parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName "EntDesktop").Id | Sort-Object -Property {$_.PublishingProfile.PublishedDate}  -Descending| Select-Object -First 1
+
 
 #be sure to modify parameters file to include [IMAGEID] under image for source location. this script rewrites the file.
 (Get-Content $imageTemplateFileNameParameters).replace('[IMAGEID]', $parentversionid) | Set-Content $imageTemplateFileNameParameters
