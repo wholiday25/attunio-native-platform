@@ -54,7 +54,7 @@
 
     "variables": {
         "MetaSolvDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetaSolvInstallerURI'),'\", \"C:\\Comcast\\Install-MetasolvProd09172021.zip\")')]",
-        "MetaSolvDEVDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetasolvDEVInstallerURI'),'\", \"C:\\Comcast\\Install-MetaSolvDEV.zip\")')]",
+        "MetaSolvDEVDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetasolvDEVInstallerURI'),'\", \"C:\\Comcast\\Install-MetasolvDev631b367.zip\")')]",
         "RSASecurIDTokenDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('RSASecurIDTokenInstallerURI'),'\", \"C:\\Comcast\\Install-RSASecurIDToken.zip\")')]",
         "AccessDatabaseEngineCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AccessDatabaseEngineURI'),'\", \"C:\\Comcast\\AccessDatabaseEngine.exe\")')]",
         "SAPGUIDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPGUIInstallerURI'),'\", \"C:\\Comcast\\Install-SAPGUI.zip\")')]",
@@ -189,10 +189,10 @@
                     }
                     ,{
                         "type": "PowerShell",
-                        "name": "Install MetasolvDEV",
+                        "name": "Install MetasolvDev631b367",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Metasolv-Dev.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MetasolvDev631b367.ps1"
                     },
                     {
                         "type": "PowerShell",

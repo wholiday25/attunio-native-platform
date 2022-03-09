@@ -24,7 +24,7 @@
             "value": "https://aibdev.blob.core.windows.net/installers/Install-MetasolvDev631b367.zip?sp=r&st=2022-03-07T21:44:53Z&se=2032-03-08T05:44:53Z&spr=https&sv=2020-08-04&sr=b&sig=EaglYCuvGNg1VeiDlvl%2Bt7VvDQCp44Nxlm65rBX0fPM%3D"
         },
         "MetasolvDEVInstallerURI": {
-            "value": "https://aibdev.blob.core.windows.net/installers/Install-MetasolvDEV.zip?sp=rl&st=2021-08-17T15:08:37Z&se=2031-11-18T15:08:00Z&sv=2020-08-04&sr=b&sig=2UkThRsI4AmT5pb%2BEeMSOCo9i7Oa7DMhh8b0UHxHzj4%3D"
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-MetasolvDev631b367.zip?sp=r&st=2022-03-08T21:14:45Z&se=2022-03-09T05:14:45Z&spr=https&sv=2020-08-04&sr=b&sig=NY7UgncMFYUcZaTgSAVqa%2FXajPm%2FPPeF7EPBftZwuw8%3D"
         },
         "RSASecurIDTokenInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-RSASecurIDToken.zip?sp=rl&st=2021-08-10T18:47:38Z&se=2031-11-11T18:47:00Z&sv=2020-08-04&sr=b&sig=OtdouhJ2ANt3xP1rVu42Bcz3V%2BOWxlVqFYkRJ9TGabQ%3D"
