@@ -17,7 +17,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
     $newestVersion = $versions | Sort-Object -Property {$_.PublishingProfile.PublishedDate} | Select-Object -First 1
     Set-AzContext -Subscription "WVD-Prod"
     $destinationgallery = Get-AzGallery -Name "WVD_PROD2"
-    Write-Output "$imagedefinitionName $NewestVersion.Name $destinationgallery.Name $resgrouptarget $destinationgallery.location $targetRegions $newestVersion.Id"
+    Write-Output "Replicating $imagedefinitionName with version $($NewestVersion.Name) to Gallery $($destinationgallery.Name) to $resgrouptarget $($destinationgallery.location) Target Region $($targetRegions.location) Version $($newestVersion.Id)"
 
     New-AzGalleryImageVersion `
         -GalleryImageDefinitionName $imageDefinitionName `
@@ -27,6 +27,6 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
         -Location $destinationgallery.Location `
         -TargetRegion $targetRegions `
         -SourceImageId $newestVersion.Id
-    Write-Output "$imageDefinitionName copyied from Source $sourcegallery Gallery with $Newestversion Version to Destination Gallery $destinationgallery"
+        Write-Output "$imageDefinitionName copied from Source $($sourcegallery.Name) Gallery with $($Newestversion.Name) Version to Destination Gallery $($destinationgallery.Name)"
 
 }
