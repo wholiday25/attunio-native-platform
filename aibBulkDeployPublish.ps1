@@ -8,7 +8,7 @@ $targetRegions = @($region1, $region2)
 $resgroupsource = "NERDIO-DEV"
 $resgrouptarget = "WVD-PROD-IMAGES"
 Set-AzContext -Subscription "WVD-Dev"
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'X_*', 'aibEntDesktopV2*','*publish*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json','SingleApp') {
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'Win11*', 'X_*', 'aibEntDesktopV2*','*publish*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json','SingleApp') {
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageDefinitionName = $imageTemplateName
     Set-AzContext -Subscription "WVD-Dev"
