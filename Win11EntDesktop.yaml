@@ -22,12 +22,12 @@ jobs:
         storage: 'aibdev'
         ContainerName: 'scripts'
     - task: AzurePowerShell@5
-      displayName: 'Run Azure Image Builder EntDesktop'
+      displayName: 'Run Azure Image Builder Win11EntDesktop'
       inputs:
         azureSubscription: 'WVD-Dev' #This is the devops service connection name
         ErrorActionPreference: 'Stop'
         FailOnStandardError: true
         ScriptType: 'FilePath'
-        ScriptPath: './EntDesktop.ps1'
+        ScriptPath: './Win11EntDesktop.ps1'
         azurePowerShellVersion: 'LatestVersion'
 

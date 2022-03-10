@@ -20,7 +20,7 @@ try {
     if ($acquiresku2 -eq "") {
         $acquiresku2 = "11windows" + $ImageTemplateName
     }
-    New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'MicrosoftWindowsDesktop' -Offer 'office-365' -Sku 'win10-21h2-avd-m365-g2' -HyperVGeneration "V2"
+    New-AzGalleryImageDefinition -GalleryName $sharedimagegallery -ResourceGroupName $sharedimagegalleryRSG -Location $location -Name $ImageTemplateName -OsState generalized -OsType Windows -Publisher 'MicrosoftWindowsDesktop' -Offer 'windows-11' -Sku 'win11-21h2-avd' -HyperVGeneration "V2"
 
 }
 catch {
