@@ -94,7 +94,7 @@
                         "name": "OptimizeOS",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Optimize-AVDv2.ps1",
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Optimize-AVDv2-Win11.ps1",
                         "validExitCodes": [0,16001]
                     },
                     {
