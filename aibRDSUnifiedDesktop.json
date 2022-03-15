@@ -53,7 +53,7 @@
     },
 
     "variables": {
-        "MetaSolvDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetaSolvInstallerURI'),'\", \"C:\\Comcast\\Install-MetasolvProd09172021.zip\")')]",
+        "MetaSolvDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetaSolvInstallerURI'),'\", \"C:\\Comcast\\Install-Metasolvb367Prod0317.zip\")')]",
         "MetaSolvDEVDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MetasolvDEVInstallerURI'),'\", \"C:\\Comcast\\Install-MetasolvDev631b367.zip\")')]",
         "RSASecurIDTokenDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('RSASecurIDTokenInstallerURI'),'\", \"C:\\Comcast\\Install-RSASecurIDToken.zip\")')]",
         "AccessDatabaseEngineCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AccessDatabaseEngineURI'),'\", \"C:\\Comcast\\AccessDatabaseEngine.exe\")')]",
@@ -211,7 +211,7 @@
                         "name": "Install Metasolv",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MetasolvProd09172021.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Metasolvb367Prod0317.ps1"
                     },
                     {
                         "type": "PowerShell",
