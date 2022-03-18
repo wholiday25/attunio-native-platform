@@ -85,7 +85,7 @@
                 },
                 "source": {
                     "type": "SharedImageVersion",
-                    "imageVersionID": "[parameters('imageVersionID')]"
+                    "imageVersionId": "[parameters('imageVersionID')]"
                 },
                 "customize": [
                     {
