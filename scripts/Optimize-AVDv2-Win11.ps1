@@ -71,7 +71,6 @@ MapsBroker
 MessagingService
 OneSyncSvc
 PimIndexMaintenanceSvc
-Power
 SEMgrSvc
 SmsRouter
 SysMain
