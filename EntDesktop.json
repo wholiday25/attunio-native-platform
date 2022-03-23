@@ -255,6 +255,13 @@
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86.ps1"
                     },
                     {
+                        "type": "PowerShell",
+                        "name": "Install RSA Secure Soft Token",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-RSASecurIDToken.ps1"
+                    },
+                    {
                         "type": "WindowsRestart",
                         "restartCheckCommand": "Write-Output 'restarting post JREx86 Install'",
                         "restartTimeout": "10m"
