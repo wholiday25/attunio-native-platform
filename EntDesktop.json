@@ -260,7 +260,12 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install RSA Secure Soft Token",
+                        "name": "Download RSASecurIDTokenCMD",
+                        "inline": ["[variables('RSASecurIDTokenDownloadCMD')]"]               
+                    },
+                              {
+                        "type": "PowerShell",
+                        "name": "Install RSASecurIDToken",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-RSASecurIDToken.ps1"
