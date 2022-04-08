@@ -93,6 +93,13 @@
                         "runAsSystem": true,
                         "inline": ["New-Item -ItemType Directory -Force -Path C:\\Comcast\\"]
                     },
+		    {
+                        "type": "PowerShell",
+                        "name": "Install LAPS",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-LAPS.ps1"
+                    },
                     {
                         "type": "PowerShell",
                         "name": "OptimizeOS",
