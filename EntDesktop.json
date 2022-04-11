@@ -95,6 +95,13 @@
                     },
 		    {
                         "type": "PowerShell",
+                        "name": "Install AzCopy10",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AzCopy10.ps1"
+                    },
+		    {
+                        "type": "PowerShell",
                         "name": "Install LAPS",
                         "runElevated": true,
                         "runAsSystem": true,
