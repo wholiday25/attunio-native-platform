@@ -32,7 +32,7 @@
         "AccessDatabaseEngineURI": {
             "type": "string"
         },
-        "Ginger.3.8.0.0_URI": {
+        "Ginger.4.2.0.0_URI": {
             "type": "string"
         }
     },
@@ -40,7 +40,7 @@
     "variables": {
 
         "AccessDatabaseEngineCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AccessDatabaseEngineURI'),'\", \"C:\\Comcast\\AccessDatabaseEngine.exe\")')]",
-        "Ginger.3.8.0.0_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Ginger.3.8.0.0_URI'),'\", \"C:\\Comcast\\Ginger.3.8.0.0.exe\")')]",
+        "Ginger.4.2.0.0_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Ginger.4.2.0.0_URI'),'\", \"C:\\Comcast\\Ginger.4.2.0.0.exe\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\DeveloperNSE.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 
@@ -84,8 +84,8 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Download Ginger.3.8.0.0_CMD",
-                        "inline": ["[variables('Ginger.3.8.0.0_CMD')]"]           
+                        "name": "Download Ginger.4.2.0.0_CMD",
+                        "inline": ["[variables('Ginger.4.2.0.0_CMD')]"]           
                     },
                     {
                         "type": "PowerShell",
@@ -95,10 +95,10 @@
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AccessDatabaseEngine.ps1"
                     },                    {
                         "type": "PowerShell",
-                        "name": "Install Ginger.3.8.0.0_CMD",
+                        "name": "Install Ginger.4.2.0.0_CMD",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Ginger.3.8.0.0.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Ginger.4.2.0.0.ps1"
                     },
                     {
                         "type": "PowerShell",
