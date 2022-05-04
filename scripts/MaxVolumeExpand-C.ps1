@@ -11,7 +11,10 @@ Set-Service -Name defragsvc -StartupType Manual
    Parameter: Drive as provided by ControlUp Logical Disk Drive Name  e.g. C:\
 #>
 
-$driveLetter,$discard = $args[0].split(':')
+# $driveLetter,$discard = $args[0].split(':')  
+#Script does not need to accept inpuy, only extend C:
+$driveletter="C"
+
 
 Write-Output "-------------------------------------------------------------- "
 Write-Output "Document previous size for $driveLetter"
