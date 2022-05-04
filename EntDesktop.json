@@ -324,6 +324,13 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Expand C Drive to 265 GB",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Config-MaxVolumeExpand-C.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "CollectInstalledApps",
                         "runElevated": true,
                         "runAsSystem": true,
