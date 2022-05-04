@@ -12,7 +12,7 @@ Start-Service -name Power
 
 # Full list is WinHttpAutoProxySvc,lmhosts,Dhcp,BFE,Dnscache,nsi, power
 # Changed 9/13/2021 to address duplciates in Crowdstrike Console
-# Start-Process -Filepath "C:\Comcast\Crowdstrike\Crowdstrike-WindowsSensor-6.23.13702.exe" -ArgumentList "/silent /install CID=1AB23F2E88784A788D3F7142081CDEFA-8A VDI=1 NO_START=1 GROUPING_TAGS=WVD, Comcast_SEP_Removal"
+# Start-Process -Filepath "C:\Comcast\Crowdstrike\Crowdstrike-WindowsSensor-6.33.14705.exe" -ArgumentList "/silent /install CID=1AB23F2E88784A788D3F7142081CDEFA-8A VDI=1 NO_START=1 GROUPING_TAGS=WVD, Comcast_SEP_Removal"
 
 Start-Process -Filepath "C:\Comcast\Crowdstrike\Crowdstrike-WindowsSensor-6.33.14705.exe" -ArgumentList "/silent /install CID=1AB23F2E88784A788D3F7142081CDEFA-8A VDI=1 GROUPING_TAGS=AVD,Comcast_SEP_Removal"
 Set-Itemproperty -path "HKLM:\SYSTEM\CurrentControlSet\Control" -Name 'ServicesPipeTimeout' -Value 600000

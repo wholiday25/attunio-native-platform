@@ -1,0 +1,485 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "imageTemplateName": {
+            "type": "string"
+        },
+        "InstalledApplicationsURI": {
+            "type": "string"
+        },
+        "api-version": {
+            "type": "string"
+        },
+        "svclocation": {
+            "type": "string"
+        },
+        "ManagedIdentityID": {
+            "type": "string"
+        },
+        "SharedImageGalleryID": {
+            "type": "string"
+        },
+        "SubnetID": {
+            "type": "string"
+        },
+        "imageVersionID": {
+            "type": "string",
+            "metadata": {
+                "description": "URL for Shared Image Gallery for Enterprise Desktop"
+            }
+        },
+        "AccessDatabaseEngineURI": {
+            "type": "string"
+        },
+        "Ginger.4.2.0.0_URI": {
+            "type": "string"
+        },
+        "MFLRAnalysis12.60URI": {
+            "type": "string"
+        },
+        "MFLRVUGen12.60URI": {
+            "type": "string"
+        },
+        "MFLRVUG_00264URI": {
+            "type": "string"
+        },
+            "UC4UserInterfaceInstallerURI": {
+                "type": "string"
+            }
+    },
+    "variables": {
+        "AccessDatabaseEngineCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AccessDatabaseEngineURI'),'\", \"C:\\Comcast\\AccessDatabaseEngine.exe\")')]",
+        "Ginger.4.2.0.0_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Ginger.4.2.0.0_URI'),'\", \"C:\\Comcast\\Install-Ginger.4.2.0.0.exe\")')]",
+        "MFLRAnalysis12.60CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRAnalysis12.60URI'),'\", \"C:\\Comcast\\Install-MFLRAnalysis12.60.zip\")')]",
+        "MFLRVUGen12.60CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUGen12.60URI'),'\", \"C:\\Comcast\\Install-MFLRVUGen12.60.zip\")')]",
+        "MFLRVUG_00264CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUG_00264URI'),'\", \"C:\\Comcast\\Install-MFLRVUG_00264.zip\")')]",
+        "UC4UserInterfaceDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('UC4UserInterfaceInstallerURI'),'\", \"C:\\Comcast\\Install-UC4UserInterface.zip\")')]",
+        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\Developer.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
+    
+    },
+    "resources": [
+        {
+            "name": "[parameters('imageTemplateName')]",
+            "type": "Microsoft.VirtualMachineImages/imageTemplates",
+            "apiVersion": "[parameters('api-version')]",
+            "location": "[parameters('svclocation')]",
+            "dependsOn": [],
+            "tags": {
+                "userIdentity": "enabled"
+            },
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[parameters('ManagedIdentityID')]": {}
+                }
+            },
+            "properties": {
+                "buildTimeoutInMinutes": 180,
+                "vmProfile": {
+                    "vmSize": "Standard_D4s_v5",
+                    "osDiskSizeGB": 128,
+                    "vnetConfig": {
+                        "subnetId": "[parameters('SubnetID')]"
+                    }
+                },
+                "source": {
+                    "type": "SharedImageVersion",
+                    "imageVersionId": "[parameters('imageVersionID')]"
+                },
+                "customize": [
+                    {
+                        "type": "PowerShell",
+                        "name": "Download AccessDatabaseEngineCMD",
+                        "inline": [
+                            "[variables('AccessDatabaseEngineCMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download Ginger.4.2.0.0_CMD",
+                        "inline": [
+                            "[variables('Ginger.4.2.0.0_CMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download MFLRAnalysis12.60CMD",
+                        "inline": [
+                            "[variables('MFLRAnalysis12.60CMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download MFLRVUGen12.60CMD",
+                        "inline": [
+                            "[variables('MFLRVUGen12.60CMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download MFLRVUG_00264CMD",
+                        "inline": [
+                            "[variables('MFLRVUG_00264CMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell", 
+                        "name": "Download UC4UserInterface",
+                        "inline": ["[variables('UC4UserInterfaceDownloadCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install UC4UserInterface",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-UC4UserInterface.ps1"
+                    },
+                    {
+                        "type": "PowerShell",                        
+                        "name": "Install AccessDatabaseEngineCMD",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AccessDatabaseEngine.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Ginger.4.2.0.0_CMD",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Ginger.4.2.0.0.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install MFLRAnalysis12.60CMD",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MFLRAnalysis12.60.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install NotepadPP",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-NotepadPP.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "AWS CLI 2.0",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AWSCLI.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "AWS SAM CLI ",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AWSSAMCLI.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Azure PowerShell Module",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AzurePS.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install ActiveDirectory RSAT",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowRSAT.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "File",
+                        "name": "Download VSBuildTools",
+                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/vs_buildtools.exe",
+                        "destination": "C:\\Comcast\\vs_buildtools.exe"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Configure VSBuildTools",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSBuildTools.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "File",
+                        "name": "Download VS Professional 2019",
+                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/vs_professional__2019.exe",
+                        "destination": "C:\\Comcast\\vs_professional__2019.exe"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Configure  VS Professional 2019",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSPro2019.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install OpenSSL",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-OpenSSL.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Python",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Python.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install PyCharm",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-PyCharm.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Microsoft Build- openjdk11microsoft",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-openjdk11.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install oracle17jdk",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-oracle17jdk.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install JDK8_211",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JDK8_211.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Maven",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Maven.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Nuget",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Nuget.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Gulp",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Gulp.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Putty",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Putty.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install SOAP UI",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SOAPUI.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install SQL Management Studio",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SQLManagementStudio.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install  MySQL Workbench",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MySQLWorkBench.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install WinSCP",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-WinSCP.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Azure Data Studio",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AzureDataStudio.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install DBeaver",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-DBeaver.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install MongoDB Compass",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MongoDBCompass.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install InelliJ IDEA",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-IntelliJIDEA.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "CollectInstalledApps",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["Get-ItemProperty HKLM:\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*,HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate -Unique | Where-Object {$_.DisplayName -ne \"\"} | Sort-Object -Property DisplayName | Export-CSV C:\\Comcast\\Developer.csv -NoTypeInformation","choco install azcopy10 -y --no-progress" ,"[variables('InstalledApplicationsAzcopy')]"]           
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "Write-Output 'restarting post Developer apps installation'",
+                        "restartTimeout": "15m"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Pause to fix SysPrep",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": [
+                            "Start-Sleep -Seconds 300"
+                        ]
+                    }
+                ],
+                "distribute": [
+                    {
+                        "type": "SharedImage",
+                        "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
+                        "runOutputName": "sigOutput",
+                        "artifactTags": {
+                            "source": "21h1-evd-o365pp-g2",
+                            "baseosimg": "21h1-evd-o365pp-g2"
+                        },
+                        "replicationRegions": [
+                            "eastus"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
