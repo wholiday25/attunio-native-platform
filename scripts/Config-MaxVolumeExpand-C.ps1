@@ -1,3 +1,5 @@
+Start-Transcript  -PATH "C:\Comcast\Config-MaxVolumeExpand-C.txt"
+
 Set-Service -Name defragsvc -StartupType Manual
 <#
    Extend a Logical Disk to maximum partition size for that volume
@@ -41,3 +43,5 @@ Write-Output "-------------------------------------------------------------- "
 Write-Output "Document resulting size for $driveLetter"
 
 Get-Partition -DriveLetter $driveLetter
+
+Stop-Transcript
