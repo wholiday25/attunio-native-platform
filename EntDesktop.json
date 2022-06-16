@@ -168,7 +168,7 @@
                         "type": "PowerShell", 
                         "name": "Download Creston Remote Client for Teams",
                         "inline": ["[variables('CrestronRemoteClientTeamsURICMD')]"]                    
-                    },                    ,
+                    },
                     {
                         "type": "PowerShell",
                         "name": "Install Crowdstrike",
