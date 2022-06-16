@@ -44,7 +44,7 @@
         "MFLRVUG_00264URI": {
             "type": "string"
         },
-            "UC4UserInterfaceInstallerURI": {
+         "UC4UserInterfaceInstallerURI": {
                 "type": "string"
             }
     },
@@ -277,6 +277,14 @@
                             0,
                             3010
                         ]
+                    }, 
+                    {
+                        "type": "PowerShell",
+                        "name": "Install PyCharm Pro",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-PyCharmPro.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
