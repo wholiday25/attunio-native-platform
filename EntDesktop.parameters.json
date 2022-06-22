@@ -35,9 +35,6 @@
         "InstalledApplicationsURI": {
             "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2021-11-19T19:29:52Z&se=2022-11-20T03:29:52Z&spr=https&sv=2020-08-04&sr=c&sig=zDeYCTSKX45iqatZXFTPEu3Xrv%2Ft38nNxAB4hSScT90%3D"
         },
-        "CrestronRemoteClientTeamsURI": {
-            "value": "https://aibdev.blob.core.windows.net/installers/Install-CrestronRemoteClientTeams_785.zip?sp=r&st=2022-06-16T17:25:00Z&se=2032-06-17T01:25:00Z&spr=https&sv=2021-06-08&sr=b&sig=MYuN8AlNWOx88dIzuScEVNmOpYFDBV%2F6APQbeRhQO2g%3D"
-        },
         "VisioInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/InstallVisio-WVD.zip?sv=2020-04-08&st=2021-05-19T03%3A20%3A58Z&se=2031-05-20T03%3A20%3A00Z&sr=b&sp=r&sig=RULdaktuWNtGmTvj3bkCvw0yJ7tOrEPIZ8NUXwUpsRY%3D"
         }

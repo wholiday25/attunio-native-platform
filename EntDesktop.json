@@ -35,9 +35,6 @@
         "ProjectInstallerURI": {
             "type": "string"
         },
-        "CrestronRemoteClientTeamsURI": {
-            "type": "string"
-        },
         "VisioInstallerURI": {
             "type": "string"
         }
@@ -48,7 +45,6 @@
         "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-AVD.zip\")')]",
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
         "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
-        "CrestronRemoteClientTeamsURICMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrestronRemoteClientTeamsURI'),'\", \"C:\\Comcast\\Install-CrestronRemoteClientTeams_785.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\EntDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
     "resources": [
@@ -165,23 +161,11 @@
                         ]
                     },
                     {
-                        "type": "PowerShell", 
-                        "name": "Download Creston Remote Client for Teams",
-                        "inline": ["[variables('CrestronRemoteClientTeamsURICMD')]"]                    
-                    },
-                    {
                         "type": "PowerShell",
                         "name": "Install Crowdstrike",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CrowdStrike.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install Creston Remote Client for Teams",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CrestronRemoteClientTeams_785.ps1"
                     },
                     {
                         "type": "PowerShell",
