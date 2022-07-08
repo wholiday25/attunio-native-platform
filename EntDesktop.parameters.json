@@ -24,7 +24,7 @@
             "value": "https://aibdev.blob.core.windows.net/installers/Install-Teammate.zip?sp=r&st=2022-01-26T19:59:34Z&se=2032-01-27T03:59:34Z&spr=https&sv=2020-08-04&sr=b&sig=Fhblrbl79IExN8xt%2Bq6Tr2qARFB9a%2BmkL9hDr%2FQC%2BrA%3D"
         },
         "CrowdStrikeInstallerURI": {
-            "value": "https://aibdev.blob.core.windows.net/installers/InstallCrowdStrike-AVD.zip?sp=r&st=2022-01-14T15:43:21Z&se=2042-01-14T23:43:21Z&spr=https&sv=2020-08-04&sr=b&sig=ARPZHV6p2CAEOaraZ0vi9h%2BVNxAKPD2oH4rawXwgYuI%3D"
+            "value": "https://aibdev.blob.core.windows.net/installers/InstallCrowdStrike-AVD.zip?sp=r&st=2022-07-06T18:38:09Z&se=2033-07-07T02:38:09Z&spr=https&sv=2021-06-08&sr=b&sig=gMYuN9Mk1n5NHhD4yKljKONv44JcSF9IxObT9QYMnTM%3D"
         },
         "RSASecurIDTokenInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-RSASecurIDToken.zip?sp=rl&st=2021-08-10T18:47:38Z&se=2031-11-11T18:47:00Z&sv=2020-08-04&sr=b&sig=OtdouhJ2ANt3xP1rVu42Bcz3V%2BOWxlVqFYkRJ9TGabQ%3D"

@@ -173,6 +173,14 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Install PyCharm Pro",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-PyCharmPro.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Install Microsoft Build- openjdk11microsoft",
                         "runElevated": true,
                         "runAsSystem": true,
