@@ -291,6 +291,20 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Install winmerge",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-winmerge.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install tortoisegit",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-tortoisegit.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Install Java x86",
                         "runElevated": true,
                         "runAsSystem": true,
