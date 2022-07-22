@@ -31,7 +31,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
         $azurergremove = get-azresourcegroup $searchstr        
         Write-Output "Removing Image Resource Group $($azurergremove.ResourceId)"
         remove-azresourcegroup $azurergremove -Force
-
+        Start-Sleep -Seconds 180
         Write-Output "Create ImageDefinition $imageTemplateName in $sharedimagegallery in the $location location"
         $acquiresku = (Get-AzGalleryImageDefinition -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName $imageTemplateName)
         $acquiresku2 = ($acquiresku | Select-Object -ExpandProperty Identifier).sku
@@ -56,6 +56,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
     try {
         Write-Output "Removing existing AIB Template $imageTemplateName"
         Remove-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName
+        Start-Sleep -Seconds 180
 
     }
     catch {
