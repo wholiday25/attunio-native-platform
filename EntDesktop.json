@@ -305,6 +305,20 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Install kubernetes-cli",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Kubectl.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install cloudfoundry-cli",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CloudFoundary.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Install Java x86",
                         "runElevated": true,
                         "runAsSystem": true,
