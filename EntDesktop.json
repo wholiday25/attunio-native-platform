@@ -76,7 +76,7 @@
                     "type": "PlatformImage",
                     "publisher": "MicrosoftWindowsDesktop",
                     "offer": "office-365",
-                    "sku": "21h1-evd-o365pp-g2",
+                    "sku": "win10-21h2-avd-m365-g2",
                     "version": "latest"
                 },
                 "customize": [
@@ -291,6 +291,34 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Install winmerge",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-winmerge.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install tortoisegit",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-tortoisegit.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install kubernetes-cli",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Kubectl.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install cloudfoundry-cli",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CloudFoundary.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Install Java x86",
                         "runElevated": true,
                         "runAsSystem": true,
@@ -321,6 +349,13 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Expand C Drive to 265 GB",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Config-MaxVolumeExpand-C.ps1"
                     },
                     {
                         "type": "PowerShell",
@@ -357,8 +392,8 @@
                         "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
                         "runOutputName": "sigOutput",
                         "artifactTags": {
-                            "source": "21h1-evd-o365pp-g2",
-                            "baseosimg": "21h1-evd-o365pp-g2"
+                            "source": "win10-21h2-avd-m365-g2",
+                            "baseosimg": "win10-21h2-avd-m365-g2"
                         },
                         "replicationRegions": [
                             "eastus"

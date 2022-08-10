@@ -28,6 +28,7 @@ catch {
 try{
      Write-Output "Removing existing AIB Template $imageTemplateName"
     Remove-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName 
+    Start-Sleep -Seconds 180
     }
 catch {
     $ErrorMessage = $_.Exception.Message
@@ -40,6 +41,7 @@ try {
     $azurergremove = get-azresourcegroup $searchstr        
     Write-Output "Removing Image Resource Group $($azurergremove.ResourceId)"
     remove-azresourcegroup $azurergremove -Force
+    Start-Sleep -Seconds 180
    }
 catch {
     $ErrorMessage = $_.Exception.Message
@@ -59,5 +61,6 @@ $oldestVersion = $versions | Sort-Object -Property {$_.PublishingProfile.Publish
 if ($versions.count -gt 3) {
     "Found oldest version $($oldestVersion.Name)...Deleting..."
     $oldestVersion | Remove-AzGalleryImageVersion -Force
+
 
 }
