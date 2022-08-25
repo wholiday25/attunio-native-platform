@@ -1,0 +1,10 @@
+<#
+This script installs dbeaver via Chocolatey
+#>
+
+# Install Chocolatey if it isn't already installed
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+# Install golang 1.19 (Community Edition)
+choco install golang -y --no-progress
+
