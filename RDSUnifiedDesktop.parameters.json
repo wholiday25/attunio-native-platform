@@ -41,6 +41,9 @@
         "SecureCRTInstallerURI": {
                "value": "https://aibdev.blob.core.windows.net/installers/Install-SecureCRT.zip?sp=r&st=2021-12-01T20:00:15Z&se=2031-12-02T04:00:15Z&spr=https&sv=2020-08-04&sr=b&sig=hl5D5KJQnW7IhuFbh9ldhJouEKWfZUojPo%2BMGUSsZGY%3D"
         },
+        "SAPHanaAdobeLifecycleURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-SAPHanaAdobeLifecycle.zip?sp=r&st=2022-08-03T18:28:48Z&se=2032-08-04T02:28:48Z&spr=https&sv=2021-06-08&sr=b&sig=W2JwiNPB9rb%2FSjzyngIhR0qw2%2Bb6EHlif2lArzDsbsE%3D"
+     },
         "InstalledApplicationsURI": {
             "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2021-11-19T19:29:52Z&se=2022-11-20T03:29:52Z&spr=https&sv=2020-08-04&sr=c&sig=zDeYCTSKX45iqatZXFTPEu3Xrv%2Ft38nNxAB4hSScT90%3D"
         },
