@@ -443,6 +443,17 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Install GoLang",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-GoLang.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Install MongoDB Compass",
                         "runElevated": true,
                         "runAsSystem": true,

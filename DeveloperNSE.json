@@ -34,6 +34,9 @@
         },
         "Ginger.4.2.0.0_URI": {
             "type": "string"
+        },
+        "Odbcjava_URI": {
+            "type": "string"
         }
     },
 
@@ -41,6 +44,7 @@
 
         "AccessDatabaseEngineCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AccessDatabaseEngineURI'),'\", \"C:\\Comcast\\AccessDatabaseEngine.exe\")')]",
         "Ginger.4.2.0.0_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Ginger.4.2.0.0_URI'),'\", \"C:\\Comcast\\Install-Ginger.4.2.0.0.exe\")')]",
+        "Odbcjava_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Odbcjava_URI'),'\", \"C:\\Comcast\\Install-Odbcjava.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\DeveloperNSE.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 
@@ -86,6 +90,11 @@
                         "type": "PowerShell",
                         "name": "Download Ginger.4.2.0.0_CMD",
                         "inline": ["[variables('Ginger.4.2.0.0_CMD')]"]           
+                    },  
+                    {
+                        "type": "PowerShell",
+                        "name": "Download Odbcjava_CMD",
+                        "inline": ["[variables('Odbcjava_CMD')]"]           
                     },
                     {
                         "type": "PowerShell",
@@ -93,12 +102,20 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AccessDatabaseEngine.ps1"
-                    },                    {
+                    },                    
+                    {
                         "type": "PowerShell",
                         "name": "Install Ginger.4.2.0.0_CMD",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Ginger.4.2.0.0.ps1"
+                    },                    
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Odbcjava_CMD",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Odbcjava.ps1"
                     },
                     {
                         "type": "PowerShell",
