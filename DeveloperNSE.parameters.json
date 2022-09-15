@@ -29,6 +29,9 @@
     "Odbcjava_URI": {
         "value": "https://aibdev.blob.core.windows.net/installers/Install-Odbcjava.zip?sp=r&st=2022-08-19T19:14:56Z&se=2032-08-20T03:14:56Z&spr=https&sv=2021-06-08&sr=b&sig=D2LXlcW7rWpvGT2enrUWefK2wYjCgryNTIBHoKsVjMY%3D"
     },
+    "AdobeCampaignClassic7_URI": {
+        "value": "https://aibdev.blob.core.windows.net/installers/Install-AdobeCampaignClassic7.zip?sp=r&st=2022-09-15T20:07:56Z&se=2032-09-16T04:07:56Z&spr=https&sv=2021-06-08&sr=b&sig=Xam7z6eJOZhjKxskxuVt%2BICYXk%2BGgEdr3HhwjpZOM54%3D"
+    },
     "InstalledApplicationsURI": {
         "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2021-11-19T19:29:52Z&se=2022-11-20T03:29:52Z&spr=https&sv=2020-08-04&sr=c&sig=zDeYCTSKX45iqatZXFTPEu3Xrv%2Ft38nNxAB4hSScT90%3D"
     },
