@@ -1,5 +1,5 @@
 Start-Transcript  -PATH "C:\Comcast\Install-AdobeCampaignClassic7.txt"
-Expand-Archive -Path "C:\Comcast\Imstall-AdobeCampaignClassic7.zip" -DestinationPath "C:\Comcast\AdobeCampaignClassic7" -Force
+Expand-Archive -Path "C:\Comcast\Install-AdobeCampaignClassic7.zip" -DestinationPath "C:\Comcast\AdobeCampaignClassic7" -Force
 
 #Start-Process -FilePath "C:\Comcast\SAPGUI\SAP-GUI-RDS-UNIFIED_20210810_1950.exe" -ArgumentList " /silent"
 
