@@ -13,8 +13,7 @@ Start-Transcript  -PATH "C:\Comcast\Install-VSPro2019.txt"
 
 $startInfo = New-Object System.Diagnostics.ProcessStartInfo
 $startInfo.FileName = "C:\Comcast\vs_professional__2019.exe"
-$startInfo.Arguments = "--nocache --wait --noUpdateInstaller --add Microsoft.VisualStudio.Component.SQL.SSDT;includeRecommended;includeOptional --quiet --norestart"
-#$startInfo.Arguments = "--nocache --wait --noUpdateInstaller --add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NetWeb;includeRecommended;includeOptional --add Microsoft.VisualStudio.Workload.NetCoreTools;includeRecommended;includeOptional --quiet --norestart"
+$startInfo.Arguments = "--nocache --wait --noUpdateInstaller --add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NetWeb;includeRecommended;includeOptional --add Microsoft.VisualStudio.Workload.NetCoreTools;includeRecommended;includeOptional --add Microsoft.VisualStudio.Component.SQL.SSDT;includeRecommended;includeOptional --quiet --norestart"
 $process = New-Object System.Diagnostics.Process
 $process.StartInfo = $startInfo
 $process.Start()
