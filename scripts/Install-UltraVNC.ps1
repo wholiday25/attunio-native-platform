@@ -1,5 +1,5 @@
 <#
-This script installs Google UltraVNC 1.3200  via Chocolatey
+This script installs UltraVNC 1.3200  via Chocolatey
 #>
 
 # Install Chocolatey if it isn't already installed
