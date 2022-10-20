@@ -5,5 +5,5 @@ This script installs SQL Management Studio via Chocolatey
 # Install Chocolatey if it isn't already installed
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-# Install Google Chrome
+# Install SQL Management Studio
 choco install sql-server-management-studio -y --no-progress
