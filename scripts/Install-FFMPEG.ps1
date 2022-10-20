@@ -1,10 +1,10 @@
 <#
-This script installs DNS BIND tools programming language  via Chocolatey
+This script installs FFMPEG  via Chocolatey
 #>
 
 # Install Chocolatey if it isn't already installed
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-# Install dbeaver 21.x (Community Edition)
+# Install FFMPEG
 choco install ffmpeg -y --no-progress
 

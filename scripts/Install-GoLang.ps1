@@ -1,5 +1,5 @@
 <#
-This script installs dbeaver via Chocolatey
+This script installs golang 1.19 (Community Edition) via Chocolatey
 #>
 
 # Install Chocolatey if it isn't already installed
