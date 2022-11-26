@@ -44,6 +44,9 @@
         "MFLRVUG_00264URI": {
             "type": "string"
         },
+        "MuleSoftAnyPointInstallerURI": {
+            "type": "string"
+        },
          "UC4UserInterfaceInstallerURI": {
                 "type": "string"
             }
