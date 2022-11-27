@@ -58,7 +58,7 @@
         "MFLRVUGen12.60CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUGen12.60URI'),'\", \"C:\\Comcast\\Install-MFLRVUGen12.60.zip\")')]",
         "MFLRVUG_00264CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUG_00264URI'),'\", \"C:\\Comcast\\Install-MFLRVUG_00264.zip\")')]",
         "UC4UserInterfaceDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('UC4UserInterfaceInstallerURI'),'\", \"C:\\Comcast\\Install-UC4UserInterface.zip\")')]",
-        "MuleSoftAnyPointDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MuleSoftAnyPointInstallerURI'),'\", \"C:\\Comcast\\Install-MuleSoftAnyPoint.zip\")')]",
+        "MuleSoftAnyPointDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MuleSoftAnyPointInstallerURI'),'\", \"C:\\Comcast\\Install-AnyPointStudio.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\Developer.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     
     },
