@@ -319,10 +319,10 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install Java x86",
+                        "name": "Install Java x86 v1.8.341 due to CLIPS and SOM incompatibility",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86-RDS-341.ps1"
                     },
                     {
                         "type": "PowerShell",
@@ -345,10 +345,10 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install Java x64",
+                        "name": "Install Java x64 v1.8.341 due to CLIPS and SOM incompatibility",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64-RDS-341.ps1"
                     },
                     {
                         "type": "PowerShell",
