@@ -85,7 +85,7 @@
             },
 
             "properties": {
-                "buildTimeoutInMinutes": 120,
+                "buildTimeoutInMinutes": 300,
 
                 "vmProfile": {
                     "vmSize": "Standard_D4s_v5",
@@ -208,6 +208,18 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AccessDatabaseEngine.ps1"
+                    },{
+                        "type": "PowerShell",
+                        "name": "Install Java x86 V 1.8.341",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86-RDS-341.ps1"
+                    },{
+                        "type": "PowerShell",
+                        "name": "Install Java x64 V 1.8.341",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64-RDS-341.ps1"
                     },
                               {
                         "type": "PowerShell",

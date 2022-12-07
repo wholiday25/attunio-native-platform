@@ -33,7 +33,7 @@
             "value": "https://aibdev.blob.core.windows.net/installers/InstallProject-WVD.zip?sv=2020-04-08&st=2021-05-19T03%3A20%3A36Z&se=2031-05-20T03%3A20%3A00Z&sr=b&sp=r&sig=stvMKUiuSCHN%2B23eIatyH5y9POrIRrKahexlnRP61FA%3D"
         },
         "InstalledApplicationsURI": {
-            "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2021-11-19T19:29:52Z&se=2022-11-20T03:29:52Z&spr=https&sv=2020-08-04&sr=c&sig=zDeYCTSKX45iqatZXFTPEu3Xrv%2Ft38nNxAB4hSScT90%3D"
+            "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2022-11-25T20:51:50Z&se=2032-11-26T04:51:50Z&spr=https&sv=2021-06-08&sr=c&sig=slVeDaDEFLYVZ2KVs5edNHOAXitadrFHsaryYkiNAtI%3D"
         },
         "VisioInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/InstallVisio-WVD.zip?sv=2020-04-08&st=2021-05-19T03%3A20%3A58Z&se=2031-05-20T03%3A20%3A00Z&sr=b&sp=r&sig=RULdaktuWNtGmTvj3bkCvw0yJ7tOrEPIZ8NUXwUpsRY%3D"
