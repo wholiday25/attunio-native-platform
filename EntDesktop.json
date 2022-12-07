@@ -32,14 +32,7 @@
         "CrowdStrikeInstallerURI": {
             "type": "string"
         },
-<<<<<<< HEAD
         "NotepadPPBigFilesURI": {
-=======
-        "ThinkCellInstallerURI": {
-            "type": "string"
-        },
-        "SmartViewInstallerURI": {
->>>>>>> 6528b010bc6018ece748c80403fc61bd3bd0d771
             "type": "string"
         },
         "ProjectInstallerURI": {
