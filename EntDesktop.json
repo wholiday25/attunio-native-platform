@@ -32,7 +32,14 @@
         "CrowdStrikeInstallerURI": {
             "type": "string"
         },
+<<<<<<< HEAD
         "NotepadPPBigFilesURI": {
+=======
+        "ThinkCellInstallerURI": {
+            "type": "string"
+        },
+        "SmartViewInstallerURI": {
+>>>>>>> 6528b010bc6018ece748c80403fc61bd3bd0d771
             "type": "string"
         },
         "ProjectInstallerURI": {
@@ -49,7 +56,9 @@
         "NotepadPPBigFilesCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('NotepadPPBigFilesURI'),'\", \"C:\\Comcast\\Install-NotepadPPBigFiles_x64.zip\")')]",
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
         "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
-        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\EntDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
+        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\EntDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]",
+        "SmartViewDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SmartViewInstallerURI'),'\", \"C:\\Comcast\\InstallSmartView-AVD.zip\")')]",
+        "ThinkCellDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ThinkCellInstallerURI'),'\", \"C:\\Comcast\\InstallThinkCell-AVD.zip\")')]"
     },
     "resources": [
         {
@@ -152,6 +161,13 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download ThinkCell",
+                        "inline": [
+                            "[variables('ThinkCellDownloadCMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Download Visio",
                         "inline": [
                             "[variables('VisioDownloadCMD')]"
@@ -170,6 +186,13 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CrowdStrike.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install ThinkCell",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-ThinkCell.ps1"
                     },
                     {
                         "type": "PowerShell",
@@ -323,7 +346,7 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install Java x86 v1.8.341 due to CLIPS and SOM incompatibility",
+                        "name": "Install Java x86",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86-RDS-341.ps1"
