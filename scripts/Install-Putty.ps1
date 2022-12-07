@@ -7,4 +7,3 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 
 # Install putty
 choco install putty.install -y --no-progress
-
