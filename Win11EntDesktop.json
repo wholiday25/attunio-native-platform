@@ -45,7 +45,7 @@
         "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-AVD.zip\")')]",
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
         "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
-        "SmartViewDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SmartViewInstallerURI'),'\", \"C:\\Comcast\\Install-SmartView-AVD.zip\")')]",
+        "SmartViewDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SmartViewInstallerURI'),'\", \"C:\\Comcast\\Install-SmartViewl-AVD.zip\")')]",
         "ThinkCellDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ThinkCellInstallerURI'),'\", \"C:\\Comcast\\Install-ThinkCell-AVD.zip\")')]"
         
     },
