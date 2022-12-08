@@ -52,8 +52,8 @@
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
         "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\EntDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]",
-        "SmartViewDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SmartViewInstallerURI'),'\", \"C:\\Comcast\\InstallSmartView-AVD.zip\")')]",
-        "ThinkCellDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ThinkCellInstallerURI'),'\", \"C:\\Comcast\\InstallThinkCell-AVD.zip\")')]"
+        "SmartViewDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SmartViewInstallerURI'),'\", \"C:\\Comcast\\Install-SmartViewl-AVD.zip\")')]",
+        "ThinkCellDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ThinkCellInstallerURI'),'\", \"C:\\Comcast\\Install-ThinkCell-AVD.zip\")')]"
     },
     "resources": [
         {
@@ -188,6 +188,12 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-ThinkCell.ps1"
+                    },{
+                        "type": "PowerShell",
+                        "name": "Install SmartView",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SmartView.ps1"
                     },
                     {
                         "type": "PowerShell",

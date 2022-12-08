@@ -26,6 +26,12 @@
         "CrowdStrikeInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/InstallCrowdStrike-AVD.zip?sp=r&st=2022-10-24T14:32:57Z&se=2032-10-24T22:32:57Z&spr=https&sv=2021-06-08&sr=b&sig=1OaxQ87Qm1l1rd%2BMd7TLRpj9MPa6zpReHpLaSANmAL4%3D"
         },
+        "SmartViewnstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-SmartView-AVD.zip?sp=r&st=2022-10-24T14:32:57Z&se=2032-10-24T22:32:57Z&spr=https&sv=2021-06-08&sr=b&sig=1OaxQ87Qm1l1rd%2BMd7TLRpj9MPa6zpReHpLaSANmAL4%3D"
+        },
+        "ThinkCellInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-ThinkCell-AVD.zip?sp=r&st=2022-10-24T14:32:57Z&se=2032-10-24T22:32:57Z&spr=https&sv=2021-06-08&sr=b&sig=1OaxQ87Qm1l1rd%2BMd7TLRpj9MPa6zpReHpLaSANmAL4%3D"
+        },
         "RSASecurIDTokenInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-RSASecurIDToken.zip?sp=rl&st=2021-08-10T18:47:38Z&se=2031-11-11T18:47:00Z&sv=2020-08-04&sr=b&sig=OtdouhJ2ANt3xP1rVu42Bcz3V%2BOWxlVqFYkRJ9TGabQ%3D"
         },
