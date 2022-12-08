@@ -23,7 +23,13 @@
         "TeammateInstallerURI": {
             "type": "string"
         },
-            "CrowdStrikeInstallerURI": {
+        "CrowdStrikeInstallerURI": {
+            "type": "string"
+        },
+        "SmartViewInstallerURI": {
+            "type": "string"
+        },
+        "ThinkCellInstallerURI": {
             "type": "string"
         },
         "ProjectInstallerURI": {
@@ -38,7 +44,10 @@
         "TeammateDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TeammateInstallerURI'),'\", \"C:\\Comcast\\Install-Teammate.zip\")')]",
         "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-AVD.zip\")')]",
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
-        "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]"
+        "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
+        "SmartViewDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SmartViewInstallerURI'),'\", \"C:\\Comcast\\Install-SmartViewl-AVD.zip\")')]",
+        "ThinkCellDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ThinkCellInstallerURI'),'\", \"C:\\Comcast\\Install-ThinkCell-AVD.zip\")')]"
+        
     },
 
 
@@ -125,6 +134,16 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download SmartView",
+                        "inline": ["[variables('SmartViewDownloadCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download ThinkCell",
+                        "inline": ["[variables('ThinkCellDownloadCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Download Visio",
                         "inline": ["[variables('VisioDownloadCMD')]"]                    
                     },
@@ -139,6 +158,20 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CrowdStrike.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install SmartView",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SmartView.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install ThinkCell",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-ThinkCell.ps1"
                     },
                     {
                         "type": "PowerShell",

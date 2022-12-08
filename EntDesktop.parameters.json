@@ -26,6 +26,12 @@
         "CrowdStrikeInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/InstallCrowdStrike-AVD.zip?sp=r&st=2022-10-24T14:32:57Z&se=2032-10-24T22:32:57Z&spr=https&sv=2021-06-08&sr=b&sig=1OaxQ87Qm1l1rd%2BMd7TLRpj9MPa6zpReHpLaSANmAL4%3D"
         },
+        "ThinkCellInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-ThinkCell-AVD.zip?sp=rcw&st=2022-12-08T11:56:01Z&se=2032-12-08T19:56:01Z&sv=2021-06-08&sr=b&sig=CaceeKeIPvdgmbJ0W9dJ39b5o2rkZatdQo27mbngVsg%3D"
+        },
+        "SmartViewInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-SmartViewl-AVD.zip?sp=rcw&st=2022-12-08T11:53:08Z&se=2032-12-08T19:53:08Z&spr=https&sv=2021-06-08&sr=b&sig=IQRwGnHu4BaOQud62TFrwfRaF%2FfiTbLi40xkoRRk%2BQ0%3D"
+        },
         "RSASecurIDTokenInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-RSASecurIDToken.zip?sp=rl&st=2021-08-10T18:47:38Z&se=2031-11-11T18:47:00Z&sv=2020-08-04&sr=b&sig=OtdouhJ2ANt3xP1rVu42Bcz3V%2BOWxlVqFYkRJ9TGabQ%3D"
         },
@@ -33,10 +39,7 @@
             "value": "https://aibdev.blob.core.windows.net/installers/InstallProject-WVD.zip?sv=2020-04-08&st=2021-05-19T03%3A20%3A36Z&se=2031-05-20T03%3A20%3A00Z&sr=b&sp=r&sig=stvMKUiuSCHN%2B23eIatyH5y9POrIRrKahexlnRP61FA%3D"
         },
         "InstalledApplicationsURI": {
-            "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2022-11-25T20:51:50Z&se=2032-11-26T04:51:50Z&spr=https&sv=2021-06-08&sr=c&sig=slVeDaDEFLYVZ2KVs5edNHOAXitadrFHsaryYkiNAtI%3D"
-        },
-        "NotepadPPBigFilesURI": {
-            "value": "https://aibdev.blob.core.windows.net/installers/Install-NotepadPlusPlusBigFiles.zip?sp=r&st=2022-12-08T15:14:16Z&se=2032-12-08T23:14:16Z&spr=https&sv=2021-06-08&sr=b&sig=ow3Oou86fG4NZqO1RWqXroR9ZfT9N5rcWmT7DFyrBok%3D"
+            "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2021-11-19T19:29:52Z&se=2022-11-20T03:29:52Z&spr=https&sv=2020-08-04&sr=c&sig=zDeYCTSKX45iqatZXFTPEu3Xrv%2Ft38nNxAB4hSScT90%3D"
         },
         "VisioInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/InstallVisio-WVD.zip?sv=2020-04-08&st=2021-05-19T03%3A20%3A58Z&se=2031-05-20T03%3A20%3A00Z&sr=b&sp=r&sig=RULdaktuWNtGmTvj3bkCvw0yJ7tOrEPIZ8NUXwUpsRY%3D"
@@ -44,7 +47,6 @@
     }
    
 }    
-
 
 
 
