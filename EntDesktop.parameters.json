@@ -29,7 +29,7 @@
         "ThinkCellInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-ThinkCell-AVD.zip?sp=rcw&st=2022-12-08T11:56:01Z&se=2032-12-08T19:56:01Z&sv=2021-06-08&sr=b&sig=CaceeKeIPvdgmbJ0W9dJ39b5o2rkZatdQo27mbngVsg%3D"
         },
-        "SmartViewlInstallerURI": {
+        "SmartViewInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-SmartViewl-AVD.zip?sp=rcw&st=2022-12-08T11:53:08Z&se=2032-12-08T19:53:08Z&spr=https&sv=2021-06-08&sr=b&sig=IQRwGnHu4BaOQud62TFrwfRaF%2FfiTbLi40xkoRRk%2BQ0%3D"
         },
         "RSASecurIDTokenInstallerURI": {
