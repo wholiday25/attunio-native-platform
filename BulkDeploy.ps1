@@ -16,7 +16,8 @@ $parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegal
 
 
 
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'Win11*', 'X_*', 'aib*', 'SingleApp*','EntDesktop*','*publish*', 'entdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') {
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'Win11*', 'X_*', 'aib*', 'SingleApp*','EntDesktop*','*publish*', 'entdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json') 
+{
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageTemplateFileName = $imageTemplateName + ".json"
     $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json"
@@ -92,13 +93,15 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
     }
     #be sure to modify parameters file to include [IMAGEID] under image for source location. this script rewrites the file.
 
-    $gallery = Get-AzGallery -Name $galleryName
-    $versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupName -GalleryName $gallery.Name -GalleryImageDefinitionName $imageTemplateName
-    $oldestVersion = $versions | Sort-Object -Property {$_.PublishingProfile.PublishedDate} | Select-Object -First 1
-    if ($versions.count -gt 8) {
-        "Found oldest version $($oldestVersion.Name)...Deleting..."
-        $oldestVersion | Remove-AzGalleryImageVersion -Force
+# 12-9-2022  Remvoving this block, as we now get constant error:
+##[error]Cannot find path 'C:\Comcast\Agent1\_work\13\s\VSWorkspaceState.parameters.json' because it does not exist.
+#suspect the image delete attemp is messing up script
+#    $gallery = Get-AzGallery -Name $galleryName
+#    $versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupName -GalleryName $gallery.Name -GalleryImageDefinitionName $imageTemplateName
+#   $oldestVersion = $versions | Sort-Object -Property {$_.PublishingProfile.PublishedDate} | Select-Object -First 1
+#  if ($versions.count -gt 8) {
+#     "Found oldest version $($oldestVersion.Name)...Deleting..."
+#       $oldestVersion | Remove-AzGalleryImageVersion -Force  
+#    }
     
-    }
-    
-}
+#}
