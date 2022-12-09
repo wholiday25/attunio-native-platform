@@ -41,7 +41,7 @@
         "InstalledApplicationsURI": {
             "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2022-12-08T18:29:58Z&se=2032-12-09T02:29:58Z&spr=https&sv=2021-06-08&sr=c&sig=DpTli9FFMQdcArKXTXUUpxJBINLCGEpHgeHwBuS8mLc%3D"
         },
-        "NotepadPPBigFilesURI": {
+        "NotepadPlusPlusBigFilesURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-NotepadPlusPlusBigFiles.zip?sp=r&st=2022-12-08T15:44:37Z&se=2033-12-08T23:44:37Z&spr=https&sv=2021-06-08&sr=b&sig=Elho7Ul1MI0IaKzsDEB69lOVpXe1F56ZaqeNtWB%2FRSA%3D"
         },
         "VisioInstallerURI": {

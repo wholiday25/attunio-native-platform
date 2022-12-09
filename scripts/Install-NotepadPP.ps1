@@ -11,4 +11,4 @@ choco install notepadplusplus -y --no-progress
 #12/7/2022  Added BigFiles plugin for very larg (5.5 GB or more!) files, per CAS1008266
 # see https://github.com/superolmo/BigFiles
 
-Expand-Archive -Path "C:\Comcast\Install-NotepadPPBigFiles_x64.zip" -DestinationPath "C:\Program Files\Notepad++\plugins\BigFiles" -Force
+Expand-Archive -Path "C:\Comcast\Install-NotepadPlusPlusBigFiles.zip" -DestinationPath "C:\Program Files\Notepad++\plugins\BigFiles" -Force
