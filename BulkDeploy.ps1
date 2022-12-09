@@ -104,4 +104,4 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
 #       $oldestVersion | Remove-AzGalleryImageVersion -Force  
 #    }
     
-#}
+}
