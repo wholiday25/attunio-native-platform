@@ -44,6 +44,9 @@
         "NotepadPPBigFilesURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-NotepadPPBigFiles.zip?sp=r&st=2022-12-09T17:37:25Z&se=2033-12-10T01:37:25Z&spr=https&sv=2021-06-08&sr=b&sig=umyKGZDkosN%2FRJ5Ee0AzwTYALwkzawO1qyfPUfIfVOs%3D"
         },
+        "TableauDesktop64bit202138URI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-TableauDesktop64bit-2021-3-8.zip?sp=r&st=2022-12-13T14:57:50Z&se=2033-12-13T22:57:50Z&spr=https&sv=2021-06-08&sr=b&sig=18DC0CkQ2FUQ2ew5FObM5tAVNpzOvkWouTI1yLg50T0%3D"
+        },
         "VisioInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/InstallVisio-WVD.zip?sv=2020-04-08&st=2021-05-19T03%3A20%3A58Z&se=2031-05-20T03%3A20%3A00Z&sr=b&sp=r&sig=RULdaktuWNtGmTvj3bkCvw0yJ7tOrEPIZ8NUXwUpsRY%3D"
         }
