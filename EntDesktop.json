@@ -166,14 +166,14 @@
                         "type": "PowerShell",
                         "name": "Download NotepadPPBigFiles",
                         "inline": [
-                            "[variables('NotepadPPBigFilesCMD]"
+                            "[variables('NotepadPPBigFilesCMD')]"
                         ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Download TableauDesktop64bit202138",
                         "inline": [
-                            "[variables('TableauDesktop64bit202138CMD)]"
+                            "[variables('TableauDesktop64bit202138CMD')]"
                         ]
                     },
                     {
