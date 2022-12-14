@@ -31,3 +31,11 @@ jobs:
         ScriptPath: './SupportNowDesktopPublish.ps1'
         azurePowerShellVersion: 'LatestVersion'
 
+    - task: AzureFileCopy@5
+      inputs:
+        SourcePath: 'script/*'
+        azureSubscription: 'WVD-Dev'
+        Destination: 'AzureBlob'
+        storage: 'aibdev'
+        ContainerName: 'scripts'
+
