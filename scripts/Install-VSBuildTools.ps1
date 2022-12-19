@@ -6,6 +6,15 @@ $startInfo.Arguments = "--nocache --wait --noUpdateInstaller --add Microsoft.Vis
 $process = New-Object System.Diagnostics.Process
 $process.StartInfo = $startInfo
 $process.Start()
-$process.WaitForExit()
+#added 12/19/2022.  to rollback, remove comment from process, remove all lines except Stop-transcript
+#$process.WaitForExit()
+$timer = 0
+while (!$process.HasExited) {
 
-Stop-Transcript
+    #Wait 5 Seconds
+    sleep 5
+    $timer = $timer + 5
+    Write-Host "Time: $timer Seconds | Process info : $process"
+}
+Write-Host "Process $process exited"
+Stop-Transcript 
