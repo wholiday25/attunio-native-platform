@@ -185,6 +185,13 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download Samrtview",
+                        "inline": [
+                            "[variables('SmartViewDownloadCMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Download Visio",
                         "inline": [
                             "[variables('VisioDownloadCMD')]"
