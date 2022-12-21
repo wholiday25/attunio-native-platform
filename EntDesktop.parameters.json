@@ -30,7 +30,7 @@
             "value": "https://aibdev.blob.core.windows.net/installers/Install-ThinkCell-AVD.zip?sp=racwdyti&st=2022-12-19T16:46:48Z&se=2033-12-20T00:46:48Z&sv=2021-06-08&sr=b&sig=UrNyKDQY%2FGhjOi%2Bkt77uN2lNABsufaPzTOrlgPPLn9c%3D"
         },
         "SmartViewInstallerURI": {
-            "value": "https://aibdev.blob.core.windows.net/installers/Install-SmartView.zip?sp=r&st=2022-12-19T18:27:51Z&se=2034-12-20T02:27:51Z&spr=https&sv=2021-06-08&sr=b&sig=wxJwXBlxpGDmorSFAx7NFaSxxZr5D3VQ%2B9gmOTLLOSA%3D"
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-ThinkCell.zip?sp=r&st=2022-12-21T14:44:30Z&se=2034-02-21T22:44:30Z&spr=https&sv=2021-06-08&sr=b&sig=q52xtESATCPwHYJTdMqSnr%2BKedBW5ALpXQYRlELUz6A%3D"
         },
         "RSASecurIDTokenInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-SmartView.zip?sp=r&st=2022-12-19T18:59:09Z&se=2034-12-20T02:59:09Z&spr=https&sv=2021-06-08&sr=b&sig=KYe1eWwjqvrKZJZ2LQdp8naNGvi1L8BDpHysqzDyaHQ%3D"
