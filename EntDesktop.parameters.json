@@ -27,13 +27,13 @@
             "value": "https://aibdev.blob.core.windows.net/installers/InstallCrowdStrike-AVD.zip?sp=r&st=2022-10-24T14:32:57Z&se=2032-10-24T22:32:57Z&spr=https&sv=2021-06-08&sr=b&sig=1OaxQ87Qm1l1rd%2BMd7TLRpj9MPa6zpReHpLaSANmAL4%3D"
         },
         "ThinkCellInstallerURI": {
-            "value": "https://aibdev.blob.core.windows.net/installers/Install-ThinkCell-AVD.zip?sp=racwdyti&st=2022-12-19T16:46:48Z&se=2033-12-20T00:46:48Z&sv=2021-06-08&sr=b&sig=UrNyKDQY%2FGhjOi%2Bkt77uN2lNABsufaPzTOrlgPPLn9c%3D"
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-ThinkCell.zip?sp=r&st=2022-12-21T21:51:47Z&se=2034-02-22T05:51:47Z&spr=https&sv=2021-06-08&sr=b&sig=0rD1yqLoD7veI9VW7FJWUGrnys7XZ37Dn%2FeIPqeUtLo%3D"
         },
         "SmartViewInstallerURI": {
-            "value": "https://aibdev.blob.core.windows.net/installers/Install-ThinkCell.zip?sp=r&st=2022-12-21T14:44:30Z&se=2034-02-21T22:44:30Z&spr=https&sv=2021-06-08&sr=b&sig=q52xtESATCPwHYJTdMqSnr%2BKedBW5ALpXQYRlELUz6A%3D"
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-SmartView.zip?sp=r&st=2022-12-21T21:52:39Z&se=2034-02-22T05:52:39Z&spr=https&sv=2021-06-08&sr=b&sig=d0dtrVQAYSgiGyt7585ewjzijKT%2FfR3HnVihtJYZVMo%3D"
         },
         "RSASecurIDTokenInstallerURI": {
-            "value": "https://aibdev.blob.core.windows.net/installers/Install-SmartView.zip?sp=r&st=2022-12-19T18:59:09Z&se=2034-12-20T02:59:09Z&spr=https&sv=2021-06-08&sr=b&sig=KYe1eWwjqvrKZJZ2LQdp8naNGvi1L8BDpHysqzDyaHQ%3D"
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-RSASecurIDToken.zip?sp=r&st=2022-12-21T21:53:37Z&se=2034-02-22T05:53:37Z&spr=https&sv=2021-06-08&sr=b&sig=nog4RNv9kmKmlaLqvQwwpJwg89vE0xXHpB0J3TQBg1E%3D"
         },
         "ProjectInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/InstallProject-WVD.zip?sv=2020-04-08&st=2021-05-19T03%3A20%3A36Z&se=2031-05-20T03%3A20%3A00Z&sr=b&sp=r&sig=stvMKUiuSCHN%2B23eIatyH5y9POrIRrKahexlnRP61FA%3D"
