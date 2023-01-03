@@ -32,9 +32,6 @@
         "CrowdStrikeInstallerURI": {
             "type": "string"
         },
-        "ThinkCellInstallerURI": {
-            "type": "string"
-        },
         "SmartViewInstallerURI": {
             "type": "string"
         },
@@ -60,8 +57,8 @@
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
         "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\EntDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]",
-        "SmartViewDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SmartViewInstallerURI'),'\", \"C:\\Comcast\\Install-SmartView.zip\")')]",
-        "ThinkCellDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ThinkCellInstallerURI'),'\", \"C:\\Comcast\\Install-ThinkCell.zip\")')]"
+        "SmartViewDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SmartViewInstallerURI'),'\", \"C:\\Comcast\\Install-SmartView.zip\")')]"
+    
     },
     "resources": [
         {
@@ -178,13 +175,6 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Download ThinkCell",
-                        "inline": [
-                            "[variables('ThinkCellDownloadCMD')]"
-                        ]
-                    },
-                    {
-                        "type": "PowerShell",
                         "name": "Download Samrtview",
                         "inline": [
                             "[variables('SmartViewDownloadCMD')]"
@@ -212,12 +202,6 @@
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CrowdStrike.ps1"
                     },
                     {
-                        "type": "PowerShell",
-                        "name": "Install ThinkCell",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-ThinkCell.ps1"
-                    },{
                         "type": "PowerShell",
                         "name": "Install SmartView",
                         "runElevated": true,

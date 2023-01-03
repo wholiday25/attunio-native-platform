@@ -26,9 +26,6 @@
         "CrowdStrikeInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/InstallCrowdStrike-AVD.zip?sp=r&st=2022-10-24T14:32:57Z&se=2032-10-24T22:32:57Z&spr=https&sv=2021-06-08&sr=b&sig=1OaxQ87Qm1l1rd%2BMd7TLRpj9MPa6zpReHpLaSANmAL4%3D"
         },
-        "ThinkCellInstallerURI": {
-            "value": "https://aibdev.blob.core.windows.net/installers/Install-ThinkCell.zip?sp=r&st=2022-12-21T21:51:47Z&se=2034-02-22T05:51:47Z&spr=https&sv=2021-06-08&sr=b&sig=0rD1yqLoD7veI9VW7FJWUGrnys7XZ37Dn%2FeIPqeUtLo%3D"
-        },
         "SmartViewInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-SmartView.zip?sp=r&st=2022-12-21T21:52:39Z&se=2034-02-22T05:52:39Z&spr=https&sv=2021-06-08&sr=b&sig=d0dtrVQAYSgiGyt7585ewjzijKT%2FfR3HnVihtJYZVMo%3D"
         },
