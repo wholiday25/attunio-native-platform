@@ -1,0 +1,447 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "imageTemplateName": {
+            "type": "string"
+        },
+        "InstalledApplicationsURI": {
+            "type": "string"
+        },
+        "api-version": {
+            "type": "string"
+        },
+        "svclocation": {
+            "type": "string"
+        },
+        "ManagedIdentityID": {
+            "type": "string"
+        },
+        "SharedImageGalleryID": {
+            "type": "string"
+        },
+        "SubnetID": {
+            "type": "string"
+        },
+        "TeammateInstallerURI": {
+            "type": "string"
+        },
+        "RSASecurIDTokenInstallerURI": {
+            "type": "string"
+        },
+        "CrowdStrikeInstallerURI": {
+            "type": "string"
+        },
+        "SmartViewInstallerURI": {
+            "type": "string"
+        },
+        "NotepadPPBigFilesURI": {
+            "type": "string"
+        },
+        "TableauDesktop64bit202138URI": {
+            "type": "string"
+        },
+        "ProjectInstallerURI": {
+            "type": "string"
+        },
+        "VisioInstallerURI": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "TeammateDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TeammateInstallerURI'),'\", \"C:\\Comcast\\Install-Teammate.zip\")')]",
+        "RSASecurIDTokenDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('RSASecurIDTokenInstallerURI'),'\", \"C:\\Comcast\\Install-RSASecurIDToken.zip\")')]",
+        "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-AVD.zip\")')]",
+        "NotepadPPBigFilesCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('NotepadPPBigFilesURI'),'\", \"C:\\Comcast\\Install-NotepadPPBigFiles.zip\")')]",
+        "TableauDesktop64bit202138CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TableauDesktop64bit202138URI'),'\", \"C:\\Comcast\\Install-TableauDesktop64bit-2021-3-8.zip\")')]",
+        "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
+        "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
+        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\EntDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]",
+        "SmartViewDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SmartViewInstallerURI'),'\", \"C:\\Comcast\\Install-SmartView.zip\")')]"
+    
+    },
+    "resources": [
+        {
+            "name": "[parameters('imageTemplateName')]",
+            "type": "Microsoft.VirtualMachineImages/imageTemplates",
+            "apiVersion": "[parameters('api-version')]",
+            "location": "[parameters('svclocation')]",
+            "dependsOn": [],
+            "tags": {
+                "userIdentity": "enabled"
+            },
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[parameters('ManagedIdentityID')]": {}
+                }
+            },
+            "properties": {
+                "buildTimeoutInMinutes": 300,
+                "vmProfile": {
+                    "vmSize": "Standard_D4s_v5",
+                    "osDiskSizeGB": 256,
+                    "vnetConfig": {
+                        "subnetId": "[parameters('SubnetID')]"
+                    }
+                },
+                "source": {
+                    "type": "PlatformImage",
+                    "publisher": "MicrosoftWindowsDesktop",
+                    "offer": "office-365",
+                    "sku": "win10-21h2-avd-m365-g2",
+                    "version": "latest"
+                },
+                "customize": [
+                    {
+                        "type": "PowerShell",
+                        "name": "Create workd",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": [
+                            "New-Item -ItemType Directory -Force -Path C:\\Comcast\\"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install AzCopy10",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AzCopy10.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install LAPS",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-LAPS.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "OptimizeOS",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Optimize-AVDv2.ps1",
+                        "validExitCodes": [
+                            0,
+                            16001
+                        ]
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "Write-Output 'restarting post Optimizations'",
+                        "restartTimeout": "5m"
+                    },
+                    {
+                        "type": "File",
+                        "name": "Download BGInfo",
+                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/BGInfo.zip",
+                        "destination": "C:\\Comcast\\BGInfo.zip"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Configure BGInfo",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-BGInfo.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download Teammate",
+                        "inline": [
+                            "[variables('TeammateDownloadCMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download Crowdstrike",
+                        "inline": [
+                            "[variables('CrowdStrikeDownloadCMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download NotepadPPBigFiles",
+                        "inline": [
+                            "[variables('NotepadPPBigFilesCMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download TableauDesktop64bit202138",
+                        "inline": [
+                            "[variables('TableauDesktop64bit202138CMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download Samrtview",
+                        "inline": [
+                            "[variables('SmartViewDownloadCMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download Visio",
+                        "inline": [
+                            "[variables('VisioDownloadCMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download Project",
+                        "inline": [
+                            "[variables('ProjectDownloadCMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Crowdstrike",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CrowdStrike.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install SmartView",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SmartView.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Visio",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Visio.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Project",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Project.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install NotepadPP",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-NotepadPP.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install 7Zip",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-7Zip.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install VCRedist",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VCRedist.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Tableau",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Tableau.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install MS PowerBI",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MSPowerBI.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install AutoHotKey",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AutoHotKey.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Github Desktop",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-GithubDesktop.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Chrome",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Chrome.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Adobe Reader",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AdobeReader.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install VSCode",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSCode.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Teammate",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Teammate.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Slack Client",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Slack.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install winmerge",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-winmerge.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install tortoisegit",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-tortoisegit.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install kubernetes-cli",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Kubectl.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install cloudfoundry-cli",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CloudFoundary.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Java x86",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86-RDS-341.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download RSASecurIDTokenCMD",
+                        "inline": [
+                            "[variables('RSASecurIDTokenDownloadCMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install RSASecurIDToken",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-RSASecurIDToken.ps1"
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "Write-Output 'restarting post JREx86 Install'",
+                        "restartTimeout": "10m"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Java x64 v1.8.341 due to CLIPS and SOM incompatibility",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64-RDS-341.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Expand C Drive to 265 GB",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Config-MaxVolumeExpand-C.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "CollectInstalledApps",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": ["Get-ItemProperty HKLM:\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*,HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate -Unique | Where-Object {$_.DisplayName -ne \"\"} | Sort-Object -Property DisplayName | Export-CSV C:\\Comcast\\EntDesktop.csv -NoTypeInformation","choco install azcopy10 -y --no-progress" ,"[variables('InstalledApplicationsAzcopy')]"]           
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Pagefile Optimization",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/PageFile-Optimization.ps1"
+                    },
+                    {
+                        "type": "WindowsRestart",
+                        "restartCheckCommand": "Write-Output 'restarting post JREx64 Install'",
+                        "restartTimeout": "10m"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Pause to fix SysPrep",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "inline": [
+                            "Start-Sleep -Seconds 300"
+                        ]
+                    }
+                ],
+                "distribute": [
+                    {
+                        "type": "SharedImage",
+                        "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
+                        "runOutputName": "sigOutput",
+                        "artifactTags": {
+                            "source": "win10-21h2-avd-m365-g2",
+                            "baseosimg": "win10-21h2-avd-m365-g2"
+                        },
+                        "replicationRegions": [
+                            "eastus"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}

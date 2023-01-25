@@ -1,0 +1,58 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "imageTemplateName": {
+        "value": "EntDesktop"
+        },
+        "api-version": {
+          "value": "2020-02-14"
+        },
+        "svclocation": {
+            "value": "eastus"
+        },
+        "ManagedIdentityID": {
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourcegroups/AzureImageBuilder-Dev/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aibIdentityDev"
+        },
+        "SharedImageGalleryID": {
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV"
+        },
+        "SubnetID": {
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/aib"
+        },
+        "TeammateInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-Teammate.zip?sp=r&st=2022-01-26T19:59:34Z&se=2032-01-27T03:59:34Z&spr=https&sv=2020-08-04&sr=b&sig=Fhblrbl79IExN8xt%2Bq6Tr2qARFB9a%2BmkL9hDr%2FQC%2BrA%3D"
+        },
+        "CrowdStrikeInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/InstallCrowdStrike-AVD.zip?sp=r&st=2022-10-24T14:32:57Z&se=2032-10-24T22:32:57Z&spr=https&sv=2021-06-08&sr=b&sig=1OaxQ87Qm1l1rd%2BMd7TLRpj9MPa6zpReHpLaSANmAL4%3D"
+        },
+        "SmartViewInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-SmartView.zip?sp=r&st=2022-12-21T21:52:39Z&se=2034-02-22T05:52:39Z&spr=https&sv=2021-06-08&sr=b&sig=d0dtrVQAYSgiGyt7585ewjzijKT%2FfR3HnVihtJYZVMo%3D"
+        },
+        "RSASecurIDTokenInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-RSASecurIDToken.zip?sp=r&st=2022-12-21T21:53:37Z&se=2034-02-22T05:53:37Z&spr=https&sv=2021-06-08&sr=b&sig=nog4RNv9kmKmlaLqvQwwpJwg89vE0xXHpB0J3TQBg1E%3D"
+        },
+        "ProjectInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/InstallProject-WVD.zip?sv=2020-04-08&st=2021-05-19T03%3A20%3A36Z&se=2031-05-20T03%3A20%3A00Z&sr=b&sp=r&sig=stvMKUiuSCHN%2B23eIatyH5y9POrIRrKahexlnRP61FA%3D"
+        },
+        "InstalledApplicationsURI": {
+            "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2022-12-08T18:29:58Z&se=2032-12-09T02:29:58Z&spr=https&sv=2021-06-08&sr=c&sig=DpTli9FFMQdcArKXTXUUpxJBINLCGEpHgeHwBuS8mLc%3D"
+        },
+        "NotepadPPBigFilesURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-NotepadPPBigFiles.zip?sp=r&st=2022-12-09T17:37:25Z&se=2033-12-10T01:37:25Z&spr=https&sv=2021-06-08&sr=b&sig=umyKGZDkosN%2FRJ5Ee0AzwTYALwkzawO1qyfPUfIfVOs%3D"
+        },
+        "TableauDesktop64bit202138URI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-TableauDesktop64bit-2021-3-8.zip?sp=r&st=2022-12-13T14:57:50Z&se=2033-12-13T22:57:50Z&spr=https&sv=2021-06-08&sr=b&sig=18DC0CkQ2FUQ2ew5FObM5tAVNpzOvkWouTI1yLg50T0%3D"
+        },
+        "VisioInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/InstallVisio-WVD.zip?sv=2020-04-08&st=2021-05-19T03%3A20%3A58Z&se=2031-05-20T03%3A20%3A00Z&sr=b&sp=r&sig=RULdaktuWNtGmTvj3bkCvw0yJ7tOrEPIZ8NUXwUpsRY%3D"
+        }
+    }
+   
+}    
+
+
+
+
+
+
