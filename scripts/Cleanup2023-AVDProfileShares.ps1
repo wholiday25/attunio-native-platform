@@ -1,4 +1,6 @@
-﻿Param(
+﻿# Get the environment being checked
+
+Param(
     [Parameter(Mandatory = $true)]
     [ValidateSet( 'Prod', 'Dev' )]
     [String]$Environment = 'Prod'
@@ -31,9 +33,9 @@ Connect-AzureAD
     $share = Get-AzStorageShare -Context $context -Name $fileShareName
     $directories = Get-AZStorageFile -Context $context -ShareName $fileShareName  
 
-#Remember to edit for Dev and Prod, as per Parmateres at start of script
+#Parse directory listing and split out username
 
-$ACTIVEUSERS= foreach ($directory in $directories) {
+foreach ($directory in $directories) {
         if($directory.Name -like "adm_*") {
             $username = "adm_" + $directory.Name.Split("_")[1]
             $sid = $directory.Name.Split("_")[2]
@@ -41,96 +43,50 @@ $ACTIVEUSERS= foreach ($directory in $directories) {
         else {        
             $username = $directory.Name.Split("_")[0]
             $sid = $directory.Name.Split("_")[1]
-          # GET-ADUSER $USERNAME | select Name
-
+ 
+ #We want to get ABSENCE of Azure AD User -- that will indicate no account, therfore safe to delete
+       
           Try  
  { 
- Get-ADUser $username 
- }
-   
-   Catch 
-   {
-   #$username |Export-Csv  C:\Comcast\$($subscription)_NON-ActiveUsers-Report.CSV
-   Write-Output $username | out-file  C:\Comcast\$($subscription)_NON-ActiveUsers-Report.csv -append
+  $ProfileNotPresent =  Get-AzureADUser -SearchString $username |select DisplayName, UserPrincipalName 
 
-   }
-
-   }
-
-        }  
-        
-        
- #}
-
-
-
- $ACTIVEUSERS | Export-Csv C:\Comcast\$($subscription)_ActiveUsers_Report.CSV
-
-
-
- ForEach ($ACTIVEUSER in $ACTIVEUSERS) {
- Try  
- { 
- Get-ADUser $username 
- }
-   
-   Catch 
-   {
-   #$username |Export-Csv  C:\Comcast\$($subscription)_NON-ActiveUsers-Report.CSV
-   Write-Output $username | out-file  C:\Comcast\$($subscription)_NON-ActiveUsers-Report.csv -append
-   
-   $files=Get-AZStorageFile -Context $context -ShareName $fileShareName -Path $directory.Name
-
-   foreach ($file in $files) 
-                {  
-                    Write-Output "Deleting: " $files.Name
-                    $Total += $files.Length
-                    $files | Remove-AzStorageFile -PassThru -Verbose -WhatIf
-                
-                Write-Output "Deleting directory..."
-                Remove-AzStorageDirectory -Context $context -ShareName $fileShareName -Path $directory.Name -PassThru -Verbose -WhatIf
-                }
-   }
-
-   }
-
-
-   $ToDeleteUserProfiles= Get-Content C:\Comcast\$($subscription)_NON-ActiveUsers-Report.csv 
-   foreach ($ToDeleteUserProfile in $ToDeleteUserProfiles  {
-
-    $files=Get-AZStorageFile -Context $context -ShareName $fileShareName -Path $directory.Name | Get-AZStorageFile
-    
-
-    foreach ($file in $files) 
-                {  
-                    Write-Output "Deleting: " $files.Name
-                    $Total += $files.Length
-                    $files | Remove-AzStorageFile -PassThru -Verbose -WhatIf
-                }
-                Write-Output "Deleting directory..."
-                Remove-AzStorageDirectory -Context $context -ShareName $fileShareName -Path $directory.Name -PassThru -Verbose
-            }
-        }
+if ($ProfileNotPresent -eq $null) {
+Write-Output $directory | Export-csv  C:\Comcast\$($subscription)_NonActiveUsers.csv -append
+#USE import-csv to get use this file not Get-Content  
     }
-    Write-Output "Total Space Saved: $Total bytes"
-}
 
+  }
+   
+   Catch 
+   {
+   #Nothing to catch, really
 
+   }
+   }
+ } 
 
+   $DeleteProfiles = import-csv C:\Comcast\$($subscription)_NonActiveUsers.csv 
 
- foreach ($checkprofile in $checkprofiles) 
- {
- Get-ADUser $checkprofile
- 
- }
+   foreach ($DeleteProfile in $DeleteProfiles) 
+                {  
+#Remove files
+                $Deletepath = $DeleteProfile.name
+                $file=Get-AZStorageFile -Context $context -ShareName $fileShareName -Path $DeletePath  | Get-AZStorageFile
+                               
+                Write-Output "Deleting: " $file.Name
+                $Total += $file.Length
+                $file | Remove-AzStorageFile -PassThru -Verbose -WhatIf
 
+                $Total /1GB
+#Remove now-empty folder
+                    Write-Output "Deleting directory..."
+                    Remove-AzStorageDirectory -Context $context -ShareName $fileShareName -Path $DeletePath -PassThru -Verbose -WhatIf
 
-$Path = 'C:\Comcast\WVD-Dev_FINAL_NON-ActiveUsers-Report.csv'
+                     # Start-sleep 3
+                    
+                    }
 
-$Content = [System.IO.File]::ReadAllLines($Path)
+                    $TotalGB = [math]::Round($Total/1GB,2)
+                   
+                    Write-host "Total Space Saved: $TotalGB GB"
 
-foreach ($string in (Get-Content c:\strings.txt))
-{
-$Content = $Content -replace $string,''
-}
-$Content | Set-Content -Path $Path

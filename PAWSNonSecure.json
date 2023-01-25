@@ -88,8 +88,8 @@
                 "source": {
                     "type": "PlatformImage",
                     "publisher": "MicrosoftWindowsDesktop",
-                    "offer": "office-365",
-                    "sku": "win10-21h2-avd-m365-g2",
+                    "offer": "Windows-10",
+                    "sku": "win10-22h2-avd-g2",
                     "version": "latest"
                 },
                 "customize": [
