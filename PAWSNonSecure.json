@@ -23,28 +23,10 @@
         "SubnetID": {
             "type": "string"
         },
-        "TeammateInstallerURI": {
-            "type": "string"
-        },
-        "RSASecurIDTokenInstallerURI": {
-            "type": "string"
-        },
         "CrowdStrikeInstallerURI": {
             "type": "string"
         },
-        "SmartViewInstallerURI": {
-            "type": "string"
-        },
         "NotepadPPBigFilesURI": {
-            "type": "string"
-        },
-        "TableauDesktop64bit202138URI": {
-            "type": "string"
-        },
-        "ProjectInstallerURI": {
-            "type": "string"
-        },
-        "VisioInstallerURI": {
             "type": "string"
         }
     },
