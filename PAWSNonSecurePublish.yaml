@@ -28,6 +28,6 @@ jobs:
         ErrorActionPreference: 'Stop'
         FailOnStandardError: true
         ScriptType: 'FilePath'
-        ScriptPath: './EntDesktopPublish.ps1'
+        ScriptPath: './PAWSNonSecurePublish.ps1'
         azurePowerShellVersion: 'LatestVersion'
 

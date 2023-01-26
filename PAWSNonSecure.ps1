@@ -1,5 +1,5 @@
 $ImageResourceGroup = "AzureImageBuilder-DEV"
-$ImageTemplateName = "EntDesktop"
+$ImageTemplateName = "PAWSNonSecure"
 $imageTemplateFileName = $imageTemplateName + ".json"
 $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json"
 $sharedimagegallery = "WVD_DEV"

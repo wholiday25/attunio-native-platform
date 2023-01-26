@@ -33,7 +33,7 @@ Connect-AzureAD
     $share = Get-AzStorageShare -Context $context -Name $fileShareName
     $directories = Get-AZStorageFile -Context $context -ShareName $fileShareName  
 
-#Parse directory listing and split out username
+#Parse above directory listing and split out username
 
 foreach ($directory in $directories) {
         if($directory.Name -like "adm_*") {
@@ -44,15 +44,16 @@ foreach ($directory in $directories) {
             $username = $directory.Name.Split("_")[0]
             $sid = $directory.Name.Split("_")[1]
  
- #We want to get ABSENCE of Azure AD User -- that will indicate no account, therfore safe to delete
+#We want to get ABSENCE of Azure AD User -- that will indicate no account, therfore safe to delete
        
           Try  
  { 
-  $ProfileNotPresent =  Get-AzureADUser -SearchString $username |select DisplayName, UserPrincipalName 
+
+$ProfileNotPresent =  Get-AzureADUser -SearchString $username |select DisplayName, UserPrincipalName 
 
 if ($ProfileNotPresent -eq $null) {
 Write-Output $directory | Export-csv  C:\Comcast\$($subscription)_NonActiveUsers.csv -append
-#USE import-csv to get use this file not Get-Content  
+# NOTE use import-csv to get use this file not Get-Content  
     }
 
   }
@@ -65,9 +66,9 @@ Write-Output $directory | Export-csv  C:\Comcast\$($subscription)_NonActiveUsers
    }
  } 
 
-   $DeleteProfiles = import-csv C:\Comcast\$($subscription)_NonActiveUsers.csv 
+$DeleteProfiles = import-csv C:\Comcast\$($subscription)_NonActiveUsers.csv 
 
-   foreach ($DeleteProfile in $DeleteProfiles) 
+foreach ($DeleteProfile in $DeleteProfiles) 
                 {  
 #Remove files
                 $Deletepath = $DeleteProfile.name
@@ -79,14 +80,14 @@ Write-Output $directory | Export-csv  C:\Comcast\$($subscription)_NonActiveUsers
 
                 $Total /1GB
 #Remove now-empty folder
-                    Write-Output "Deleting directory..."
-                    Remove-AzStorageDirectory -Context $context -ShareName $fileShareName -Path $DeletePath -PassThru -Verbose -WhatIf
+                 Write-Output "Deleting directory..."
+                 Remove-AzStorageDirectory -Context $context -ShareName $fileShareName -Path $DeletePath -PassThru -Verbose -WhatIf
 
-                     # Start-sleep 3
+                 # Start-sleep 3
                     
                     }
 
-                    $TotalGB = [math]::Round($Total/1GB,2)
-                   
-                    Write-host "Total Space Saved: $TotalGB GB"
+          $TotalGB = [math]::Round($Total/1GB,2)
+                 
+          Write-host "Total Space Saved: $TotalGB GB"
 
