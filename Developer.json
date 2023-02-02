@@ -416,7 +416,6 @@
                             3010
                         ]
                     },
-
                     {
                         "type": "PowerShell",
                         "name": "Install WinSCP",

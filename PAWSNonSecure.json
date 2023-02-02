@@ -190,6 +190,47 @@
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Chrome.ps1"
                     },
                     {
+                        "type": "PowerShell",
+                        "name": "Install Putty",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Putty.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install PowerCLI for VMWare",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-PowerCLIVMWare.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install WinSCP",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-WinSCP.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install WireShark",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-WireShark.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
                         "type": "WindowsRestart",
                         "restartCheckCommand": "Write-Output 'restarting post JREx86 Install'",
                         "restartTimeout": "10m"
