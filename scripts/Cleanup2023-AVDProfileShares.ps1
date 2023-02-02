@@ -46,12 +46,17 @@ foreach ($directory in $directories) {
  
 #We want to get ABSENCE of Azure AD User -- that will indicate no account, therfore safe to delete
        
-          Try  
- { 
+         
 
-$ProfileNotPresent =  Get-AzureADUser -SearchString $username |select DisplayName, UserPrincipalName 
+#$ProfileNotPresent =  Get-AzureADUser -SearchString $username |select DisplayName, UserPrincipalName 
+$ProfileNotPresentCable =  Get-AzureADUser -Filter "userPrincipalName eq '$username@cable.comcast.com'" |select DisplayName, UserPrincipalName 
+$ProfileNotPresentAPAC =  Get-AzureADUser -Filter "userPrincipalName eq '$username@APAC.comcast.com'" |select DisplayName, UserPrincipalName 
+$ProfileNotPresentEMEA =  Get-AzureADUser -Filter "userPrincipalName eq '$username@EMEA.comcast.com'" |select DisplayName, UserPrincipalName 
+$ProfileNotPresentCORPHQ =  Get-AzureADUser -Filter "userPrincipalName eq '$username@CORPHQ.comcast.com'" |select DisplayName, UserPrincipalName 
 
-if ($ProfileNotPresent -eq $null) {
+if ($ProfileNotPresentCable -eq $null -and $ProfileNotPresentAPAC -eq $null -and $ProfileNotPresentEMEA -eq $null -and $ProfileNotPresentCORPHQ -eq $null ) 
+   {
+
 Write-Output $directory | Export-csv  C:\Comcast\$($subscription)_NonActiveUsers.csv -append
 # NOTE use import-csv to get use this file not Get-Content  
     }
