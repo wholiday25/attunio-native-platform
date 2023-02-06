@@ -485,6 +485,17 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Install NVM",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-NVM.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "CollectInstalledApps",
                         "runElevated": true,
                         "runAsSystem": true,
