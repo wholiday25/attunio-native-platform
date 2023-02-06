@@ -23,42 +23,18 @@
         "SubnetID": {
             "type": "string"
         },
-        "TeammateInstallerURI": {
-            "type": "string"
-        },
-        "RSASecurIDTokenInstallerURI": {
-            "type": "string"
-        },
         "CrowdStrikeInstallerURI": {
-            "type": "string"
-        },
-        "SmartViewInstallerURI": {
             "type": "string"
         },
         "NotepadPPBigFilesURI": {
             "type": "string"
-        },
-        "TableauDesktop64bit202138URI": {
-            "type": "string"
-        },
-        "ProjectInstallerURI": {
-            "type": "string"
-        },
-        "VisioInstallerURI": {
-            "type": "string"
         }
     },
     "variables": {
-        "TeammateDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TeammateInstallerURI'),'\", \"C:\\Comcast\\Install-Teammate.zip\")')]",
-        "RSASecurIDTokenDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('RSASecurIDTokenInstallerURI'),'\", \"C:\\Comcast\\Install-RSASecurIDToken.zip\")')]",
         "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-AVD.zip\")')]",
         "NotepadPPBigFilesCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('NotepadPPBigFilesURI'),'\", \"C:\\Comcast\\Install-NotepadPPBigFiles.zip\")')]",
-        "TableauDesktop64bit202138CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TableauDesktop64bit202138URI'),'\", \"C:\\Comcast\\Install-TableauDesktop64bit-2021-3-8.zip\")')]",
-        "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
-        "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
-        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\EntDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]",
-        "SmartViewDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SmartViewInstallerURI'),'\", \"C:\\Comcast\\Install-SmartView.zip\")')]"
-    
+        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\PAWSNonSecure.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
+        
     },
     "resources": [
         {
@@ -80,7 +56,7 @@
                 "buildTimeoutInMinutes": 300,
                 "vmProfile": {
                     "vmSize": "Standard_D4s_v5",
-                    "osDiskSizeGB": 256,
+                    "osDiskSizeGB": 128,
                     "vnetConfig": {
                         "subnetId": "[parameters('SubnetID')]"
                     }
@@ -88,8 +64,8 @@
                 "source": {
                     "type": "PlatformImage",
                     "publisher": "MicrosoftWindowsDesktop",
-                    "offer": "office-365",
-                    "sku": "win10-21h2-avd-m365-g2",
+                    "offer": "Windows-10",
+                    "sku": "win10-22h2-avd-g2",
                     "version": "latest"
                 },
                 "customize": [
@@ -147,13 +123,6 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Download Teammate",
-                        "inline": [
-                            "[variables('TeammateDownloadCMD')]"
-                        ]
-                    },
-                    {
-                        "type": "PowerShell",
                         "name": "Download Crowdstrike",
                         "inline": [
                             "[variables('CrowdStrikeDownloadCMD')]"
@@ -168,59 +137,10 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Download TableauDesktop64bit202138",
-                        "inline": [
-                            "[variables('TableauDesktop64bit202138CMD')]"
-                        ]
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Download Samrtview",
-                        "inline": [
-                            "[variables('SmartViewDownloadCMD')]"
-                        ]
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Download Visio",
-                        "inline": [
-                            "[variables('VisioDownloadCMD')]"
-                        ]
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Download Project",
-                        "inline": [
-                            "[variables('ProjectDownloadCMD')]"
-                        ]
-                    },
-                    {
-                        "type": "PowerShell",
                         "name": "Install Crowdstrike",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CrowdStrike.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install SmartView",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SmartView.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install Visio",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Visio.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install Project",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Project.ps1"
                     },
                     {
                         "type": "PowerShell",
@@ -253,39 +173,6 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install Tableau",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Tableau.ps1",
-                        "validExitCodes": [
-                            0,
-                            3010
-                        ]
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install MS PowerBI",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MSPowerBI.ps1",
-                        "validExitCodes": [
-                            0,
-                            3010
-                        ]
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install AutoHotKey",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AutoHotKey.ps1",
-                        "validExitCodes": [
-                            0,
-                            3010
-                        ]
-                    },
-                    {
-                        "type": "PowerShell",
                         "name": "Install Github Desktop",
                         "runElevated": true,
                         "runAsSystem": true,
@@ -304,92 +191,49 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install Adobe Reader",
+                        "name": "Install Putty",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AdobeReader.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install VSCode",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSCode.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install Teammate",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Teammate.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install Slack Client",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Slack.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install winmerge",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-winmerge.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install tortoisegit",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-tortoisegit.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install kubernetes-cli",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Kubectl.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install cloudfoundry-cli",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CloudFoundary.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install Java x86",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86-RDS-341.ps1"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Download RSASecurIDTokenCMD",
-                        "inline": [
-                            "[variables('RSASecurIDTokenDownloadCMD')]"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Putty.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
                         ]
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Install RSASecurIDToken",
+                        "name": "Install PowerCLI for VMWare",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-RSASecurIDToken.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-PowerCLIVMWare.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install WinSCP",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-WinSCP.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install WireShark",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-WireShark.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "WindowsRestart",
                         "restartCheckCommand": "Write-Output 'restarting post JREx86 Install'",
                         "restartTimeout": "10m"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install Java x64 v1.8.341 due to CLIPS and SOM incompatibility",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64-RDS-341.ps1"
                     },
                     {
                         "type": "PowerShell",
@@ -403,7 +247,7 @@
                         "name": "CollectInstalledApps",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "inline": ["Get-ItemProperty HKLM:\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*,HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate -Unique | Where-Object {$_.DisplayName -ne \"\"} | Sort-Object -Property DisplayName | Export-CSV C:\\Comcast\\EntDesktop.csv -NoTypeInformation","choco install azcopy10 -y --no-progress" ,"[variables('InstalledApplicationsAzcopy')]"]           
+                        "inline": ["Get-ItemProperty HKLM:\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*,HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate -Unique | Where-Object {$_.DisplayName -ne \"\"} | Sort-Object -Property DisplayName | Export-CSV C:\\Comcast\\PAWSNonSecure.csv -NoTypeInformation","choco install azcopy10 -y --no-progress" ,"[variables('InstalledApplicationsAzcopy')]"]           
                     },
                     {
                         "type": "PowerShell",
