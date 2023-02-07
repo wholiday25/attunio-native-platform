@@ -49,7 +49,7 @@
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
         "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
         "SmartViewDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SmartViewInstallerURI'),'\", \"C:\\Comcast\\Install-SmartViewl-AVD.zip\")')]",
-        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\EntDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]",
+        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\Win11EntDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]",
         "ThinkCellDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ThinkCellInstallerURI'),'\", \"C:\\Comcast\\Install-ThinkCell-AVD.zip\")')]"
         
     },
