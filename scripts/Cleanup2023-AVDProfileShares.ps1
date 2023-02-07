@@ -8,6 +8,9 @@ Param(
 Switch ($Environment) {
     'Prod' {
         $subscription = "WVD-Prod"
+#        $resourceGroupName = "AzureFilesWest"  
+#        $storageAccName = "ccwvdprodwest"  
+ 
         $resourceGroupName = "AzureFiles"  
         $storageAccName = "ccwvdprod"  
         $fileShareName = "profile"
@@ -46,7 +49,7 @@ foreach ($directory in $directories) {
  
 #We want to get ABSENCE of Azure AD User -- that will indicate no account, therfore safe to delete
        
-         
+       #try  
 
 #$ProfileNotPresent =  Get-AzureADUser -SearchString $username |select DisplayName, UserPrincipalName 
 $ProfileNotPresentCable =  Get-AzureADUser -Filter "userPrincipalName eq '$username@cable.comcast.com'" |select DisplayName, UserPrincipalName 
@@ -58,20 +61,22 @@ if ($ProfileNotPresentCable -eq $null -and $ProfileNotPresentAPAC -eq $null -and
    {
 
 Write-Output $directory | Export-csv  C:\Comcast\$($subscription)_NonActiveUsers.csv -append
+#Write-Output $directory | Export-csv  C:\Comcast\$($subscription)_NonActiveUsersWest.csv -append
 # NOTE use import-csv to get use this file not Get-Content  
     }
 
   }
    
-   Catch 
+   # Catch 
    {
    #Nothing to catch, really
 
    }
    }
- } 
+ # } 
 
 $DeleteProfiles = import-csv C:\Comcast\$($subscription)_NonActiveUsers.csv 
+# $DeleteProfiles = import-csv C:\Comcast\$($subscription)_NonActiveUsersWest.csv 
 
 foreach ($DeleteProfile in $DeleteProfiles) 
                 {  
