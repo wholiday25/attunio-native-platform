@@ -8,6 +8,9 @@
         "api-version": {
             "type": "string"
         },
+        "InstalledApplicationsURI": {
+            "type": "string"
+        },
         "svclocation": {
             "type": "string"
         },
