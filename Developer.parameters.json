@@ -32,6 +32,9 @@
         "MFLRVUGen12.60URI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-MFLRVUGen12.60.zip?sp=rl&st=2021-10-13T17:11:55Z&se=2031-11-14T17:11:00Z&sv=2020-08-04&sr=b&sig=cVfciP4dpCIrCX398DbcB8V5t57CmUYdRN7XCx5XrCw%3D"
         },
+        "AmazonRedShiftODBCURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-AmazonRedshiftODBC64-1.4.62.1000.zip?sp=r&st=2023-02-17T19:44:38Z&se=2034-02-18T03:44:38Z&spr=https&sv=2021-06-08&sr=b&sig=rJgpI3s%2FNcsQj5ZVg5c0O4I%2F6LOFTSekQmA9l8KH2qs%3D"
+        },
         "MFLRVUG_00264URI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-MFLRVUG_00264.zip?sp=rl&st=2021-10-13T16:43:25Z&se=2031-11-14T16:43:00Z&sv=2020-08-04&sr=b&sig=9HQvzYSNVeI8XNFxE5gfg3Jxai%2FYJgt5QkGL0kY%2BFTQ%3D"
         },

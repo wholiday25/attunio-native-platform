@@ -38,6 +38,9 @@
         "MFLRAnalysis12.60URI": {
             "type": "string"
         },
+        "AmazonRedShiftODBCURI": {
+            "type": "string"
+        },
         "MFLRVUGen12.60URI": {
             "type": "string"
         },
@@ -57,6 +60,7 @@
         "MFLRAnalysis12.60CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRAnalysis12.60URI'),'\", \"C:\\Comcast\\Install-MFLRAnalysis12.60.zip\")')]",
         "MFLRVUGen12.60CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUGen12.60URI'),'\", \"C:\\Comcast\\Install-MFLRVUGen12.60.zip\")')]",
         "MFLRVUG_00264CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUG_00264URI'),'\", \"C:\\Comcast\\Install-MFLRVUG_00264.zip\")')]",
+        "AmazonRedShiftODBCCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AmazonRedShiftODBCURI'),'\", \"C:\\Comcast\\Install-AmazonRedshiftODBC64-1.4.62.1000.zip\")')]",
         "UC4UserInterfaceDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('UC4UserInterfaceInstallerURI'),'\", \"C:\\Comcast\\Install-UC4UserInterface.zip\")')]",
         "MuleSoftAnyPointDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MuleSoftAnyPointInstallerURI'),'\", \"C:\\Comcast\\Install-AnyPointStudio.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\Developer.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
@@ -122,6 +126,13 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download AmazonRedShiftODBCCMD",
+                        "inline": [
+                            "[variables('AmazonRedShiftODBCCMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Download MFLRVUG_00264CMD",
                         "inline": [
                             "[variables('MFLRVUG_00264CMD')]"
@@ -164,6 +175,13 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MFLRAnalysis12.60.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Amazon Redshift ODBC",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AmazonRedshiftODBC64-1.4.62.1000.ps1"
                     },
                     {
                         "type": "PowerShell",
