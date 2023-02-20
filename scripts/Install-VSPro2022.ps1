@@ -10,10 +10,9 @@ Microsoft.VisualStudio.Workload.NetCoreTools;includeRecommended;includeOptional
 https://learn.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-community?view=vs-2022
 for workload IDs
 Be sure to select Visual Studio 2022 from upper left !
-
 #>
 
-Start-Transcript  -PATH "C:\Comcast\Install-VSPro2019.txt"
+Start-Transcript  -PATH "C:\Comcast\Install-VSPro2022.txt"
 
 $startInfo = New-Object System.Diagnostics.ProcessStartInfo
 $startInfo.FileName = "C:\Comcast\vs_professional__2022.exe"
