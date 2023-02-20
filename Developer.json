@@ -271,6 +271,23 @@
                             0,
                             3010
                         ]
+                    }, 
+                    {
+                        "type": "File",
+                        "name": "Download VS Professional 2022",
+                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/vs_professional__2022.exe",
+                        "destination": "C:\\Comcast\\vs_professional__2022.exe"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Configure  VS Professional 2022",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSPro2022.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
