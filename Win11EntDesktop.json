@@ -77,7 +77,7 @@
 
                 "vmProfile": {
                     "vmSize": "Standard_D4s_v5",
-                    "osDiskSizeGB": 128,
+                    "osDiskSizeGB": 256,
                     "vnetConfig": {
                         "subnetId": "[parameters('SubnetID')]"
                     }
@@ -333,8 +333,8 @@
                         "galleryImageId": "[concat(parameters('SharedImageGalleryID'),'/images/',parameters('ImageTemplateName'))]",
                         "runOutputName": "sigOutput",
                         "artifactTags": {
-                            "source": "win11-21h2-avd",
-                            "baseosimg": "win11-21h2-avd"
+                            "source": "win11-22h2-avd-m365",
+                            "baseosimg": "win11-22h2-avd"
                         },
                         "replicationRegions": [
                             "eastus"
