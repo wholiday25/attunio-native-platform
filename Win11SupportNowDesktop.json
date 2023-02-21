@@ -40,7 +40,7 @@
     "variables": {
         "SupportNowLogmeInCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowLogmeInURI'),'\", \"C:\\Comcast\\Install-SupportNowLogmeIn.zip\")')]",
         "SupportNowRumbaCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowRumbaURI'),'\", \"C:\\Comcast\\Install-SupportNowRumba.zip\")')]",
-        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\SupportNowDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
+        "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\Win11SupportNowDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 
 

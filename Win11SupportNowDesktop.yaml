@@ -23,7 +23,7 @@ jobs:
         storage: 'aibdev'
         ContainerName: 'scripts'
     - task: AzurePowerShell@5
-      displayName: 'Run Azure Image Builder aibWin11SupportNowDesktop'
+      displayName: 'Run Azure Image Builder Win11SupportNowDesktop'
       inputs:
         azureSubscription: 'WVD-Dev' #This is the devops service connection name
         ErrorActionPreference: 'Stop'
