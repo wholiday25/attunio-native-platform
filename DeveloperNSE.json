@@ -38,6 +38,9 @@
         "Odbcjava_URI": {
             "type": "string"
         },
+        "WinGPG_URI": {
+            "type": "string"
+        },
         "AdobeCampaignClassic7_URI": {
             "type": "string"
         }
@@ -49,6 +52,7 @@
         "Ginger.4.2.0.0_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Ginger.4.2.0.0_URI'),'\", \"C:\\Comcast\\Install-Ginger.4.2.0.0.exe\")')]",
         "Odbcjava_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Odbcjava_URI'),'\", \"C:\\Comcast\\Install-Odbcjava.zip\")')]",
         "AdobeCampaignClassic7_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AdobeCampaignClassic7_URI'),'\", \"C:\\Comcast\\Install-AdobeCampaignClassic7.zip\")')]",
+        "WinGPG_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('WinGPG_URI'),'\", \"C:\\Comcast\\Install-WinGPG.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\DeveloperNSE.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 
@@ -99,6 +103,11 @@
                         "type": "PowerShell",
                         "name": "Download AdobeCampaignClassic7 ",
                         "inline": ["[variables('AdobeCampaignClassic7_CMD')]"]           
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download WinGPG ",
+                        "inline": ["[variables('WinGPG_CMD')]"]           
                     },
                     {
                         "type": "PowerShell",
@@ -361,6 +370,14 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AdobeCampaignClassic7.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install WinGPG",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-WinGPG.ps1",
                         "validExitCodes": [0,3010]
                     },
                     {
