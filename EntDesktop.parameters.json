@@ -44,6 +44,9 @@
         "TableauDesktop64bit202138URI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-TableauDesktop64bit-2021-3-8.zip?sp=r&st=2022-12-13T14:57:50Z&se=2033-12-13T22:57:50Z&spr=https&sv=2021-06-08&sr=b&sig=18DC0CkQ2FUQ2ew5FObM5tAVNpzOvkWouTI1yLg50T0%3D"
         },
+        "WalkMeURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-WalkmeAllInOneInstaller_x64.zip?sp=r&st=2023-02-24T16:32:54Z&se=2034-02-25T00:32:54Z&spr=https&sv=2021-06-08&sr=b&sig=c4h%2FRimU%2BjmuRUoq2AKYQElqaqmtabPcJd11LFBYMcs%3D"
+        },
         "VisioInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/InstallVisio-WVD.zip?sv=2020-04-08&st=2021-05-19T03%3A20%3A58Z&se=2031-05-20T03%3A20%3A00Z&sr=b&sp=r&sig=RULdaktuWNtGmTvj3bkCvw0yJ7tOrEPIZ8NUXwUpsRY%3D"
         }
