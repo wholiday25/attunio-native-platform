@@ -516,7 +516,17 @@
                             0,
                             3010
                         ]
-                    },
+                    },{
+                        "type": "PowerShell",
+                        "name": "Install VNX Launcher",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VNXLauncher.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    }, 
                     {
                         "type": "PowerShell",
                         "name": "Install NVM",
