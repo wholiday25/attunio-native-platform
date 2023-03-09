@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "imageTemplateName": {
-            "value": "IHAGoodkidDesktop"
+            "value": "Win11IHAGoodkidDesktop"
         },
         "api-version": {
             "value": "2020-02-14"
