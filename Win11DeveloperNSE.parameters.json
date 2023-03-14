@@ -1,0 +1,45 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+"contentVersion": "1.0.0.0",
+"parameters": {
+    "imageTemplateName": {
+        "value": "Win11DeveloperNSE"
+    },
+    "api-version": {
+        "value": "2020-02-14"
+    },
+    "svclocation": {
+        "value": "eastus"
+    },
+    "ManagedIdentityID": {
+        "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourcegroups/AzureImageBuilder-Dev/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aibIdentityDev"
+    },
+    "SharedImageGalleryID": {
+        "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV"
+    },
+    "SubnetID": {
+        "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/aib"
+    },
+    "AccessDatabaseEngineURI": {
+        "value": "https://aibdev.blob.core.windows.net/installers/AccessDatabaseEngine.exe?sp=rl&st=2021-09-23T19:14:48Z&se=2031-11-24T19:14:00Z&sv=2020-08-04&sr=b&sig=FKKxmpSizkP38bkbWINM7AoaaXpJeAqIVBLbao4sSR8%3D"
+    },
+    "Ginger.4.2.0.0_URI": {
+        "value": "https://aibdev.blob.core.windows.net/installers/Install-Ginger.4.2.0.0.exe?sp=r&st=2022-04-15T14:14:38Z&se=2032-04-15T22:14:38Z&spr=https&sv=2020-08-04&sr=b&sig=BqE5E%2F%2B5JKUUeoIw7Sdt7d1E1kwpPCVJh81s4M4wOUU%3D"
+    },
+    "Odbcjava_URI": {
+        "value": "https://aibdev.blob.core.windows.net/installers/Install-Odbcjava.zip?sp=r&st=2022-10-21T20:13:40Z&se=2032-10-22T04:13:40Z&spr=https&sv=2021-06-08&sr=b&sig=IKXYHRZTpElUiPx85fRhziZm6Kgk9IWGk2tHgBERXec%3D"
+    },
+    "AdobeCampaignClassic7_URI": {
+        "value": "https://aibdev.blob.core.windows.net/installers/Install-AdobeCampaignClassic7.zip?sp=r&st=2022-09-15T20:07:56Z&se=2032-09-16T04:07:56Z&spr=https&sv=2021-06-08&sr=b&sig=Xam7z6eJOZhjKxskxuVt%2BICYXk%2BGgEdr3HhwjpZOM54%3D"
+    },
+    "WinGPG_URI": {
+        "value": "https://aibdev.blob.core.windows.net/installers/Install-WinGPG.zip?sp=r&st=2023-02-24T19:51:25Z&se=2034-02-25T03:51:25Z&spr=https&sv=2021-06-08&sr=b&sig=Zva1qkPqMr4jLG%2BLB1a6k%2FkwhAGO5hGMWDIGanGbbeM%3D"
+    },
+    "InstalledApplicationsURI": {
+        "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2022-11-25T20:51:50Z&se=2032-11-26T04:51:50Z&spr=https&sv=2021-06-08&sr=c&sig=slVeDaDEFLYVZ2KVs5edNHOAXitadrFHsaryYkiNAtI%3D"
+    },
+    "imageVersionID": {
+        "value": "[IMAGEID]"
+    }
+}
+}
