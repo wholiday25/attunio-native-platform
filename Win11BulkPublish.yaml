@@ -9,7 +9,7 @@ jobs:
 - job: AIB
   pool:
     name: aibBuildServer
-  timeoutInMinutes: 360
+  timeoutInMinutes: 420
   cancelTimeoutInMinutes: 10
   steps:
     - task: AzureFileCopy@5
@@ -28,6 +28,6 @@ jobs:
         ErrorActionPreference: 'Stop'
         FailOnStandardError: true
         ScriptType: 'FilePath'
-        ScriptPath: './BulkDeployPublish.ps1'
+        ScriptPath: './Win11BulkPublish.ps1'
         azurePowerShellVersion: 'LatestVersion'
 
