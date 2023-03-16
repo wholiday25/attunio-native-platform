@@ -28,6 +28,6 @@ jobs:
           ErrorActionPreference: 'Stop'
           FailOnStandardError: true
           ScriptType: 'FilePath'
-          ScriptPath: './SupportNowDesktopPublish.ps1'
+          ScriptPath: './Win11SupportNowDesktopPublish.ps1'
           azurePowerShellVersion: 'LatestVersion'
 
