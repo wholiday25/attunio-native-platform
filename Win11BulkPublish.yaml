@@ -1,4 +1,4 @@
-# Build AzureImageBuilder Pipeline
+# Publish AzureImageBuilder Pipeline images from DEV to PROD
 
 
 trigger: none
@@ -9,7 +9,7 @@ jobs:
 - job: AIB
   pool:
     name: aibBuildServer
-  timeoutInMinutes: 480
+  timeoutInMinutes: 360
   cancelTimeoutInMinutes: 10
   steps:
     - task: AzureFileCopy@5
@@ -22,12 +22,12 @@ jobs:
         storage: 'aibdev'
         ContainerName: 'scripts'
     - task: AzurePowerShell@5
-      displayName: 'Run Azure Image Builder Win11BulkBuild'
+      displayName: 'Clone Azure Image Builder developer to production'
       inputs:
         azureSubscription: 'WVD-Dev' #This is the devops service connection name
         ErrorActionPreference: 'Stop'
         FailOnStandardError: true
         ScriptType: 'FilePath'
-        ScriptPath: './Win11BulkBuild.ps1'
+        ScriptPath: './BulkDeployPublish.ps1'
         azurePowerShellVersion: 'LatestVersion'
-  
+

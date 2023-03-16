@@ -16,7 +16,7 @@ $parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegal
 
 
 #foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'Win11*', 'PAWS*','X_*', 'aib*', 'SingleApp*','EntDesktop*','*publish*', 'entdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json','VSWorkspaceState.json') 
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter 'Win11*.json' -File -Exclude 'Win11EntDesktop*','Win11BulkBuild','*parameters*') 
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter 'Win11*.json' -File -Exclude 'Win11EntDesktop*','Win11Bulk*','*parameters*') 
 {
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageTemplateFileName = $imageTemplateName + ".json"
@@ -80,7 +80,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter 'Win11*.json' -File -Exc
 }
 
 #foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'Win11*', 'PAWS*' 'X_*', 'aib*', 'EntDesktop*','SingleApp*','entdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json', '*.yaml','VSWorkspaceState.json') {
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter 'Win11*.json' -File -Exclude 'Win11EntDesktop*','Win11BulkBuild','*parameters*') 
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter 'Win11*.json' -File -Exclude 'Win11EntDesktop*','Win11Bulk*','*parameters*') 
 {
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageTemplateFileName = $imageTemplateName + ".json"
