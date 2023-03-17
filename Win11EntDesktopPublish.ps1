@@ -1,4 +1,4 @@
-#aibEntDesktop publish
+#aibWin11EntDesktop publish
 #copy developer image to public image
 
 
