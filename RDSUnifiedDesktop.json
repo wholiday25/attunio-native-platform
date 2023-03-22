@@ -46,7 +46,11 @@
         },
         "AccessDatabaseEngineURI": {
             "type": "string"
+            
         },"SAPGUIInstallerURI": {
+            "type": "string"
+
+        },"SAPHanaABAPDevelopmentToolKitURI": {
             "type": "string"
         },
         "SAPHanaAdobeLifecycleURI": {
@@ -63,6 +67,7 @@
         "SupportNowLogmeInCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowLogmeInURI'),'\", \"C:\\Comcast\\Install-SupportNowLogmeIn.zip\")')]",
         "SecureCRTDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SecureCRTInstallerURI'),'\", \"C:\\Comcast\\Install-SecureCRT.zip\")')]",
         "SAPHanaAdobeLifecycleDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPHanaAdobeLifecycleURI'),'\", \"C:\\Comcast\\Install-SAPHanaAdobeLifecycle.zip\")')]",
+        "SAPHanaABAPDevelopmentToolKitCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPHanaABAPDevelopmentToolKitURI'),'\", \"C:\\Comcast\\Install-SAP-HANA-ABAPDevelopmentToolKit.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\RDSUnifiedDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 
@@ -254,15 +259,27 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download SAPHanaABAPDevelopmentToolKitCMD",
+                        "inline": ["[variables('SAPHanaABAPDevelopmentToolKitCMD')]"]               
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Download SAPHanaAdobeLifecycleDownloadCMD",
                         "inline": ["[variables('SAPHanaAdobeLifecycleDownloadCMD')]"]               
                     },
-                              {
+                    {
                         "type": "PowerShell",
                         "name": "Install SAPHanaAdobeLifecycle",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SAPHanaAdobeLifecycle.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install SAPHanaABAPDevelopmentToolKit",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SAP-HANA-ABAPDevelopmentToolKit.ps1"
                     },
                     {
                         "type": "PowerShell",

@@ -43,7 +43,10 @@
         },
         "SAPHanaAdobeLifecycleURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-SAPHanaAdobeLifecycle.zip?sp=r&st=2022-08-03T18:28:48Z&se=2032-08-04T02:28:48Z&spr=https&sv=2021-06-08&sr=b&sig=W2JwiNPB9rb%2FSjzyngIhR0qw2%2Bb6EHlif2lArzDsbsE%3D"
-     },
+        },
+        "SAPHanaABAPDevelopmentToolKitURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-SAP-HANA-ABAPDevelopmentToolKit.zip?sp=r&st=2023-03-22T19:42:26Z&se=2034-03-23T03:42:26Z&spr=https&sv=2021-12-02&sr=b&sig=01vBQ%2FwrBV8vRmzhMl%2FYeDGbzCxjDeVJsAaaDbffYWU%3D"
+        },
         "InstalledApplicationsURI": {
             "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2022-11-25T20:51:50Z&se=2032-11-26T04:51:50Z&spr=https&sv=2021-06-08&sr=c&sig=slVeDaDEFLYVZ2KVs5edNHOAXitadrFHsaryYkiNAtI%3D"
         },
