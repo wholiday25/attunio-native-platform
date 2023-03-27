@@ -31,3 +31,5 @@ jobs:
           ScriptPath: './SupportNowDesktopPublish.ps1'
           azurePowerShellVersion: 'LatestVersion'
 
+
+
