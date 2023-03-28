@@ -47,6 +47,9 @@
         "SAPHanaABAPDevelopmentToolKitURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-SAP-HANA-ABAPDevelopmentToolKit.zip?sp=r&st=2023-03-22T19:42:26Z&se=2034-03-23T03:42:26Z&spr=https&sv=2021-12-02&sr=b&sig=01vBQ%2FwrBV8vRmzhMl%2FYeDGbzCxjDeVJsAaaDbffYWU%3D"
         },
+        "EFV_ADP_DM_ClientURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-EFV_ADP_DM_Client.zip?sp=r&st=2023-03-28T15:41:56Z&se=2034-03-28T23:41:56Z&spr=https&sv=2021-12-02&sr=b&sig=Bf1VwhnSWjpv%2B%2FIAZ0HK6MM5iIN6Xwb9dhnA6%2FC7e%2F8%3D"
+        },
         "InstalledApplicationsURI": {
             "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2022-11-25T20:51:50Z&se=2032-11-26T04:51:50Z&spr=https&sv=2021-06-08&sr=c&sig=slVeDaDEFLYVZ2KVs5edNHOAXitadrFHsaryYkiNAtI%3D"
         },

@@ -52,6 +52,8 @@
 
         },"SAPHanaABAPDevelopmentToolKitURI": {
             "type": "string"
+        },"EFV_ADP_DM_ClientURI": {
+            "type": "string"
         },
         "SAPHanaAdobeLifecycleURI": {
             "type": "string"
@@ -68,6 +70,7 @@
         "SecureCRTDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SecureCRTInstallerURI'),'\", \"C:\\Comcast\\Install-SecureCRT.zip\")')]",
         "SAPHanaAdobeLifecycleDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPHanaAdobeLifecycleURI'),'\", \"C:\\Comcast\\Install-SAPHanaAdobeLifecycle.zip\")')]",
         "SAPHanaABAPDevelopmentToolKitCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPHanaABAPDevelopmentToolKitURI'),'\", \"C:\\Comcast\\Install-SAP-HANA-ABAPDevelopmentToolKit.zip\")')]",
+        "EFV_ADP_DM_ClientCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('EFV_ADP_DM_ClientURI'),'\", \"C:\\Comcast\\Install-EFV_ADP_DM_Client.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\RDSUnifiedDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 
@@ -264,6 +267,11 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download EFV_ADP_DM_ClientURI",
+                        "inline": ["[variables('EFV_ADP_DM_ClientURICMD')]"]               
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Download SAPHanaAdobeLifecycleDownloadCMD",
                         "inline": ["[variables('SAPHanaAdobeLifecycleDownloadCMD')]"]               
                     },
@@ -280,6 +288,13 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SAP-HANA-ABAPDevelopmentToolKit.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install EFV_ADP_DM_Client",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-EFV_ADP_DM_Client.ps1"
                     },
                     {
                         "type": "PowerShell",
