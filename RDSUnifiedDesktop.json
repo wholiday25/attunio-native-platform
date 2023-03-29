@@ -267,8 +267,8 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Download EFV_ADP_DM_ClientURI",
-                        "inline": ["[variables('EFV_ADP_DM_ClientURICMD')]"]               
+                        "name": "Download EFV ADP DM Client",
+                        "inline": ["[variables('EFV_ADP_DM_ClientCMD')]"]               
                     },
                     {
                         "type": "PowerShell",
