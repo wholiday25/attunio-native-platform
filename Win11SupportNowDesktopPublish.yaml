@@ -11,7 +11,9 @@ jobs:
     name: aibBuildServer
   timeoutInMinutes: 360
   cancelTimeoutInMinutes: 10
-  steps:
+   steps:
+     - powershell: Write-Host "##vso[task.setvariable variable=USE_MSAL]true"
+       displayName: USE MSAL
       - task: AzureFileCopy@5
         inputs:
           AdditionalArgumentsForBlobCopy: '--overwrite=true'
