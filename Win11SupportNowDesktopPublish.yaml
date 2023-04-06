@@ -12,7 +12,7 @@ jobs:
   timeoutInMinutes: 360
   cancelTimeoutInMinutes: 10
    steps:
-      - task: AzureFileCopy@5
+     - task: AzureFileCopy@5
         inputs:
           AdditionalArgumentsForBlobCopy: '--overwrite=true'
           SourcePath: 'scripts/*'
