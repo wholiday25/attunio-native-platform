@@ -11,8 +11,8 @@ jobs:
     name: aibBuildServer
   timeoutInMinutes: 420
   cancelTimeoutInMinutes: 10
-   steps:
-     - task: AzureFileCopy@5
+  steps:
+    - task: AzureFileCopy@5
       inputs:
         AdditionalArgumentsForBlobCopy: '--overwrite=true'
         SourcePath: 'scripts/*'
