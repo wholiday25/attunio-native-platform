@@ -12,8 +12,6 @@ jobs:
   timeoutInMinutes: 360
   cancelTimeoutInMinutes: 10
   steps:
-    - powershell: Write-Host "##vso[task.setvariable variable=USE_MSAL]true"
-      displayName: USE MSAL
     - task: AzureFileCopy@5
       inputs:
         AdditionalArgumentsForBlobCopy: '--overwrite=true'
