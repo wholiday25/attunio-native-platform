@@ -21,13 +21,13 @@ jobs:
         Destination: 'AzureBlob'
         storage: 'aibdev'
         ContainerName: 'scripts'
-   - task: AzurePowerShell@5
-     displayName: 'Clone Azure Image Builder developer to production'
-     inputs:
-       azureSubscription: 'WVD-Dev' #This is the devops service connection name
-       ErrorActionPreference: 'Stop'
-       FailOnStandardError: true
-       ScriptType: 'FilePath'
-       ScriptPath: './Win11SupportNowDesktopPublish.ps1'
-       azurePowerShellVersion: 'LatestVersion'
+    - task: AzurePowerShell@5
+      displayName: 'Clone Azure Image Builder developer to production'
+      inputs:
+        azureSubscription: 'WVD-Dev' #This is the devops service connection name
+        ErrorActionPreference: 'Stop'
+        FailOnStandardError: true
+        ScriptType: 'FilePath'
+        ScriptPath: './Win11SupportNowDesktopPublish.ps1'
+        azurePowerShellVersion: 'LatestVersion'
 
