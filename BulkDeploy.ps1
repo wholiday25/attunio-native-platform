@@ -79,7 +79,9 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 
     
 }
 
-foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'Win11*', 'PAWS*' 'X_*', 'aib*', 'EntDesktop*','SingleApp*','EntDesktop.parameters*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json', '*.yaml','VSWorkspaceState.json') {
+# 4-10-2023  After a successful run, try the below, it is much simpler
+#   Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'Win11*', 'PAWS*','*parameters*','EntDesktop*' , 'VSWorkspaceState*'
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'Win11*', 'PAWS*', 'X_*', 'aib*', 'EntDesktop*','SingleApp*','EntDesktop.parameters*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json', '*.yaml','VSWorkspaceState.json') {
     $imageTemplateName = $aibtemplate.Name -replace ".json", ""
     $imageTemplateFileName = $imageTemplateName + ".json"
     $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json" 
