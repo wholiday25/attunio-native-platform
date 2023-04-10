@@ -32,6 +32,9 @@
         "SupportNowLogmeInURI": {
             "type": "string"
         },
+        "TeamViewerURI": {
+            "type": "string"
+        },
         "SupportNowRumbaURI": {
             "type": "string"
         }
@@ -40,6 +43,7 @@
     "variables": {
         "SupportNowLogmeInCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowLogmeInURI'),'\", \"C:\\Comcast\\Install-SupportNowLogmeIn.zip\")')]",
         "SupportNowRumbaCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SupportNowRumbaURI'),'\", \"C:\\Comcast\\Install-SupportNowRumba.zip\")')]",
+        "TeamViewerCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TeamViewerURI'),'\", \"C:\\Comcast\\Install-TeamViewer.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\SupportNowDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 
@@ -89,6 +93,11 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download TeamViewerCMD",
+                        "inline": ["[variables('TeamViewerCMD')]"]           
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Install LogMeIn",
                         "runElevated": true,
                         "runAsSystem": true,
@@ -106,6 +115,14 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowRSAT.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install TeamViewer",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-TeamViewer.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",

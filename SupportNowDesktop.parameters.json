@@ -26,6 +26,9 @@
         "SupportNowRumbaURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-SupportNowRumba.zip?sp=rl&st=2021-06-14T18:52:51Z&se=2031-11-15T18:52:00Z&sv=2020-02-10&sr=b&sig=LQSFkEG6bbMZFxJqWlQDNV%2FoU4CMsFH6BE3YKYnaT1o%3D"
         },
+        "TeamViewerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-TeamViewer.zip?sp=r&st=2023-04-10T18:07:03Z&se=2035-04-11T02:07:03Z&spr=https&sv=2021-12-02&sr=b&sig=MBWtDBTq5IQSxix6%2BcFZxgMPgirfvcgLTy71GYHK6zA%3D"
+        },
         "InstalledApplicationsURI": {
             "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2022-11-25T20:51:50Z&se=2032-11-26T04:51:50Z&spr=https&sv=2021-06-08&sr=c&sig=slVeDaDEFLYVZ2KVs5edNHOAXitadrFHsaryYkiNAtI%3D"
         },
