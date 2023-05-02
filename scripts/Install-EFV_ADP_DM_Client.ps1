@@ -1,3 +1,5 @@
+#--this installs RedPoint Data Management Client 9.4.5.2864 
+
 Start-Transcript  -PATH "C:\Comcast\Install-EFV_ADP_DM_Client.txt"
 Expand-Archive -Path "C:\Comcast\Install-EFV_ADP_DM_Client.zip" -DestinationPath "C:\Comcast\Install-EFV_ADP_DM_Client" -Force
 
