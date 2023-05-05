@@ -54,6 +54,10 @@
             "type": "string"
         },"EFV_ADP_DM_ClientURI": {
             "type": "string"
+        },"EFV_ADP_RPI_ClientURI": {
+            "type": "string"
+        },"MediationzoneLauncherURI": {
+            "type": "string"
         },
         "SAPHanaAdobeLifecycleURI": {
             "type": "string"
@@ -71,6 +75,8 @@
         "SAPHanaAdobeLifecycleDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPHanaAdobeLifecycleURI'),'\", \"C:\\Comcast\\Install-SAPHanaAdobeLifecycle.zip\")')]",
         "SAPHanaABAPDevelopmentToolKitCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SAPHanaABAPDevelopmentToolKitURI'),'\", \"C:\\Comcast\\Install-SAP-HANA-ABAPDevelopmentToolKit.zip\")')]",
         "EFV_ADP_DM_ClientCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('EFV_ADP_DM_ClientURI'),'\", \"C:\\Comcast\\Install-EFV_ADP_DM_Client.zip\")')]",
+        "EFV_ADP_RPI_ClientCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('EFV_ADP_RPI_ClientURI'),'\", \"C:\\Comcast\\Install-EFV_ADP_RPI_Client.zip\")')]",
+        "MediationzoneLauncherCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MediationzoneLauncherURI'),'\", \"C:\\Comcast\\Install-MediationzoneLauncher.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\RDSUnifiedDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 
@@ -272,6 +278,16 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download EFV ADP RPI Client",
+                        "inline": ["[variables('EFV_ADP_RPI_ClientMD')]"]               
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download MediationzoneLauncher",
+                        "inline": ["[variables('MediationzoneLauncherCMD')]"]               
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Download SAPHanaAdobeLifecycleDownloadCMD",
                         "inline": ["[variables('SAPHanaAdobeLifecycleDownloadCMD')]"]               
                     },
@@ -295,6 +311,20 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-EFV_ADP_DM_Client.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install EFV_ADP_RPI_Client",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-EFV_ADP_RPI_Client.ps1"
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install EFV_ADP_MediationZoneLauncher",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MediationzoneLauncher.ps1"
                     },
                     {
                         "type": "PowerShell",
