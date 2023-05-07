@@ -279,7 +279,7 @@
                     {
                         "type": "PowerShell",
                         "name": "Download EFV ADP RPI Client",
-                        "inline": ["[variables('EFV_ADP_RPI_ClientMD')]"]               
+                        "inline": ["[variables('EFV_ADP_RPI_ClientCMD')]"]               
                     },
                     {
                         "type": "PowerShell",
