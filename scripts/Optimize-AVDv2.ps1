@@ -88,7 +88,7 @@ XboxNetApiSvc
 "@
 
 # ================== Customize User settings here. Please ensure to use correct JSON formatting
-#05/10/2023 -- Added  HKLM\Software\FSLogix\apps\CleanupInvalidSessions
+#05/10/2023 -- Added  HKLM\DEFAULT\Software\FSLogix\apps\CleanupInvalidSessions
 $DefaultUserSettings = @"
 [
     {
@@ -350,7 +350,7 @@ $DefaultUserSettings = @"
         "SetProperty": "True"
     },
     {
-        "HivePath": "HKLM:\\Software\\FSLogix\\apps",
+        "HivePath": "HKLM:\\DEFAULT\\Software\\FSLogix\\apps",
         "KeyName": "CleanupInvalidSessions",
         "PropertyType": "DWORD",
         "PropertyValue": 1,
