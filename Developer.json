@@ -50,6 +50,9 @@
         "MuleSoftAnyPointInstallerURI": {
             "type": "string"
         },
+        "VS2019ExtensionsURI": {
+            "type": "string"
+        },
          "UC4UserInterfaceInstallerURI": {
                 "type": "string"
             }
@@ -62,6 +65,7 @@
         "MFLRVUG_00264CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUG_00264URI'),'\", \"C:\\Comcast\\Install-MFLRVUG_00264.zip\")')]",
         "AmazonRedShiftODBCCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AmazonRedShiftODBCURI'),'\", \"C:\\Comcast\\Install-AmazonRedshiftODBC64-1.4.62.1000.zip\")')]",
         "UC4UserInterfaceDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('UC4UserInterfaceInstallerURI'),'\", \"C:\\Comcast\\Install-UC4UserInterface.zip\")')]",
+        "VS2019ExtensionsCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VS2019ExtensionsURI'),'\", \"C:\\Comcast\\Install-VS2019Extensions.zip\")')]",
         "MuleSoftAnyPointDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MuleSoftAnyPointInstallerURI'),'\", \"C:\\Comcast\\Install-AnyPointStudio.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\Developer.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     
@@ -145,6 +149,11 @@
                     },
                     {
                         "type": "PowerShell", 
+                        "name": "Download Visual Studio 2019 Extensions",
+                        "inline": ["[variables('VS2019ExtensionsCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell", 
                         "name": "Download MuleSoftAnyPoint",
                         "inline": ["[variables('MuleSoftAnyPointDownloadCMD')]"]                    
                     },
@@ -196,7 +205,7 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "AWS CLI 2.0",
+                        "name": "install AWS CLI 2.0",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AWSCLI.ps1",
@@ -207,7 +216,7 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "AWS SAM CLI ",
+                        "name": "Install AWS SAM CLI ",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AWSSAMCLI.ps1",
@@ -218,7 +227,7 @@
                     },
                     {
                         "type": "PowerShell",
-                        "name": "Azure PowerShell Module",
+                        "name": "Install Azure PowerShell Module",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AzurePS.ps1",
@@ -516,7 +525,19 @@
                             0,
                             3010
                         ]
-                    },{
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Visual Studio 2019 Extensions",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VS2019Extensions.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
                         "type": "PowerShell",
                         "name": "Install VNX Launcher",
                         "runElevated": true,
