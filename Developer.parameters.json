@@ -44,6 +44,9 @@
         "UC4UserInterfaceInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-UC4UserInterface.zip?sv=2020-04-08&st=2021-12-09T02%3A26%3A32Z&se=2031-12-10T02%3A26%3A00Z&sr=b&sp=r&sig=YY909YuIsjSLWttY5ULOcAczvTHf7ITarbY86mhH8As%3D"
         },
+        "VS2019ExtensionsURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-VS2019Extensions.zip?sp=r&st=2023-03-24T17:08:04Z&se=2034-03-25T01:08:04Z&spr=https&sv=2021-12-02&sr=b&sig=ILI0b%2FH5NYGW%2FJy%2BZ2dvWkbsVy%2BS3dLkHe9kpxFz8k4%3D"
+        },
         "MuleSoftAnyPointInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-AnypointStudio.zip?sp=r&st=2022-11-25T20:39:41Z&se=2032-11-26T04:39:41Z&spr=https&sv=2021-06-08&sr=b&sig=xlIdrUp7%2F1zmL%2B9wxBx3LJTFyvdeys0ietOAK68bLUs%3D"
         },       

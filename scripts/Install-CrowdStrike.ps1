@@ -1,5 +1,12 @@
 Start-Transcript  -PATH "C:\Comcast\InstallCrowdStrike.txt"
 
+# 5/12/2023  Added Regkey to enhance FSLogix sessions
+# Note that Nerdio >>Integrations >>FSLogix installs to  HKLM\SOFTWARE\FSLogix\Profile
+# However, this is needed:  HKLM\Software\fslogix\apps\CleanupInvalidSessions
+
+New-ItemProperty -Path "HKLM:\Software\FSLogix\apps\" -Name 'CleanupInvalidSessions' -PropertyType DWORD -Value 1
+
+
 Expand-Archive -Path "C:\Comcast\InstallCrowdStrike-AVD.zip" -DestinationPath "C:\Comcast\CrowdStrike" -Force
 
 # According to error logs, Power servivce must be running to install Crowdstrike

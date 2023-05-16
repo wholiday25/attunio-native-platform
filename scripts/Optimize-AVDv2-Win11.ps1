@@ -87,6 +87,7 @@ XboxNetApiSvc
 "@
 
 # ================== Customize User settings here. Please ensure to use correct JSON formatting
+#05/10/2023 -- Added  HKLM\DEFAULT\Software\FSLogix\apps\CleanupInvalidSessions
 $DefaultUserSettings = @"
 [
     {
@@ -339,12 +340,18 @@ $DefaultUserSettings = @"
         "PropertyType": "DWORD",
         "PropertyValue": 0,
         "SetProperty": "True"
-    },
-    {
+    },{
         "HivePath": "HKLM:\\DEFAULT\\Software\\Microsoft\\Windows\\CurrentVersion\\SearchSettings",
         "KeyName": "IsDeviceSearchHistoryEnabled",
         "PropertyType": "DWORD",
         "PropertyValue": 0,
+        "SetProperty": "True"
+    },
+    {
+        "HivePath": "HKLM:\\DEFAULT\\Software\\FSLogix\\apps",
+        "KeyName": "CleanupInvalidSessions",
+        "PropertyType": "DWORD",
+        "PropertyValue": 1,
         "SetProperty": "True"
     },
     {
