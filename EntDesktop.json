@@ -54,7 +54,7 @@
     "variables": {
         "TeammateDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TeammateInstallerURI'),'\", \"C:\\Comcast\\Install-Teammate.zip\")')]",
         "RSASecurIDTokenDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('RSASecurIDTokenInstallerURI'),'\", \"C:\\Comcast\\Install-RSASecurIDToken.zip\")')]",
-        "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\InstallCrowdStrike-AVD.zip\")')]",
+        "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\Install-CrowdStrikeAVD.zip\")')]",
         "NotepadPPBigFilesCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('NotepadPPBigFilesURI'),'\", \"C:\\Comcast\\Install-NotepadPPBigFiles.zip\")')]",
         "TableauDesktop64bit202138CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TableauDesktop64bit202138URI'),'\", \"C:\\Comcast\\Install-TableauDesktop64bit-2021-3-8.zip\")')]",
         "WalkMeCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('WalkMeURI'),'\", \"C:\\Comcast\\Install-WalkmeAllInOneInstaller_x64.zip\")')]",

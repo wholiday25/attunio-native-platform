@@ -4,10 +4,11 @@ Start-Transcript  -PATH "C:\Comcast\InstallCrowdStrike.txt"
 # Note that Nerdio >>Integrations >>FSLogix installs to  HKLM\SOFTWARE\FSLogix\Profile
 # However, this is needed:  HKLM\Software\fslogix\apps\CleanupInvalidSessions
 
+#7/14/2023 - Update version to Crowdstrike-WindowsSensor-6.56.17010.exe
 New-ItemProperty -Path "HKLM:\Software\FSLogix\apps\" -Name 'CleanupInvalidSessions' -PropertyType DWORD -Value 1
 
 
-Expand-Archive -Path "C:\Comcast\InstallCrowdStrike-AVD.zip" -DestinationPath "C:\Comcast\CrowdStrike" -Force
+Expand-Archive -Path "C:\Comcast\Install-CrowdstrikeAVD.zip" -DestinationPath "C:\Comcast\CrowdStrike" -Force
 
 # According to error logs, Power servivce must be running to install Crowdstrike
 # Error 0x80004005: Required service DISABLED: power
@@ -23,7 +24,7 @@ Start-Service -name Power
 
 #Edits 10/20/2022 -- new version remove some flag per Shane Lingo
 #Start-Process -Filepath "C:\Comcast\Crowdstrike\Crowdstrike-WindowsSensor-6.39.15316" -ArgumentList "/silent /install CID=1AB23F2E88784A788D3F7142081CDEFA-8A VDI=1 GROUPING_TAGS=AVD,Comcast_SEP_Removal"
-Start-Process -Filepath "C:\Comcast\Crowdstrike\Crowdstrike-WindowsSensor-6.45.15907.exe" -ArgumentList "/silent /install CID=1AB23F2E88784A788D3F7142081CDEFA-8A VDI=1 GROUPING_TAGS=AVD"
+Start-Process -Filepath "C:\Comcast\Crowdstrike\Crowdstrike-WindowsSensor-6.56.17010.exe" -ArgumentList "/silent /install CID=1AB23F2E88784A788D3F7142081CDEFA-8A VDI=1 GROUPING_TAGS=AVD"
 
 Set-Itemproperty -path "HKLM:\SYSTEM\CurrentControlSet\Control" -Name 'ServicesPipeTimeout' -Value 600000
 Start-Sleep -s 60
