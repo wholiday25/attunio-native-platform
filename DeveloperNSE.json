@@ -117,7 +117,7 @@
                         "type": "PowerShell", 
                         "name": "Download MySQLWorkbenchv8.0.33",
                         "inline": ["[variables('MySQLWorkbenchv8.0.33CMD')]"]                    
-                    },,
+                    },
                     {
                         "type": "PowerShell",
                         "name": "Download Odbcjava_CMD",
