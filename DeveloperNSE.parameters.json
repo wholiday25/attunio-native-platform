@@ -35,6 +35,9 @@
     "WinGPG_URI": {
         "value": "https://aibdev.blob.core.windows.net/installers/Install-WinGPG.zip?sp=r&st=2023-02-24T19:51:25Z&se=2034-02-25T03:51:25Z&spr=https&sv=2021-06-08&sr=b&sig=Zva1qkPqMr4jLG%2BLB1a6k%2FkwhAGO5hGMWDIGanGbbeM%3D"
     },
+    "MySQLWorkbenchv8.0.33URI": {
+        "value": "https://aibdev.blob.core.windows.net/installers/Install-MySQLWorkbenchv8.0.33.zip?sp=r&st=2023-07-18T15:08:55Z&se=2035-07-18T23:08:55Z&spr=https&sv=2022-11-02&sr=b&sig=NQy5TfapOUy0nAn2Y7PHTntM%2BZooX7LTFupGiQFQsIw%3D"
+    },
     "InstalledApplicationsURI": {
         "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2022-11-25T20:51:50Z&se=2032-11-26T04:51:50Z&spr=https&sv=2021-06-08&sr=c&sig=slVeDaDEFLYVZ2KVs5edNHOAXitadrFHsaryYkiNAtI%3D"
     },

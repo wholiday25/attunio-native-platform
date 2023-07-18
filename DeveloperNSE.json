@@ -41,6 +41,9 @@
         "WinGPG_URI": {
             "type": "string"
         },
+        "MySQLWorkbenchv8.0.33URI": {
+            "type": "string"
+        },
         "AdobeCampaignClassic7_URI": {
             "type": "string"
         }
@@ -53,6 +56,7 @@
         "Odbcjava_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('Odbcjava_URI'),'\", \"C:\\Comcast\\Install-Odbcjava.zip\")')]",
         "AdobeCampaignClassic7_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AdobeCampaignClassic7_URI'),'\", \"C:\\Comcast\\Install-AdobeCampaignClassic7.zip\")')]",
         "WinGPG_CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('WinGPG_URI'),'\", \"C:\\Comcast\\Install-WinGPG.zip\")')]",
+        "MySQLWorkbenchv8.0.33CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MySQLWorkbenchv8.0.33URI'),'\", \"C:\\Comcast\\Install-MySQLWorkbenchv8.0.33.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\DeveloperNSE.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     },
 
@@ -109,6 +113,11 @@
                         "name": "Download WinGPG ",
                         "inline": ["[variables('WinGPG_CMD')]"]           
                     },
+                    {
+                        "type": "PowerShell", 
+                        "name": "Download MySQLWorkbenchv8.0.33",
+                        "inline": ["[variables('MySQLWorkbenchv8.0.33CMD')]"]                    
+                    },,
                     {
                         "type": "PowerShell",
                         "name": "Download Odbcjava_CMD",

@@ -50,6 +50,9 @@
         "MuleSoftAnyPointInstallerURI": {
             "type": "string"
         },
+        "MySQLWorkbenchv8.0.33URI": {
+            "type": "string"
+        },
         "VS2019ExtensionsURI": {
             "type": "string"
         },
@@ -66,6 +69,7 @@
         "AmazonRedShiftODBCCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AmazonRedShiftODBCURI'),'\", \"C:\\Comcast\\Install-AmazonRedshiftODBC64-1.4.62.1000.zip\")')]",
         "UC4UserInterfaceDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('UC4UserInterfaceInstallerURI'),'\", \"C:\\Comcast\\Install-UC4UserInterface.zip\")')]",
         "VS2019ExtensionsCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VS2019ExtensionsURI'),'\", \"C:\\Comcast\\Install-VS2019Extensions.zip\")')]",
+        "MySQLWorkbenchv8.0.33CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MySQLWorkbenchv8.0.33URI'),'\", \"C:\\Comcast\\Install-MySQLWorkbenchv8.0.33.zip\")')]",
         "MuleSoftAnyPointDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MuleSoftAnyPointInstallerURI'),'\", \"C:\\Comcast\\Install-AnyPointStudio.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\Developer.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     
@@ -156,6 +160,11 @@
                         "type": "PowerShell", 
                         "name": "Download MuleSoftAnyPoint",
                         "inline": ["[variables('MuleSoftAnyPointDownloadCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell", 
+                        "name": "Download MySQLWorkbenchv8.0.33",
+                        "inline": ["[variables('MySQLWorkbenchv8.0.33CMD')]"]                    
                     },
                     {
                         "type": "PowerShell",
