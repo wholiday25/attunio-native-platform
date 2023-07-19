@@ -41,6 +41,9 @@
         "TableauDesktop64bit202138URI": {
             "type": "string"
         },
+        "TableauPrestoDriversURI": {
+            "type": "string"
+        },
         "WalkMeURI": {
             "type": "string"
         },
@@ -57,6 +60,7 @@
         "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\Install-CrowdStrikeAVD.zip\")')]",
         "NotepadPPBigFilesCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('NotepadPPBigFilesURI'),'\", \"C:\\Comcast\\Install-NotepadPPBigFiles.zip\")')]",
         "TableauDesktop64bit202138CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TableauDesktop64bit202138URI'),'\", \"C:\\Comcast\\Install-TableauDesktop64bit-2021-3-8.zip\")')]",
+        "TableauPrestoDriversCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TableauPrestoDriversURI'),'\", \"C:\\Comcast\\Install-TableauPrestoDrivers.zip\")')]",
         "WalkMeCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('WalkMeURI'),'\", \"C:\\Comcast\\Install-WalkmeAllInOneInstaller_x64.zip\")')]",
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
         "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
@@ -175,6 +179,13 @@
                         "name": "Download TableauDesktop64bit202138",
                         "inline": [
                             "[variables('TableauDesktop64bit202138CMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Download TableauPrestoDrivers",
+                        "inline": [
+                            "[variables('TableauPrestoDriversCMD')]"
                         ]
                     },
                     {

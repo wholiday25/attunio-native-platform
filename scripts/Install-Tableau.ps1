@@ -14,5 +14,7 @@ Expand-Archive -Path "C:\Comcast\Install-TableauDesktop64bit-2021-3-8.zip" -Dest
 Start-Process -Filepath "C:\Comcast\Install-TableauDesktop64bit-2021-3-8\TableauDesktop-64bit-2021-3-8.exe" -ArgumentList "/quiet /norestart ACCEPTEULA=1"
 Start-Sleep 240
 
-
-
+#7/19/2023 Istall Presto Drivers per CAS1274244
+Expand-Archive -Path "C:\Comcast\Install-TableauPrestoDrivers.zip" -DestinationPath "C:\Comcast\Install-TableauPrestoDrivers" -Force
+Start-Process -FilePath C:\Windows\System32\msiexec.exe -ArgumentList " /i ""C:\Comcast\Install-TableauPrestoDrivers\TreasureDataPrestoODBCDriver.msi"" /qn /norestart"
+Start-Sleep 60
