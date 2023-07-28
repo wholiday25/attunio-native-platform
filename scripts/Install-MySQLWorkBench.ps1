@@ -19,7 +19,7 @@ This script installs My SQl Workbench via Chocolatey
 Start-Transcript  -PATH "C:\Comcast\Install-MySQLWorkbenchv8.0.33.txt"
 Expand-Archive -Path "C:\Comcast\Install-MySQLWorkbenchv8.0.33.zip" -DestinationPath "C:\Comcast\" -Force
 
-Start-Process -FilePath C:\Windows\System32\msiexec.exe -ArgumentList " /i ""C:\Comcast\Install-MySQLWorkbenchv8.0.33\mysql-workbench-community-8.0.33-winx64.msi"" /qn /norestart"
+Start-Process -FilePath C:\Windows\System32\msiexec.exe -ArgumentList " /i ""C:\Comcast\mysql-workbench-community-8.0.33-winx64.msi"" /qn /norestart"
 Start-Sleep  -s 120 
 
 
