@@ -44,6 +44,9 @@
         "TableauDesktop64bit202138URI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-TableauDesktop64bit-2021-3-8.zip?sp=r&st=2022-12-13T14:57:50Z&se=2033-12-13T22:57:50Z&spr=https&sv=2021-06-08&sr=b&sig=18DC0CkQ2FUQ2ew5FObM5tAVNpzOvkWouTI1yLg50T0%3D"
         },
+        "CitrixWorkspaceURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-CitrixWorkspace.zip?sp=r&st=2023-08-01T16:04:43Z&se=2034-08-02T00:04:43Z&spr=https&sv=2022-11-02&sr=b&sig=DAqBySolVij%2Bm0MthQyhAGQ%2BqnY1JbylT0cr24gi62Y%3D"
+        },
         "TableauPrestoDriversURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-TableauPrestoDrivers.zip?sp=r&st=2023-07-19T17:14:20Z&se=2035-07-20T01:14:20Z&spr=https&sv=2022-11-02&sr=b&sig=FHcmTo7xVpF42bvQ%2BJ4IX66WLstLH63KlkpVwBuVHd8%3D"
         },
