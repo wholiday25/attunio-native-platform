@@ -26,8 +26,8 @@
         "Ginger.4.2.0.0_URI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-Ginger.4.2.0.0.exe?sp=r&st=2022-04-15T14:14:38Z&se=2032-04-15T22:14:38Z&spr=https&sv=2020-08-04&sr=b&sig=BqE5E%2F%2B5JKUUeoIw7Sdt7d1E1kwpPCVJh81s4M4wOUU%3D"
         },
-        "MFLRAnalysis12.60URI": {
-            "value": "https://aibdev.blob.core.windows.net/installers/Install-MFLRAnalysis12.60.zip?sp=rl&st=2021-10-13T16:33:58Z&se=2031-11-21T16:33:00Z&sv=2020-08-04&sr=b&sig=ux%2B7ePy1mcXnZmPvn%2BaKB%2FvFR7cxBawK7dyLADu%2FQxY%3D"
+        "MFLRAnalysis2022R1URI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-MFLRAnalysis2022R1.zip?sp=r&st=2023-08-03T17:24:53Z&se=2035-08-04T01:24:53Z&spr=https&sv=2022-11-02&sr=b&sig=MRPKZNKBRhWPeaq9P3OnWKVED9hmIcwye%2BLEdLxh0Xc%3D"
         },
         "MFLRVUGen12.60URI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-MFLRVUGen12.60.zip?sp=rl&st=2021-10-13T17:11:55Z&se=2031-11-14T17:11:00Z&sv=2020-08-04&sr=b&sig=cVfciP4dpCIrCX398DbcB8V5t57CmUYdRN7XCx5XrCw%3D"
