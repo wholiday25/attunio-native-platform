@@ -134,7 +134,8 @@
                         "name": "Install SecureCRT",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SecureCRT.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SecureCRT.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
@@ -162,7 +163,8 @@
                         "name": "Install SupportNowLogMeIn",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowLogmeIn.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowLogmeIn.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
@@ -195,7 +197,8 @@
                         "name": "Install MetasolvDev631b367",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MetasolvDev631b367.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MetasolvDev631b367.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
@@ -207,26 +210,30 @@
                         "name": "Install AccessDatabaseEngineCMD",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AccessDatabaseEngine.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AccessDatabaseEngine.ps1",
+                        "validExitCodes": [0,3010]
                     },{
                         "type": "PowerShell",
                         "name": "Install Java x86 V 1.8.341",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86-RDS-341.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86-RDS-341.ps1",
+                        "validExitCodes": [0,3010]
                     },{
                         "type": "PowerShell",
                         "name": "Install Java x64 V 1.8.341",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64-RDS-341.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64-RDS-341.ps1",
+                        "validExitCodes": [0,3010]
                     },
                               {
                         "type": "PowerShell",
                         "name": "Install Metasolv",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Metasolvb367Prod0317.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Metasolvb367Prod0317.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
@@ -238,7 +245,8 @@
                         "name": "Install RSASecurIDToken",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-RSASecurIDToken.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-RSASecurIDToken.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
@@ -250,7 +258,8 @@
                         "name": "Install SAPGUI",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SAPGUI.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SAPGUI.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
@@ -262,7 +271,8 @@
                         "name": "Install SAPHanaAdobeLifecycle",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SAPHanaAdobeLifecycle.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SAPHanaAdobeLifecycle.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",

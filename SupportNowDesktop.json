@@ -109,14 +109,16 @@
                         "name": "Install Rumba",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowRumba.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowRumba.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install RSAT Tools ",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowRSAT.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowRSAT.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",

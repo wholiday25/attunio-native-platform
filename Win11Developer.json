@@ -153,35 +153,40 @@
                         "name": "Install MuleSoftAnyPoint",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MulesoftAnyPoint.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MulesoftAnyPoint.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",                        
                         "name": "Install AccessDatabaseEngineCMD",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AccessDatabaseEngine.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AccessDatabaseEngine.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install Ginger.4.2.0.0_CMD",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Ginger.4.2.0.0.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Ginger.4.2.0.0.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install MFLRAnalysis12.60CMD",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MFLRAnalysis12.60.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MFLRAnalysis12.60.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install Amazon Redshift ODBC",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AmazonRedshiftODBC64-1.4.62.1000.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AmazonRedshiftODBC64-1.4.62.1000.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
