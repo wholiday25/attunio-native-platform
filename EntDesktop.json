@@ -232,28 +232,44 @@
                         "name": "Install Crowdstrike",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CrowdStrike.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CrowdStrike.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install SmartView",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SmartView.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SmartView.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install Visio",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Visio.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Visio.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install Project",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Project.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Project.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
@@ -271,7 +287,11 @@
                         "name": "Install 7Zip",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-7Zip.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-7Zip.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
@@ -355,70 +375,110 @@
                         "name": "Install Chrome",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Chrome.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Chrome.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install Adobe Reader",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AdobeReader.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AdobeReader.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install VSCode",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSCode.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSCode.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install Teammate",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Teammate.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Teammate.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install Slack Client",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Slack.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Slack.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install winmerge",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-winmerge.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-winmerge.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install tortoisegit",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-tortoisegit.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-tortoisegit.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install kubernetes-cli",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Kubectl.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-Kubectl.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install cloudfoundry-cli",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CloudFoundary.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-CloudFoundary.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Install Java x86",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86-RDS-341.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx86-RDS-341.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
@@ -432,7 +492,11 @@
                         "name": "Install RSASecurIDToken",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-RSASecurIDToken.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-RSASecurIDToken.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "WindowsRestart",
@@ -444,14 +508,22 @@
                         "name": "Install Java x64 v1.8.341 due to CLIPS and SOM incompatibility",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64-RDS-341.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-JREx64-RDS-341.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
                         "name": "Expand C Drive to 265 GB",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Config-MaxVolumeExpand-C.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Config-MaxVolumeExpand-C.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },
                     {
                         "type": "PowerShell",
