@@ -50,6 +50,9 @@
         "TableauPrestoDriversURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-TableauPrestoDrivers.zip?sp=r&st=2023-07-19T17:14:20Z&se=2035-07-20T01:14:20Z&spr=https&sv=2022-11-02&sr=b&sig=FHcmTo7xVpF42bvQ%2BJ4IX66WLstLH63KlkpVwBuVHd8%3D"
         },
+        "TableauTeradataURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-Tableau-TeradataODBC-v17.20.19.00.zip?sp=r&st=2023-10-17T19:56:23Z&se=2035-10-18T03:56:23Z&spr=https&sv=2022-11-02&sr=b&sig=bxbrt03xclJ4QT9wLa2nnHRvXPrb32a5Oq%2BHmsSm87c%3D"
+        },
         "WalkMeURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-WalkmeAllInOneInstaller_x64.zip?sp=r&st=2023-02-24T16:32:54Z&se=2034-02-25T00:32:54Z&spr=https&sv=2021-06-08&sr=b&sig=c4h%2FRimU%2BjmuRUoq2AKYQElqaqmtabPcJd11LFBYMcs%3D"
         },
