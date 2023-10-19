@@ -56,6 +56,9 @@ New-AzResourceGroupDeployment -ResourceGroupName $imageResourceGroup -TemplateFi
 Write-Output "Starting Azure ImageBuilder Build for $imageTemplateName"
 Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $imageTemplateName
 
+<# Commented out 10/19/2023 --  Issue withDevOps Secrets : ClientSecretCredential authentication failed: A configuration issue is preventing authentication 
+Made new secret in Keyvault, but in fixing this, the delete version block seems to error 
+Revisit when there's time
 
 $gallery = Get-AzGallery -Name $galleryName
 $versions = Get-AzGalleryImageVersion -ResourceGroupName $($gallery.ResourceGroupName) -GalleryName $($gallery.Name) -GalleryImageDefinitionName $imageTemplateName
@@ -66,3 +69,4 @@ if ($versions.count -gt 8) {
 
 }
 
+#>
