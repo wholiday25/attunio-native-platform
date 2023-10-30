@@ -99,6 +99,12 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-IBMAsperaConnect.ps1"
+                    },                    {
+                        "type": "PowerShell",
+                        "name": "Install EDPStation",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-EDPSTation.ps1"
                     },
                     {
                         "type": "PowerShell",
