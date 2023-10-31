@@ -4,9 +4,11 @@ Start-Transcript  -PATH "C:\Comcast\Install-EDPStation.txt"
     
 #Download Batch file for EDP Station
 $source = "http://10.168.72.113:7080/SelfServe/GetBatch.cgi?install"
-$destination = "c:\Comcast\Install.bat"
+$destination = "C:\Comcast\Install.txt"
 $client = New-Object System.Net.WebClient
 $client.DownloadFile($source, $destination)
+
+Rename-Item -PATH "C:\Comcast\Install.txt" -NewName "C:\Comcast\Install.bat"
 
 #install silently
 start-process "cmd.exe" "/c  C:\comcast\install.bat"
