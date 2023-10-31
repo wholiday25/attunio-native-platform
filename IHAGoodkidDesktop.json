@@ -92,14 +92,19 @@
                         "name": "Install AdobeCreativeCloud",
                         "runElevated": true,
                         "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AdobeCreativeCloud.ps1"
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AdobeCreativeCloud.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
                     },                    {
                         "type": "PowerShell",
                         "name": "Install IBMAsperaConnect",
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-IBMAsperaConnect.ps1"
-                    },                    {
+                    },                    
+                    {
                         "type": "PowerShell",
                         "name": "Install EDPStation",
                         "runElevated": true,
