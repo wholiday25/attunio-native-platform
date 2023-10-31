@@ -3,15 +3,16 @@
 Start-Transcript  -PATH "C:\Comcast\Install-EDPStation.txt"
     
 #Download Batch file for EDP Station
-$source = "http://10.168.72.113:7080/SelfServe/GetBatch.cgi?install"
-$destination = "C:\Comcast\Install.txt"
-$client = New-Object System.Net.WebClient
-$client.DownloadFile($source, $destination)
+# this fails.  download will be done ion JSON
 
-Rename-Item -PATH "C:\Comcast\Install.txt" -NewName "C:\Comcast\Install.bat"
+#$source = "http://10.168.72.113:7080/SelfServe/GetBatch.cgi?install"
+#$destination = "C:\Comcast\Install.txt"
+#$client = New-Object System.Net.WebClient
+#$client.DownloadFile($source, $destination)
+#Rename-Item -PATH "C:\Comcast\Install.txt" -NewName "C:\Comcast\Install.bat"
 
 #install silently
-start-process "cmd.exe" "/c  C:\comcast\install.bat"
+start-process "cmd.exe" "/c  C:\comcast\Install-EDPStation.bat"
 
 # Wait 240 Seconds for the installation to finish
 Start-Sleep -s 240
