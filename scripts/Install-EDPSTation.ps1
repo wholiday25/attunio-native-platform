@@ -12,7 +12,7 @@ Start-Transcript  -PATH "C:\Comcast\Install-EDPStation.txt"
 #Rename-Item -PATH "C:\Comcast\Install.txt" -NewName "C:\Comcast\Install.bat"
 
 #install silently
-start-process "cmd.exe" "/c  C:\comcast\Install-EDPStation.bat"
+start-process "cmd.exe" "/c  C:\comcast\install.bat"
 
 # Wait 240 Seconds for the installation to finish
 Start-Sleep -s 240
