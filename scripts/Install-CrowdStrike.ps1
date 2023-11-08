@@ -24,7 +24,7 @@ Start-Service -name Power
 
 #Edits 10/20/2022 -- new version remove some flag per Shane Lingo
 #Start-Process -Filepath "C:\Comcast\Crowdstrike\Crowdstrike-WindowsSensor-6.39.15316" -ArgumentList "/silent /install CID=1AB23F2E88784A788D3F7142081CDEFA-8A VDI=1 GROUPING_TAGS=AVD,Comcast_SEP_Removal"
-Start-Process -Filepath "C:\Comcast\Crowdstrike\Crowdstrike-WindowsSensor-6.56.17010.exe" -ArgumentList "/silent /install CID=1AB23F2E88784A788D3F7142081CDEFA-8A VDI=1 GROUPING_TAGS=AVD"
+Start-Process -Filepath "C:\Comcast\Crowdstrike\Crowdstrike-WindowsSensor-7.01.17312.exe" -ArgumentList "/silent /install CID=1AB23F2E88784A788D3F7142081CDEFA-8A VDI=1 GROUPING_TAGS=AVD"
 
 Set-Itemproperty -path "HKLM:\SYSTEM\CurrentControlSet\Control" -Name 'ServicesPipeTimeout' -Value 600000
 Start-Sleep -s 60
