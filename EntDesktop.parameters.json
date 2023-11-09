@@ -41,6 +41,9 @@
         "NotepadPPBigFilesURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-NotepadPPBigFiles.zip?sp=r&st=2022-12-09T17:37:25Z&se=2033-12-10T01:37:25Z&spr=https&sv=2021-06-08&sr=b&sig=umyKGZDkosN%2FRJ5Ee0AzwTYALwkzawO1qyfPUfIfVOs%3D"
         },
+        "AdobeReportBuilderAddInURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-AdobeReportBuilderAddIn.zip?sp=r&st=2023-11-09T16:33:09Z&se=2035-11-10T00:33:09Z&spr=https&sv=2022-11-02&sr=b&sig=QHNvkOhnhH1qJbjN6dyhX%2BSobWP7fMqBv7tUV242pVc%3D"
+        },
         "TableauDesktop64bit202138URI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-TableauDesktop64bit-2021-3-8.zip?sp=r&st=2022-12-13T14:57:50Z&se=2033-12-13T22:57:50Z&spr=https&sv=2021-06-08&sr=b&sig=18DC0CkQ2FUQ2ew5FObM5tAVNpzOvkWouTI1yLg50T0%3D"
         },

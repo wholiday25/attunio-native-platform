@@ -38,6 +38,9 @@
         "NotepadPPBigFilesURI": {
             "type": "string"
         },
+        "AdobeReportBuilderAddInURI": {
+            "type": "string"
+        },
         "TableauDesktop64bit202138URI": {
             "type": "string"
         },
@@ -65,6 +68,7 @@
         "RSASecurIDTokenDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('RSASecurIDTokenInstallerURI'),'\", \"C:\\Comcast\\Install-RSASecurIDToken.zip\")')]",
         "CrowdStrikeDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CrowdStrikeInstallerURI'),'\", \"C:\\Comcast\\Install-CrowdStrikeAVD.zip\")')]",
         "NotepadPPBigFilesCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('NotepadPPBigFilesURI'),'\", \"C:\\Comcast\\Install-NotepadPPBigFiles.zip\")')]",
+        "AdobeReportBuilderAddInCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AdobeReportBuilderAddInURI'),'\", \"C:\\Comcast\\Install-AdobeReportBuilderAddIn.zip\")')]",
         "TableauDesktop64bit202138CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TableauDesktop64bit202138URI'),'\", \"C:\\Comcast\\Install-TableauDesktop64bit-2021-3-8.zip\")')]",
         "TableauPrestoDriversCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TableauPrestoDriversURI'),'\", \"C:\\Comcast\\Install-TableauPrestoDrivers.zip\")')]",
         "TableauTeradataCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TableauTeradataURI'),'\", \"C:\\Comcast\\Install-Tableau-TeradataODBC-v17.20.19.00.zip\")')]",
@@ -184,6 +188,13 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download AdobeReportBuilderAddIn",
+                        "inline": [
+                            "[variables('AdobeReportBuilderAddInCMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Download TableauDesktop64bit202138",
                         "inline": [
                             "[variables('TableauDesktop64bit202138CMD')]"
@@ -288,6 +299,17 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-NotepadPP.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install AdobeReportBuilderAddIn",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AdobeReportBuilderAddIn.ps1",
                         "validExitCodes": [
                             0,
                             3010

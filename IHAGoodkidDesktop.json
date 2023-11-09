@@ -109,13 +109,6 @@
                         "name": "Download EDP Station batch file",
                         "sourceUri": "https://aibdev.blob.core.windows.net/installers/Install-EDPStation.bat",
                         "destination": "C:\\Comcast\\install.bat"
-                    },                    
-                    {
-                        "type": "PowerShell",
-                        "name": "Install EDPStation",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-EDPSTation.ps1"
                     },
                     {
                         "type": "PowerShell",
