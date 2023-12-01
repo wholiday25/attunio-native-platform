@@ -53,6 +53,9 @@
         "TableauTeradataURI": {
             "type": "string"
         },
+        "TeradataSQLAssistURI": {
+            "type": "string"
+        },
         "WalkMeURI": {
             "type": "string"
         },
@@ -72,6 +75,7 @@
         "TableauDesktop64bit202138CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TableauDesktop64bit202138URI'),'\", \"C:\\Comcast\\Install-TableauDesktop64bit-2021-3-8.zip\")')]",
         "TableauPrestoDriversCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TableauPrestoDriversURI'),'\", \"C:\\Comcast\\Install-TableauPrestoDrivers.zip\")')]",
         "TableauTeradataCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TableauTeradataURI'),'\", \"C:\\Comcast\\Install-Tableau-TeradataODBC-v17.20.19.00.zip\")')]",
+        "TeradataSQLAssistCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TeradataSQLAssistURI'),'\", \"C:\\Comcast\\Install-TeradataSQL Assistant-v16.20.49.00.zip\")')]",
         "CitrixWorkspaceCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CitrixWorkspaceURI'),'\", \"C:\\Comcast\\Install-CitrixWorkspace.zip\")')]",
         "WalkMeCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('WalkMeURI'),'\", \"C:\\Comcast\\Install-WalkmeAllInOneInstaller_x64.zip\")')]",
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
@@ -223,6 +227,13 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download TeradataSQLAssistCMD",
+                        "inline": [
+                            "[variables('TeradataSQLAssistCMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Download WalkMe",
                         "inline": [
                             "[variables('WalkMeCMD')]"
@@ -365,6 +376,17 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-TeradataODBC-Tableau-v17.20.19.00.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Teradata SQL Assistant v16.20.49.00",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-TeradataSQLAssistant-v16.20.49.00.ps1",
                         "validExitCodes": [
                             0,
                             3010
