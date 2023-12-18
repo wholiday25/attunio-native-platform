@@ -59,6 +59,9 @@
         "WalkMeURI": {
             "type": "string"
         },
+        "T-Recs10.2.0URI": {
+            "type": "string"
+        },
         "ProjectInstallerURI": {
             "type": "string"
         },
@@ -78,6 +81,7 @@
         "TeradataSQLAssistCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TeradataSQLAssistURI'),'\", \"C:\\Comcast\\Install-TeradataSQL Assistant-v16.20.49.00.zip\")')]",
         "CitrixWorkspaceCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CitrixWorkspaceURI'),'\", \"C:\\Comcast\\Install-CitrixWorkspace.zip\")')]",
         "WalkMeCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('WalkMeURI'),'\", \"C:\\Comcast\\Install-WalkmeAllInOneInstaller_x64.zip\")')]",
+        "T-Recs10.2.0CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('T-Recs10.2.0URI'),'\", \"C:\\Comcast\\Install-T-Recs10.2.0.ps1\")')]",
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
         "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\EntDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]",
@@ -241,6 +245,13 @@
                     },
                     {
                         "type": "PowerShell",
+                        "name": "Download T-Recs10.2.0",
+                        "inline": [
+                            "[variables('T-Recs10.2.0CMD')]"
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
                         "name": "Download Smartview",
                         "inline": [
                             "[variables('SmartViewDownloadCMD')]"
@@ -398,6 +409,17 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-WalkmeAllInOneInstaller_x64.ps1",
+                        "validExitCodes": [
+                            0,
+                            3010
+                        ]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install T-Recs10.2.0",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-T-Recs10.2.0.ps1",
                         "validExitCodes": [
                             0,
                             3010
