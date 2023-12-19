@@ -81,7 +81,7 @@
         "TeradataSQLAssistCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('TeradataSQLAssistURI'),'\", \"C:\\Comcast\\Install-TeradataSQL Assistant-v16.20.49.00.zip\")')]",
         "CitrixWorkspaceCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('CitrixWorkspaceURI'),'\", \"C:\\Comcast\\Install-CitrixWorkspace.zip\")')]",
         "WalkMeCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('WalkMeURI'),'\", \"C:\\Comcast\\Install-WalkmeAllInOneInstaller_x64.zip\")')]",
-        "T-Recs10.2.0CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('T-Recs10.2.0URI'),'\", \"C:\\Comcast\\Install-T-Recs10.2.0.ps1\")')]",
+        "T-Recs10.2.0CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('T-Recs10.2.0URI'),'\", \"C:\\Comcast\\Install-T-Recs10.2.0.zip\")')]",
         "VisioDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VisioInstallerURI'),'\", \"C:\\Comcast\\InstallVisio-WVD.zip\")')]",
         "ProjectDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('ProjectInstallerURI'),'\", \"C:\\Comcast\\InstallProject-WVD.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\EntDesktop.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]",
