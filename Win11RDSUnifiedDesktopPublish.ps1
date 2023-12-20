@@ -4,7 +4,8 @@
 
 $region1 = @{Name = 'East US'; ReplicaCount = 1 }
 $region2 = @{Name = 'West US 2'; ReplicaCount = 1 }
-$targetRegions = @($region1, $region2)
+$region3 = @{Name = 'Central India'; ReplicaCount = 1 }
+$targetRegions = @($region1, $region2, $region3)
 $resgroupsource = "NERDIO-DEV"
 $resgrouptarget = "WVD-PROD-IMAGES"
 Set-AzContext -Subscription "WVD-Dev"
