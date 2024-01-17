@@ -1,0 +1,60 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "imageTemplateName": {
+            "value": "FusionPWC"
+        },
+        "api-version": {
+            "value": "2020-02-14"
+        },
+        "svclocation": {
+            "value": "eastus"
+        },
+        "ManagedIdentityID": {
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourcegroups/AzureImageBuilder-Dev/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aibIdentityDev"
+        },
+        "SharedImageGalleryID": {
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV"
+        },
+        "SubnetID": {
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/aib"
+        },
+        "AccessDatabaseEngineURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/AccessDatabaseEngine.exe?sp=rl&st=2021-09-23T19:14:48Z&se=2031-11-24T19:14:00Z&sv=2020-08-04&sr=b&sig=FKKxmpSizkP38bkbWINM7AoaaXpJeAqIVBLbao4sSR8%3D"
+        },
+        "Ginger.4.2.0.0_URI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-Ginger.4.2.0.0.exe?sp=r&st=2022-04-15T14:14:38Z&se=2032-04-15T22:14:38Z&spr=https&sv=2020-08-04&sr=b&sig=BqE5E%2F%2B5JKUUeoIw7Sdt7d1E1kwpPCVJh81s4M4wOUU%3D"
+        },
+        "MFLRAnalysis2022R1URI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-MFLRAnalysis2022R1.zip?sp=r&st=2023-08-03T17:24:53Z&se=2035-08-04T01:24:53Z&spr=https&sv=2022-11-02&sr=b&sig=MRPKZNKBRhWPeaq9P3OnWKVED9hmIcwye%2BLEdLxh0Xc%3D"
+        },
+        "MFLRVUGen12.60URI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-MFLRVUGen12.60.zip?sp=rl&st=2021-10-13T17:11:55Z&se=2031-11-14T17:11:00Z&sv=2020-08-04&sr=b&sig=cVfciP4dpCIrCX398DbcB8V5t57CmUYdRN7XCx5XrCw%3D"
+        },
+        "AmazonRedShiftODBCURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-AmazonRedshiftODBC64-1.4.62.1000.zip?sp=r&st=2023-02-17T19:44:38Z&se=2034-02-18T03:44:38Z&spr=https&sv=2021-06-08&sr=b&sig=rJgpI3s%2FNcsQj5ZVg5c0O4I%2F6LOFTSekQmA9l8KH2qs%3D"
+        },
+        "MFLRVUG_00264URI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-MFLRVUG_00264.zip?sp=rl&st=2021-10-13T16:43:25Z&se=2031-11-14T16:43:00Z&sv=2020-08-04&sr=b&sig=9HQvzYSNVeI8XNFxE5gfg3Jxai%2FYJgt5QkGL0kY%2BFTQ%3D"
+        },
+        "InstalledApplicationsURI": {
+            "value": "https://aibdev.blob.core.windows.net/applicationlogs?sp=racwdl&st=2022-11-25T20:51:50Z&se=2032-11-26T04:51:50Z&spr=https&sv=2021-06-08&sr=c&sig=slVeDaDEFLYVZ2KVs5edNHOAXitadrFHsaryYkiNAtI%3D"
+        },
+        "UC4UserInterfaceInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-UC4UserInterface.zip?sv=2020-04-08&st=2021-12-09T02%3A26%3A32Z&se=2031-12-10T02%3A26%3A00Z&sr=b&sp=r&sig=YY909YuIsjSLWttY5ULOcAczvTHf7ITarbY86mhH8As%3D"
+        },
+        "VS2019ExtensionsURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-VS2019Extensions.zip?sp=r&st=2023-03-24T17:08:04Z&se=2034-03-25T01:08:04Z&spr=https&sv=2021-12-02&sr=b&sig=ILI0b%2FH5NYGW%2FJy%2BZ2dvWkbsVy%2BS3dLkHe9kpxFz8k4%3D"
+        },
+        "MySQLWorkbenchv8.0.33URI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-MySQLWorkbenchv8.0.33.zip?sp=r&st=2023-07-18T15:08:55Z&se=2035-07-18T23:08:55Z&spr=https&sv=2022-11-02&sr=b&sig=NQy5TfapOUy0nAn2Y7PHTntM%2BZooX7LTFupGiQFQsIw%3D"
+        },
+        "MuleSoftAnyPointInstallerURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-AnypointStudio.zip?sp=r&st=2022-11-25T20:39:41Z&se=2032-11-26T04:39:41Z&spr=https&sv=2021-06-08&sr=b&sig=xlIdrUp7%2F1zmL%2B9wxBx3LJTFyvdeys0ietOAK68bLUs%3D"
+        },       
+        "imageVersionID": {
+        "value": "[IMAGEID]"
+        }
+    }
+}
