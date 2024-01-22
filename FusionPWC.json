@@ -50,6 +50,9 @@
         "MuleSoftAnyPointInstallerURI": {
             "type": "string"
         },
+        "AlteryxDesignerFusionPWCURI": {
+            "type": "string"
+        },
         "MySQLWorkbenchv8.0.33URI": {
             "type": "string"
         },
@@ -71,6 +74,7 @@
         "VS2019ExtensionsCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VS2019ExtensionsURI'),'\", \"C:\\Comcast\\Install-VS2019Extensions.zip\")')]",
         "MySQLWorkbenchv8.0.33CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MySQLWorkbenchv8.0.33URI'),'\", \"C:\\Comcast\\Install-MySQLWorkbenchv8.0.33.zip\")')]",
         "MuleSoftAnyPointDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MuleSoftAnyPointInstallerURI'),'\", \"C:\\Comcast\\Install-AnyPointStudio.zip\")')]",
+        "AlteryxDesignerFusionPWCCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AlteryxDesignerFusionPWCURI'),'\", \"C:\\Comcast\\Install-AlteryxDesignerFusionPWC.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\FusionPWC.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     
     },
@@ -163,6 +167,11 @@
                     },
                     {
                         "type": "PowerShell", 
+                        "name": "Download lteryxDesignerFusionPWC",
+                        "inline": ["[variables('AlteryxDesignerFusionPWCCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell", 
                         "name": "Download MySQLWorkbenchv8.0.33",
                         "inline": ["[variables('MySQLWorkbenchv8.0.33CMD')]"]                    
                     },
@@ -172,6 +181,14 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-MulesoftAnyPoint.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install AlteryxDesignerFusionPWC",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-AlteryxFusionPWC.ps1",
                         "validExitCodes": [0,3010]
                     },
                     {

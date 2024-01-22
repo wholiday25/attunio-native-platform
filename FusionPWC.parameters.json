@@ -52,6 +52,9 @@
         },
         "MuleSoftAnyPointInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-AnypointStudio.zip?sp=r&st=2022-11-25T20:39:41Z&se=2032-11-26T04:39:41Z&spr=https&sv=2021-06-08&sr=b&sig=xlIdrUp7%2F1zmL%2B9wxBx3LJTFyvdeys0ietOAK68bLUs%3D"
+        },
+        "AlteryxDesignerFusionPWCURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-AlteryxDesignerFusionPWC.zip?sp=r&st=2024-01-22T18:25:01Z&se=2036-01-23T02:25:01Z&spr=https&sv=2022-11-02&sr=b&sig=YkTTVACknWxBq4hf3j4SqMMS7ZTfawOzaHCkBiiu7fY%3D"
         },       
         "imageVersionID": {
         "value": "[IMAGEID]"
