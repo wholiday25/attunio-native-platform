@@ -29,6 +29,4 @@ while (!$process.HasExited) {
 }
 Write-Host "Process $process exited"
 
-Remove-Item C:\Comcast\Install-VS2019Extensions.zip -Force -Recurse
-emove-Item C:\Comcast\VS2019Extensions -Force -Recurse
 Stop-Transcript

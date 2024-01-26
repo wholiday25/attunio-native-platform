@@ -18,6 +18,3 @@ Start-Sleep 240
 Expand-Archive -Path "C:\Comcast\Install-TableauPrestoDrivers.zip" -DestinationPath "C:\Comcast\Install-TableauPrestoDrivers" -Force
 Start-Process -FilePath C:\Windows\System32\msiexec.exe -ArgumentList " /i ""C:\Comcast\Install-TableauPrestoDrivers\TreasureDataPrestoODBCDriver.msi"" /qn /norestart"
 Start-Sleep 60
-
-Remove-Item -Path C:\Comcast\Install-TableauDesktop64bit-2021-3-8.zip -Force
-Remove-Item -Path C:\Comcast\Install-TableauDesktop64bit-2021-3-8 -Force
