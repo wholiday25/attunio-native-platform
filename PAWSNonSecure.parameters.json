@@ -18,7 +18,7 @@
             "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV"
         },
         "SubnetID": {
-            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/aib"
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourcegroups/AzureImageBuilder-Dev/providers/Microsoft.Network/virtualNetworks/aib-vnet/subnets/aib-subnet"
         },
         "CrowdStrikeInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/InstallCrowdStrike-AVD.zip?sp=r&st=2022-10-24T14:32:57Z&se=2032-10-24T22:32:57Z&spr=https&sv=2021-06-08&sr=b&sig=1OaxQ87Qm1l1rd%2BMd7TLRpj9MPa6zpReHpLaSANmAL4%3D"
