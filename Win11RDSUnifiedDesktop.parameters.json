@@ -18,7 +18,7 @@
             "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV"
         },
         "SubnetID": {
-            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/aib"
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourcegroups/AzureImageBuilder-Dev/providers/Microsoft.Network/virtualNetworks/aib-vnet/subnets/aib-subnet"
         },
         "MetasolvInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-Metasolvb367Prod0317.zip?sp=r&st=2022-03-15T15:31:08Z&se=2032-03-15T23:31:08Z&spr=https&sv=2020-08-04&sr=b&sig=jjCK1ehOb%2FrQT5mwCzSYAu4fHZnG27cYjbBdd6b5%2F%2Fk%3D"

@@ -18,7 +18,7 @@
             "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV"
         },
         "SubnetID": {
-            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/aib"
+            "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourcegroups/AzureImageBuilder-Dev/providers/Microsoft.Network/virtualNetworks/aib-vnet/subnets/aib-subnet"
         },
         "TeammateInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-Teammate.zip?sp=r&st=2022-01-26T19:59:34Z&se=2032-01-27T03:59:34Z&spr=https&sv=2020-08-04&sr=b&sig=Fhblrbl79IExN8xt%2Bq6Tr2qARFB9a%2BmkL9hDr%2FQC%2BrA%3D"

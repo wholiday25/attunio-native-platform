@@ -18,7 +18,7 @@
         "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/Nerdio-Dev/providers/Microsoft.Compute/galleries/WVD_DEV"
     },
     "SubnetID": {
-        "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourceGroups/wvd-dev-nerdio-rg/providers/Microsoft.Network/virtualNetworks/wvd-dev-vnet/subnets/aib"
+        "value": "/subscriptions/bd95b3dc-d659-42de-a9e9-d9f78c9a34c6/resourcegroups/AzureImageBuilder-Dev/providers/Microsoft.Network/virtualNetworks/aib-vnet/subnets/aib-subnet"
     },
     "AccessDatabaseEngineURI": {
         "value": "https://aibdev.blob.core.windows.net/installers/AccessDatabaseEngine.exe?sp=rl&st=2021-09-23T19:14:48Z&se=2031-11-24T19:14:00Z&sv=2020-08-04&sr=b&sig=FKKxmpSizkP38bkbWINM7AoaaXpJeAqIVBLbao4sSR8%3D"
