@@ -5,6 +5,11 @@ $imageTemplateFileNameParameters = $imageTemplateName + ".parameters" + ".json"
 $sharedimagegallery = "WVD_DEV"
 $sharedimagegalleryRSG = "Nerdio-Dev"
 $location = "eastus"
+
+$region1 = @{Name='East US';ReplicaCount=1}
+$region2 = @{Name='Central India';ReplicaCount=1}
+$targetRegions = @($region1,$region2)
+
 #Date sorts on $_.PublishingProfile.PublishedDate are usualy bad.  Trying simple sort on ID 
 #$parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName "Win11EntDesktop").Id | Sort-Object -Property {$_.PublishingProfile.PublishedDate}  -Descending | Select-Object -First 1
 $parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName "Win11EntDesktop").Id |  Select-Object -Last 1
@@ -65,3 +70,8 @@ if ($versions.count -gt 8) {
     $oldestVersion | Remove-AzGalleryImageVersion -Force
 
 }
+
+#$versions = Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName $ImageTemplateName
+$newestVersion = $versions | Sort-Object -Property {$_.PublishingProfile.PublishedDate} -Descending | Select-Object -First 1
+
+Update-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName $ImageTemplateName -Name $($Newestversion.Name) -TargetRegion $targetRegions
