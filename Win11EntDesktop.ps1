@@ -7,6 +7,10 @@ $sharedimagegalleryRSG = "Nerdio-Dev"
 $location = "eastus"
 $searchstr = "IT_AzureImageBuilder-DEV_"+$imagetemplateName+"_*"
 
+$region1 = @{Name='East US';ReplicaCount=1}
+$region2 = @{Name='Central India';ReplicaCount=1}
+$targetRegions = @($region1,$region2)
+
 try {
     Write-Output "Clean up Previous Image Builders Image Creation Process"
 
@@ -60,9 +64,13 @@ Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $image
 $gallery = Get-AzGallery -Name $galleryName
 $versions = Get-AzGalleryImageVersion -ResourceGroupName $($gallery.ResourceGroupName) -GalleryName $($gallery.Name) -GalleryImageDefinitionName $imageTemplateName
 $oldestVersion = $versions | Sort-Object -Property {$_.PublishingProfile.PublishedDate} | Select-Object -First 1
-if ($versions.count -gt 8) {
+if ($versions.count -gt 2) {
     Write-Output "Found oldest version $($oldestVersion.Name)...Deleting..."
     $oldestVersion | Remove-AzGalleryImageVersion -Force
 
 }
 
+#$versions = Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName $ImageTemplateName
+$newestVersion = $versions | Sort-Object -Property {$_.PublishingProfile.PublishedDate} -Descending | Select-Object -First 1
+
+Update-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName $ImageTemplateName -Name $($Newestversion.Name) -TargetRegion $targetRegions

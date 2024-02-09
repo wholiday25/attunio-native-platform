@@ -61,7 +61,7 @@ Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $image
 $gallery = Get-AzGallery -Name $galleryName
 $versions = Get-AzGalleryImageVersion -ResourceGroupName $gallery.ResourceGroupName -GalleryName $gallery.Name -GalleryImageDefinitionName $imageTemplateName
 $oldestVersion = $versions | Sort-Object -Property {$_.PublishingProfile.PublishedDate} | Select-Object -First 1
-if ($versions.count -gt 8) {
+if ($versions.count -gt 5) {
     "Found oldest version $($oldestVersion.Name)...Deleting..."
     $oldestVersion | Remove-AzGalleryImageVersion -Force
 
