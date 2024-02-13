@@ -9,10 +9,14 @@ $galleryName = "WVD_DEV"
 $sharedimagegallery = "WVD_DEV"
 $sharedimagegalleryRSG = "Nerdio-Dev"
 $location = "eastus"
+
+$region1 = @{Name='East US';ReplicaCount=1}
+$region2 = @{Name='Central India';ReplicaCount=1}
+$targetRegions = @($region1,$region2)
+
 #Date sorts on $_.PublishingProfile.PublishedDate are usualy bad.  Trying simple sort on ID 
 #$parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName "EntDesktop").Id | Sort-Object -Property {$_.PublishingProfile.PublishedDate}  -Descending | Select-Object -First 1
 $parentversionid = (Get-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName "Win11EntDesktop").Id |  Select-Object -Last 1
-
 
 
 #foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'Win11*', 'PAWS*','X_*', 'aib*', 'SingleApp*','EntDesktop*','*publish*', 'entdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json','VSWorkspaceState.json') 
@@ -77,7 +81,7 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter 'Win11*.json' -File -Exc
 
     
     
-}
+} 
 
 #foreach ($aibtemplate in Get-ChildItem -Recurse -Filter '*.json' -File -Exclude 'Win11*', 'PAWS*' 'X_*', 'aib*', 'EntDesktop*','SingleApp*','entdesktop*', 'Readme.md', 'scripts', '*parameters*', '*.ps1', 'aibRoleDefinition.json', '*.yaml','VSWorkspaceState.json') {
 foreach ($aibtemplate in Get-ChildItem -Recurse -Filter 'Win11*.json' -File -Exclude 'Win11EntDesktop*','Win11Bulk*','*parameters*') 
@@ -105,5 +109,16 @@ foreach ($aibtemplate in Get-ChildItem -Recurse -Filter 'Win11*.json' -File -Exc
 #     "Found oldest version $($oldestVersion.Name)...Deleting..."
 #       $oldestVersion | Remove-AzGalleryImageVersion -Force  
 #    }
-    
+
+foreach ($aibtemplate in Get-ChildItem -Recurse -Filter 'Win11*.json' -File -Exclude 'Win11EntDesktop*','Win11Bulk*','*parameters*') 
+{   #write-host $aibtemplate
+    $gallery = Get-AzGallery -Name $galleryName -ResourceGroupName $sharedimagegalleryRSG
+    $imageTemplateName = $aibtemplate.Name -replace ".json", ""
+    #write-host $imageTemplateName
+    $versions = Get-AzGalleryImageVersion -ResourceGroupName $($gallery.ResourceGroupName) -GalleryName $($gallery.Name) -GalleryImageDefinitionName $imageTemplateName
+    $newestVersion = $versions | Sort-Object -Property {$_.PublishingProfile.PublishedDate} -Descending | Select-Object -First 1
+    #write-host -$newestVersion
+    Update-AzGalleryImageVersion -ResourceGroupName $sharedimagegalleryRSG -GalleryName $sharedimagegallery -GalleryImageDefinitionName $ImageTemplateName -Name $($Newestversion.Name) -TargetRegion $targetRegions -WhatIf
+}
+
 }
