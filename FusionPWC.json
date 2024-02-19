@@ -53,12 +53,6 @@
         "AlteryxDesignerFusionPWCURI": {
             "type": "string"
         },
-        "MySQLWorkbenchv8.0.33URI": {
-            "type": "string"
-        },
-        "VS2019ExtensionsURI": {
-            "type": "string"
-        },
          "UC4UserInterfaceInstallerURI": {
                 "type": "string"
             }
@@ -71,7 +65,6 @@
         "MFLRVUG_00264CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MFLRVUG_00264URI'),'\", \"C:\\Comcast\\Install-MFLRVUG_00264.zip\")')]",
         "AmazonRedShiftODBCCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AmazonRedShiftODBCURI'),'\", \"C:\\Comcast\\Install-AmazonRedshiftODBC64-1.4.62.1000.zip\")')]",
         "UC4UserInterfaceDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('UC4UserInterfaceInstallerURI'),'\", \"C:\\Comcast\\Install-UC4UserInterface.zip\")')]",
-        "VS2019ExtensionsCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VS2019ExtensionsURI'),'\", \"C:\\Comcast\\Install-VS2019Extensions.zip\")')]",
         "MySQLWorkbenchv8.0.33CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MySQLWorkbenchv8.0.33URI'),'\", \"C:\\Comcast\\Install-MySQLWorkbenchv8.0.33.zip\")')]",
         "MuleSoftAnyPointDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MuleSoftAnyPointInstallerURI'),'\", \"C:\\Comcast\\Install-AnyPointStudio.zip\")')]",
         "AlteryxDesignerFusionPWCCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('AlteryxDesignerFusionPWCURI'),'\", \"C:\\Comcast\\Install-AlteryxDesignerFusionPWC.zip\")')]",
@@ -154,11 +147,6 @@
                         "type": "PowerShell", 
                         "name": "Download UC4UserInterface",
                         "inline": ["[variables('UC4UserInterfaceDownloadCMD')]"]                    
-                    },
-                    {
-                        "type": "PowerShell", 
-                        "name": "Download Visual Studio 2019 Extensions",
-                        "inline": ["[variables('VS2019ExtensionsCMD')]"]                    
                     },
                     {
                         "type": "PowerShell", 
@@ -273,57 +261,6 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-SupportNowRSAT.ps1",
-                        "validExitCodes": [
-                            0,
-                            3010
-                        ]
-                    },
-                    {
-                        "type": "File",
-                        "name": "Download VSBuildTools",
-                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/vs_buildtools.exe",
-                        "destination": "C:\\Comcast\\vs_buildtools.exe"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Configure VSBuildTools",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSBuildTools.ps1",
-                        "validExitCodes": [
-                            0,
-                            3010
-                        ]
-                    },
-                    {
-                        "type": "File",
-                        "name": "Download VS Professional 2019",
-                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/vs_professional__2019.exe",
-                        "destination": "C:\\Comcast\\vs_professional__2019.exe"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Configure  VS Professional 2019",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSPro2019.ps1",
-                        "validExitCodes": [
-                            0,
-                            3010
-                        ]
-                    }, 
-                    {
-                        "type": "File",
-                        "name": "Download VS Professional 2022",
-                        "sourceUri": "https://aibdev.blob.core.windows.net/installers/vs_professional__2022.exe",
-                        "destination": "C:\\Comcast\\vs_professional__2022.exe"
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Configure  VS Professional 2022",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VSPro2022.ps1",
                         "validExitCodes": [
                             0,
                             3010
@@ -552,17 +489,6 @@
                         "runElevated": true,
                         "runAsSystem": true,
                         "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-IntelliJIDEA.ps1",
-                        "validExitCodes": [
-                            0,
-                            3010
-                        ]
-                    },
-                    {
-                        "type": "PowerShell",
-                        "name": "Install Visual Studio 2019 Extensions",
-                        "runElevated": true,
-                        "runAsSystem": true,
-                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-VS2019Extensions.ps1",
                         "validExitCodes": [
                             0,
                             3010
