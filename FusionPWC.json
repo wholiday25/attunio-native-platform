@@ -41,6 +41,9 @@
         "AmazonRedShiftODBCURI": {
             "type": "string"
         },
+        "MySQLWorkbenchv8.0.33URI": {
+            "type": "string"
+        },
         "MFLRVUGen12.60URI": {
             "type": "string"
         },
