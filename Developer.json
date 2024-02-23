@@ -175,6 +175,11 @@
                     },
                     {
                         "type": "PowerShell", 
+                        "name": "Download OracleClient-v19.3",
+                        "inline": ["[variables('OracleClient-v19.3CMD)]"]                    
+                    },
+                    {
+                        "type": "PowerShell", 
                         "name": "Download Oracle TOAD v16.0",
                         "inline": ["[variables('OracleTOADv16.0CMD')]"]                    
                     },
@@ -187,6 +192,14 @@
                         "type": "PowerShell", 
                         "name": "Download MySQLWorkbenchv8.0.33",
                         "inline": ["[variables('MySQLWorkbenchv8.0.33CMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install OracleClient-v19.3",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-OracleClient-v19.3.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",
