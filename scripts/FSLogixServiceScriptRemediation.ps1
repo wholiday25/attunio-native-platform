@@ -29,6 +29,9 @@ if ($serviceStatus.Status -eq "Running") {
     Write-Output $logMessage
     Add-Content -Path $logFilePath -Value $logMessage
 
+    #Write to Windows System Event Log, source is "beep' 
+    Write-EventLog -LogName "System" -Source "beep" -EventID 23 -Message "FSLogix Service wastarted via Scheduled Task FSLogix Service Script Remediation"
+
     # Start the FSLogix service
     Start-Service -Name $serviceName
 
