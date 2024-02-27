@@ -47,7 +47,16 @@
         "MFLRVUG_00264URI": {
             "type": "string"
         },
+        "OracleTOADv16.0URI": {
+            "type": "string"
+        },
         "MuleSoftAnyPointInstallerURI": {
+            "type": "string"
+        },
+        "OracleClient-v19.3URI": {
+            "type": "string"
+        },
+        "SQLDeveloperOracleURI": {
             "type": "string"
         },
         "MySQLWorkbenchv8.0.33URI": {
@@ -70,6 +79,9 @@
         "UC4UserInterfaceDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('UC4UserInterfaceInstallerURI'),'\", \"C:\\Comcast\\Install-UC4UserInterface.zip\")')]",
         "VS2019ExtensionsCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('VS2019ExtensionsURI'),'\", \"C:\\Comcast\\Install-VS2019Extensions.zip\")')]",
         "MySQLWorkbenchv8.0.33CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MySQLWorkbenchv8.0.33URI'),'\", \"C:\\Comcast\\Install-MySQLWorkbenchv8.0.33.zip\")')]",
+        "OracleTOADv16.0CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('OracleTOADv16.0URI'),'\", \"C:\\Comcast\\Install-OracleTOADv16.0.zip\")')]",
+        "OracleClient-v19.3CMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('OracleClient-v19.3URI'),'\", \"C:\\Comcast\\Install-OracleClient-v19.3.zip\")')]",
+        "SQLDeveloperOracleCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('SQLDeveloperOracleURI'),'\", \"C:\\Comcast\\Install-SQLDeveloperOracle.zip\")')]",
         "MuleSoftAnyPointDownloadCMD": "[concat('(New-Object System.Net.WebClient).DownloadFile(\"',parameters('MuleSoftAnyPointInstallerURI'),'\", \"C:\\Comcast\\Install-AnyPointStudio.zip\")')]",
         "InstalledApplicationsAzcopy": "[concat('azcopy copy \"C:\\Comcast\\Win11Developer.csv\" \"',parameters('InstalledApplicationsURI'),'\"')]"
     
@@ -163,8 +175,39 @@
                     },
                     {
                         "type": "PowerShell", 
+                        "name": "Download OracleClient-v19.3",
+                        "inline": ["[variables('OracleClient-v19.3CMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell", 
+                        "name": "Download Oracle TOAD v16.0",
+                        "inline": ["[variables('OracleTOADv16.0CMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell", 
+                        "name": "Download SQL Developer for Oracle",
+                        "inline": ["[variables('SQLDeveloperOracleCMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell", 
                         "name": "Download MySQLWorkbenchv8.0.33",
                         "inline": ["[variables('MySQLWorkbenchv8.0.33CMD')]"]                    
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install OracleClient-v19.3",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-OracleClient-v19.3.ps1",
+                        "validExitCodes": [0,3010]
+                    },
+                    {
+                        "type": "PowerShell",
+                        "name": "Install Oracle TOADv 16.0",
+                        "runElevated": true,
+                        "runAsSystem": true,
+                        "scriptUri": "https://aibdev.blob.core.windows.net/scripts/Install-OracleTOADv16.0.ps1",
+                        "validExitCodes": [0,3010]
                     },
                     {
                         "type": "PowerShell",

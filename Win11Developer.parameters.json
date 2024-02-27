@@ -50,6 +50,15 @@
         "MySQLWorkbenchv8.0.33URI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-MySQLWorkbenchv8.0.33.zip?sp=r&st=2023-07-18T15:08:55Z&se=2035-07-18T23:08:55Z&spr=https&sv=2022-11-02&sr=b&sig=NQy5TfapOUy0nAn2Y7PHTntM%2BZooX7LTFupGiQFQsIw%3D"
         },
+        "SQLDeveloperOracleURI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-SQLDeveloperOracle.zip?sp=r&st=2024-02-21T19:55:10Z&se=2036-02-22T03:55:10Z&spr=https&sv=2022-11-02&sr=b&sig=RJ%2F3J5wfV1XAnFlD%2F00k2rYvFnwv%2BJOfA2LDuXUsve0%3D"
+        },
+        "OracleClient-v19.3URI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-OracleClient-v19.3.zip?sp=r&st=2024-02-21T19:54:15Z&se=2036-02-22T03:54:15Z&spr=https&sv=2022-11-02&sr=b&sig=mrmKbEe94%2F03PBa4mFY0MY28%2FUastEm4DTBxEAFSZCU%3D"
+        },
+        "OracleTOADv16.0URI": {
+            "value": "https://aibdev.blob.core.windows.net/installers/Install-OracleTOADv16.0.zip?sp=r&st=2024-02-22T18:44:17Z&se=2036-02-23T02:44:17Z&spr=https&sv=2022-11-02&sr=b&sig=fwV7M0kzf9tVNc343SxEtShItghc6u%2BMWNB1pCTyoEU%3D"
+        },
         "MuleSoftAnyPointInstallerURI": {
             "value": "https://aibdev.blob.core.windows.net/installers/Install-AnypointStudio.zip?sp=r&st=2022-11-25T20:39:41Z&se=2032-11-26T04:39:41Z&spr=https&sv=2021-06-08&sr=b&sig=xlIdrUp7%2F1zmL%2B9wxBx3LJTFyvdeys0ietOAK68bLUs%3D"
         },       
