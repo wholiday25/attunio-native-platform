@@ -1,0 +1,55 @@
+import { View, Text, TouchableOpacity, TextInput, Image, ScrollView, StyleSheet } from 'react-native';
+
+
+interface TrendIndicatorProps {
+  value: number
+  previousValue: number
+  unit?: string
+  className?: string
+  inverse?: boolean // When true, lower is better (like for ADHD risk)
+}
+
+export function TrendIndicator({ value, previousValue, unit = "", className, inverse = false }: TrendIndicatorProps) {
+  const difference = value - previousValue
+  const percentChange = previousValue !== 0 ? (difference / previousValue) * 100 : 0
+  const isPositive = inverse ? difference < 0 : difference > 0
+  const isNeutral = Math.abs(percentChange) < 1
+
+  return (
+    <View className={cn("flex items-center gap-1 text-sm", className)}>
+      {isNeutral ? (
+        <svg className="w-4 h-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+        </svg>
+      ) : isPositive ? (
+        <svg
+          className="w-4 h-4 text-green-600 dark:text-green-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        </svg>
+      ) : (
+        <svg className="w-4 h-4 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+        </svg>
+      )}
+      <Text
+        className={cn(
+          "font-medium",
+          isNeutral && "text-muted-foreground",
+          isPositive && "text-green-600 dark:text-green-400",
+          !isPositive && !isNeutral && "text-red-600 dark:text-red-400",
+        )}
+      >
+        {Math.abs(percentChange).toFixed(1)}%
+      </Text>
+      <Text className="text-muted-foreground">
+        {difference > 0 ? "+" : ""}
+        {difference.toFixed(1)}
+        {unit}
+      </Text>
+    </View>
+  )
+}

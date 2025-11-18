@@ -1,0 +1,181 @@
+import { View, Text, TouchableOpacity, TextInput, Image, ScrollView, StyleSheet } from 'react-native';
+"use client"
+
+
+
+
+
+import { Brain, Lightbulb, TrendingUp, AlertTriangle, Sparkles } from "lucide-react"
+
+
+interface AIInsightsPanelProps {
+  biomarkers?: BiomarkerData
+  className?: string
+}
+
+export function AIInsightsPanel({ biomarkers, className }: AIInsightsPanelProps) {
+  const { insights, loading, error } = useAIInsights(biomarkers)
+
+  // Don't show if GenAI is disabled
+  if (process.env.NEXT_PUBLIC_GENAI_ENABLED !== 'true') {
+    return null
+  }
+
+  // Don't show if no biomarker data
+  if (!biomarkers || Object.keys(biomarkers).length === 0) {
+    return (
+      <Card className={className}>
+        <CardHeader>
+          <View className="flex items-center gap-2">
+            <Brain className="h-5 w-5 text-purple-500" />
+            <CardTitle>AI Insights</CardTitle>
+            <Badge variant="outline" className="ml-auto">
+              <Sparkles className="h-3 w-3 mr-1" />
+              Powered by AI
+            </Badge>
+          </View>
+          <CardDescription>
+            Connect a device to get personalized ADHD insights
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    )
+  }
+
+  if (error) {
+    return (
+      <Card className={className}>
+        <CardHeader>
+          <View className="flex items-center gap-2">
+            <Brain className="h-5 w-5 text-purple-500" />
+            <CardTitle>AI Insights</CardTitle>
+          </View>
+        </CardHeader>
+        <CardContent>
+          <Alert>
+            <TouchableOpacitylertTriangle className="h-4 w-4" />
+            <AlertDescription>
+              Unable to generate insights: {error}
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (loading) {
+    return (
+      <Card className={className}>
+        <CardHeader>
+          <View className="flex items-center gap-2">
+            <Brain className="h-5 w-5 text-purple-500 animate-pulse" />
+            <CardTitle>AI Insights</CardTitle>
+            <Badge variant="outline" className="ml-auto">
+              <Sparkles className="h-3 w-3 mr-1 animate-pulse" />
+              Analyzing...
+            </Badge>
+          </View>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <View className="space-y-2">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-5/6" />
+            <Skeleton className="h-4 w-4/6" />
+          </View>
+          <View className="space-y-2">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
+          </View>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (!insights) {
+    return null
+  }
+
+  return (
+    <Card className={className}>
+      <CardHeader>
+        <View className="flex items-center gap-2">
+          <Brain className="h-5 w-5 text-purple-500" />
+          <CardTitle>AI Insights</CardTitle>
+          <Badge variant="outline" className="ml-auto">
+            <Sparkles className="h-3 w-3 mr-1" />
+            Powered by AI
+          </Badge>
+        </View>
+        <CardDescription>
+          Personalized ADHD management insights based on your data
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        {/* Summary */}
+        <View className="space-y-2">
+          <View className="flex items-center gap-2 text-sm font-medium">
+            <Brain className="h-4 w-4 text-blue-500" />
+            Summary
+          </View>
+          <Text className="text-sm text-muted-foreground leading-relaxed">
+            {insights.summary}
+          </Text>
+        </View>
+
+        {/* Patterns */}
+        {insights.patterns && insights.patterns.length > 0 && (
+          <View className="space-y-2">
+            <View className="flex items-center gap-2 text-sm font-medium">
+              <TrendingUp className="h-4 w-4 text-green-500" />
+              Key Patterns
+            </View>
+            <View className="space-y-2">
+              {insights.patterns.map((pattern, index) => (
+                <View key={index} className="flex items-start gap-2 text-sm">
+                  <Text className="text-green-500 mt-0.5">•</Text>
+                  <Text className="text-muted-foreground flex-1">{pattern}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
+
+        {/* Recommendations */}
+        {insights.recommendations && insights.recommendations.length > 0 && (
+          <View className="space-y-2">
+            <View className="flex items-center gap-2 text-sm font-medium">
+              <Viewghtbulb className="h-4 w-4 text-yellow-500" />
+              Recommendations
+            </View>
+            <View className="space-y-2">
+              {insights.recommendations.map((rec, index) => (
+                <View key={index} className="flex items-start gap-2 text-sm">
+                  <Text className="text-yellow-500 mt-0.5">•</Text>
+                  <Text className="text-muted-foreground flex-1">{rec}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
+
+        {/* Concerns */}
+        {insights.concerns && insights.concerns.length > 0 && insights.concerns.some(c => c.trim()) && (
+          <View className="space-y-2">
+            <View className="flex items-center gap-2 text-sm font-medium">
+              <TouchableOpacitylertTriangle className="h-4 w-4 text-red-500" />
+              Concerns
+            </View>
+            <View className="space-y-2">
+              {insights.concerns.filter(c => c.trim()).map((concern, index) => (
+                <View key={index} className="flex items-start gap-2 text-sm">
+                  <Text className="text-red-500 mt-0.5">•</Text>
+                  <Text className="text-muted-foreground flex-1">{concern}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
+      </CardContent>
+    </Card>
+  )
+}

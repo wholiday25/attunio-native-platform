@@ -1,0 +1,43 @@
+import { View, Text, TouchableOpacity, TextInput, Image, ScrollView, StyleSheet } from 'react-native';
+"use client"
+
+
+import { Star } from "lucide-react"
+
+interface SocialProofCardProps {
+  name: string
+  age: number
+  diagnosis: string
+  quote: string
+  avatar?: string
+}
+
+export function SocialProofCard({ name, age, diagnosis, quote, avatar }: SocialProofCardProps) {
+  return (
+    <View className="bg-white border border-slate-200 rounded-2xl p-6 max-w-lg mx-auto mb-8 shadow-sm">
+      <View className="flex items-center gap-4 mb-4">
+        <View className="w-12 h-12 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white font-bold text-lg">
+          {avatar ? (
+            <Image source={avatar || "/placeholder.svg"} width={48} height={48} className="rounded-full" alt={name} />
+          ) : (
+            name.charAt(0)
+          )}
+        </View>
+        <View>
+          <View className="font-semibold text-slate-900">{name}</View>
+          <View className="text-sm text-slate-500">
+            {diagnosis}, {age}
+          </View>
+        </View>
+      </View>
+
+      <Text className="text-slate-700 italic mb-3 leading-relaxed">&ldquo;{quote}&rdquo;</Text>
+
+      <View className="flex items-center gap-1">
+        {[...Array(5)].map((_, i) => (
+          <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+        ))}
+      </View>
+    </View>
+  )
+}

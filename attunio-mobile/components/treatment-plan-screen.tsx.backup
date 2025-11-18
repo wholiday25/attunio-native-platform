@@ -1,0 +1,599 @@
+import { View, Text, TouchableOpacity, TextInput, Image, ScrollView, StyleSheet } from 'react-native';
+"use client"
+
+import type React from "react"
+import { useState, useEffect, useRef } from "react"
+
+
+import { Check, X, Package } from 'lucide-react'
+
+interface TreatmentPlanScreenProps {
+  assessmentAnswers: {
+    primaryConcern: string | null
+    severity: string | null
+    timeline: string | null
+  }
+  onSelectPlan: (plan: "essential" | "pro" | "complete") => void
+  onBack: () => void
+}
+
+export function TreatmentPlanScreen({ assessmentAnswers, onSelectPlan, onBack }: TreatmentPlanScreenProps) {
+  const [isAnalyzing, setIsAnalyzing] = useState(true)
+  const [recommendedPlan, setRecommendedPlan] = useState<"essential" | "pro" | "complete">("pro")
+  const [selectedBilling, setSelectedBilling] = useState<"monthly" | "yearly">("monthly")
+  const [currentPlanIndex, setCurrentPlanIndex] = useState(1)
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const plans: Array<"essential" | "pro" | "complete"> = ["essential", "pro", "complete"]
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      let recommended: "essential" | "pro" | "complete" = "essential"
+
+      if (assessmentAnswers.severity === "severe" || assessmentAnswers.timeline === "lifelong") {
+        recommended = "complete"
+      } else if (
+        assessmentAnswers.severity === "moderate" ||
+        assessmentAnswers.primaryConcern === "diagnosed" ||
+        assessmentAnswers.timeline === "ongoing"
+      ) {
+        recommended = "pro"
+      }
+
+      setRecommendedPlan(recommended)
+      setCurrentPlanIndex(plans.indexOf(recommended))
+      setIsAnalyzing(false)
+    }, 2500)
+
+    return () => clearTimeout(timer)
+  }, [assessmentAnswers])
+
+  const planDetails = {
+    essential: {
+      name: "Essential",
+      tagline: "ADHD Care Plan",
+      subtitle: "Self-directed tracking with wearable insights",
+      monthlyPrice: 79,
+      yearlyPrice: 790,
+      priceUnit: "per month",
+      savings: "$158/year",
+      tangibleItems: [
+        {
+          name: "Digital Access Only",
+          description: "Connect your existing wearables (Fitbit, Apple Watch, Oura, Garmin)",
+          included: true,
+        },
+      ],
+      categories: {
+        "Core Monitoring": [
+          "Wearable device integration (all major brands)",
+          "Real-time ADHD symptom tracking",
+          "125+ health biomarkers monitored",
+          "Focus score & attention performance metrics",
+          "Heart rate variability (HRV) tracking",
+          "Sleep quality & efficiency analysis",
+        ],
+        "Insights & Analysis": [
+          "Daily focus score with AI-powered insights",
+          "Weekly progress trends & patterns",
+          "Personalized recommendations",
+          "Correlation analysis (sleep, stress, activity)",
+          "Historical data comparison",
+        ],
+        "Tools & Resources": [
+          "Data export for doctor visits",
+          "Attunio app and dashboard access",
+          "Email support (48hr response)",
+          "Educational resources library",
+        ],
+      },
+    },
+    pro: {
+      name: "Pro",
+      tagline: "ADHD Care Plan",
+      subtitle: "Advanced insights + monthly clinician consultations",
+      monthlyPrice: 299,
+      yearlyPrice: 2988,
+      priceUnit: "per month",
+      savings: "$600/year",
+      tangibleItems: [
+        {
+          name: "Quarterly Blood Testing Kit",
+          description: "At-home kit with prepaid lab processing (4 per year, $625 value each)",
+          included: true,
+        },
+        {
+          name: "Premium Wearable Integration",
+          description: "Advanced analytics for all your devices",
+          included: true,
+        },
+      ],
+      categories: {
+        "Everything in Essential, plus:": [
+          "Continuous stress & recovery monitoring",
+          "Advanced biomarker correlations with ADHD symptoms",
+          "Predictive focus score analytics",
+          "Personalized daily optimization tips",
+        ],
+        "Clinical Support": [
+          "Monthly 30-min licensed clinician consultations",
+          "Personalized ADHD treatment plan development",
+          "Progress review & plan adjustments",
+          "Clinical notes shared with your care team",
+          "Priority email support (24hr response)",
+        ],
+        "Comprehensive Lab Testing (Quarterly)": [
+          "Vitamin D levels (critical for ADHD)",
+          "Iron & Ferritin (linked to attention)",
+          "Magnesium (impacts symptom severity)",
+          "B-vitamins (B6, B12, Folate)",
+          "Omega-3 fatty acids",
+          "Thyroid panel (TSH, T3, T4)",
+          "Cortisol levels (stress indicator)",
+          "Complete metabolic panel",
+        ],
+        "Premium Features": [
+          "Doctor-ready PDF reports with insights",
+          "Lab result interpretation by clinicians",
+          "Supplement & nutrition recommendations",
+          "Treatment response tracking",
+        ],
+      },
+    },
+    complete: {
+      name: "Complete",
+      tagline: "Ultimate ADHD Care",
+      subtitle: "Maximum support with dedicated clinical team + CGM monitoring",
+      monthlyPrice: 449,
+      yearlyPrice: 4488,
+      priceUnit: "per month",
+      savings: "$900/year",
+      tangibleItems: [
+        {
+          name: "Continuous Glucose Monitor (CGM)",
+          description: "Abbott FreeStyle Libre 3 sensor + monthly sensor refills ($150/mo value)",
+          included: true,
+        },
+        {
+          name: "Quarterly Comprehensive Blood Panels",
+          description: "Advanced ADHD biomarker testing (4 per year, $735 value each)",
+          included: true,
+        },
+        {
+          name: "Premium Wearable Suite",
+          description: "Enterprise-grade analytics and integrations",
+          included: true,
+        },
+      ],
+      categories: {
+        "Everything in Pro, plus:": [
+          "Real-time glucose monitoring for focus optimization",
+          "Blood sugar impact on ADHD symptoms tracked 24/7",
+          "Meal timing & composition recommendations",
+          "Personalized metabolic insights for brain function",
+        ],
+        "Intensive Clinical Support": [
+          "Weekly 30-min clinician consultations (4x per month)",
+          "Dedicated care coordinator assigned to you",
+          "Same-day appointment scheduling",
+          "Direct messaging with clinical team (replies within 2hrs)",
+          "Emergency support line access",
+          "Medication titration monitoring (if applicable)",
+        ],
+        "Advanced Lab Testing (Quarterly)": [
+          "All Pro plan biomarkers included",
+          "Advanced inflammation markers (CRP, homocysteine)",
+          "Comprehensive hormone panel",
+          "Heavy metal screening",
+          "Food sensitivity testing",
+          "Gut health markers",
+          "Oxidative stress markers",
+          "Neurotransmitter precursor levels",
+        ],
+        "Premium Concierge Services": [
+          "Personalized nutrition & supplement protocol",
+          "Lifestyle intervention programs (sleep, stress, exercise)",
+          "Weekly progress check-ins via messaging",
+          "Priority lab processing (results in 3-5 days)",
+          "Quarterly comprehensive progress reports",
+          "Coordination with your existing care team",
+          "24/7 priority customer support",
+          "Early access to new features & beta programs",
+        ],
+      },
+    },
+  }
+
+  const currentPlanKey = plans[currentPlanIndex]
+  const currentPlan = planDetails[currentPlanKey]
+  const price = selectedBilling === "monthly" ? currentPlan.monthlyPrice : currentPlan.yearlyPrice
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+
+    if (isLeftSwipe && currentPlanIndex < plans.length - 1) {
+      setCurrentPlanIndex(currentPlanIndex + 1)
+    }
+    if (isRightSwipe && currentPlanIndex > 0) {
+      setCurrentPlanIndex(currentPlanIndex - 1)
+    }
+
+    setTouchStart(0)
+    setTouchEnd(0)
+  }
+
+  if (isAnalyzing) {
+    return (
+      <View className="min-h-screen bg-[#fff8f2] flex items-center justify-center p-4">
+        <Card className="max-w-md w-full p-12 text-center shadow-sm border-0 bg-white rounded-3xl">
+          <View className="relative w-24 h-24 mx-auto mb-6">
+            <View className="absolute inset-0 rounded-full border-4 border-orange-200 animate-ping" />
+            <View className="absolute inset-0 rounded-full border-4 border-[#f38660] animate-pulse" />
+            <View className="absolute inset-0 flex items-center justify-center">
+              <svg className="w-12 h-12 text-[#f38660] animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            </View>
+          </View>
+
+          <Text className="text-2xl font-bold text-[#172334] mb-2 tracking-tight">Analyzing your needs</Text>
+          <Text className="text-[#6b7280] mb-6">Matching you with the right treatment plan...</Text>
+
+          <View className="space-y-3 text-left">
+            {["Evaluating symptom severity", "Reviewing timeline", "Personalizing recommendations"].map(
+              (step, index) => (
+                <View key={step} className="flex items-center gap-3 text-sm text-[#6b7280]">
+                  <View
+                    className="w-5 h-5 rounded-full border-2 border-[#f38660] flex items-center justify-center"
+                    style={{
+                      animation: `fadeIn 0.5s ease-in-out ${index * 0.5}s forwards`,
+                      opacity: 0,
+                    }}
+                  >
+                    <Check className="w-3 h-3 text-[#f38660]" />
+                  </View>
+                  <Text
+                    style={{
+                      animation: `fadeIn 0.5s ease-in-out ${index * 0.5}s forwards`,
+                      opacity: 0,
+                    }}
+                  >
+                    {step}
+                  </Text>
+                </View>
+              ),
+            )}
+          </View>
+
+          <style jsx>{`
+            @keyframes fadeIn {
+              from {
+                opacity: 0;
+                transform: translateY(10px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+          `}</style>
+        </Card>
+      </View>
+    )
+  }
+
+  return (
+    <View
+      ref={containerRef}
+      className="min-h-screen bg-white"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Header */}
+      <View className="bg-white border-b border-slate-200/60">
+        <View className="max-w-7xl mx-auto px-6 py-8">
+          <TouchableOpacity
+            onPress={onBack}
+            className="text-slate-600 hover:text-slate-900 flex items-center gap-2 text-sm mb-8 font-medium transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back
+          </TouchableOpacity>
+
+          <View className="flex items-start justify-between gap-8">
+            <View className="flex-1 max-w-2xl">
+              <Text className="text-4xl sm:text-5xl font-bold mb-3 text-[#172334] tracking-tight leading-tight">
+                Based on your needs
+              </Text>
+              <Text className="text-lg text-[#6b7280] leading-relaxed">
+                We've created a care pathway designed specifically for you, combining wearable data, clinical lab
+                testing, and expert clinician support.
+              </Text>
+            </View>
+
+            {/* Plan indicator dots */}
+            <View className="hidden sm:flex items-center gap-2">
+              {plans.map((_, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => setCurrentPlanIndex(index)}
+                  className={`transition-all duration-300 ${
+                    index === currentPlanIndex
+                      ? "w-8 h-1.5 bg-[#172334] rounded-full"
+                      : "w-1.5 h-1.5 bg-slate-300 rounded-full hover:bg-slate-400"
+                  }`}
+                  aria-label={`View ${plans[index]} plan`}
+                />
+              ))}
+            </View>
+          </View>
+        </View>
+      </View>
+
+      {/* Main Content - Two Column Layout */}
+      <View className="max-w-7xl mx-auto px-6 py-12">
+        <View className="grid lg:grid-cols-[1fr_400px] gap-8 items-start">
+          {/* Left: Feature Categories */}
+          <View className="space-y-6">
+            <Card className="bg-gradient-to-br from-orange-50 to-orange-100/30 border border-orange-200/80 rounded-2xl p-8 shadow-sm">
+              <View className="flex items-center gap-3 mb-6">
+                <View className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
+                  <Textackage className="w-5 h-5 text-[#f38660]" strokeWidth={2} />
+                </View>
+                <Text className="text-xl font-bold text-[#172334] tracking-tight">What You'll Receive</Text>
+              </View>
+              <View className="space-y-4">
+                {currentPlan.tangibleItems.map((item, index) => (
+                  <View
+                    key={index}
+                    className="bg-white rounded-xl p-5 border border-orange-200/60 shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <View className="flex items-start gap-4">
+                      <View className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Check className="w-6 h-6 text-[#f38660]" strokeWidth={2.5} />
+                      </View>
+                      <View className="flex-1">
+                        <Text className="font-bold text-[#172334] mb-1 text-base">{item.name}</Text>
+                        <Text className="text-sm text-[#6b7280] leading-relaxed">{item.description}</Text>
+                      </View>
+                    </View>
+                  </View>
+                ))}
+              </View>
+              <View className="mt-6 pt-6 border-t border-orange-200/60">
+                <Text className="text-sm text-[#6b7280] leading-relaxed">
+                  <strong className="font-semibold text-[#172334]">Free shipping included.</strong> All physical items
+                  ship within 2-3 business days to your doorstep.
+                </Text>
+              </View>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-slate-50 to-slate-100/50 border border-slate-200/80 rounded-2xl p-8 shadow-sm">
+              <View className="flex items-start gap-4">
+                <View className="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <svg className="w-5 h-5 text-[#f38660]" fill="currentColor" viewBox="0 0 20 20">
+                    <Textath
+                      fillRule="evenodd"
+                      d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </View>
+                <View className="flex-1">
+                  <Text className="font-bold text-[#172334] mb-2 text-base">Research-Backed Approach</Text>
+                  <Text className="text-sm text-[#6b7280] leading-relaxed mb-3">
+                    Studies show key nutrient deficiencies (Vitamin D, Iron/Ferritin, Magnesium, B-vitamins, Omega-3)
+                    are prevalent in ADHD and correlate with symptom severity. Blood glucose fluctuations directly
+                    impact neurotransmitter production (dopamine, serotonin, norepinephrine) critical for attention and
+                    focus.
+                  </Text>
+                  <Text className="text-sm text-[#6b7280] leading-relaxed mb-2">
+                    Our biomarkers are based on peer-reviewed studies showing 89% accuracy in identifying ADHD-related
+                    patterns. We track the same physiological signals clinicians use for diagnosis and treatment
+                    monitoring.
+                  </Text>
+                  <Text className="text-xs text-slate-500 font-medium">
+                    References: Frontiers in Nutrition (2025), Journal of Medical Internet Research (2023), Nature
+                    Digital Medicine (2024)
+                  </Text>
+                </View>
+              </View>
+            </Card>
+
+            {/* Existing category cards code */}
+            {Object.entries(currentPlan.categories).map(([category, features]) => (
+              <Card
+                key={category}
+                className="bg-white border border-slate-200/80 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <Text className="text-lg font-bold text-[#172334] mb-5 tracking-tight">{category}</Text>
+                <View className="grid sm:grid-cols-2 gap-x-8 gap-y-3.5">
+                  {features.map((feature, index) => (
+                    <View key={index} className="flex items-start gap-3">
+                      <Check className="w-4 h-4 text-[#f38660] mt-0.5 flex-shrink-0" strokeWidth={2.5} />
+                      <Text className="text-sm text-[#6b7280] leading-relaxed">{feature}</Text>
+                    </View>
+                  ))}
+                </View>
+              </Card>
+            ))}
+          </View>
+
+          {/* Right: Sticky Pricing Card */}
+          <View className="lg:sticky lg:top-8">
+            <Card className="bg-white border border-slate-200/80 rounded-2xl shadow-lg overflow-hidden">
+              {currentPlanKey === recommendedPlan && (
+                <View className="bg-[#f38660] text-white text-center py-2.5 px-4">
+                  <Text className="text-sm font-semibold tracking-wide">Recommended for you</Text>
+                </View>
+              )}
+
+              <View className="p-8">
+                <View className="mb-6">
+                  <Text className="text-2xl font-bold text-[#172334] mb-1 tracking-tight">{currentPlan.name}</Text>
+                  <Text className="text-sm text-[#6b7280] leading-relaxed">{currentPlan.subtitle}</Text>
+                </View>
+
+                <View className="mb-8">
+                  <View className="flex items-baseline gap-2 mb-2">
+                    <Text className="text-5xl font-bold text-[#172334] tracking-tight">${price}</Text>
+                    <Text className="text-lg text-[#6b7280]">/ {selectedBilling === "monthly" ? "mo" : "yr"}</Text>
+                  </View>
+                  {selectedBilling === "yearly" && (
+                    <Text className="text-sm text-[#f38660] font-medium">Save {currentPlan.savings}</Text>
+                  )}
+                  <Text className="text-sm text-slate-500 mt-2">vs. $15,000+ traditional ADHD care costs</Text>
+                </View>
+
+                {/* Billing Toggle */}
+                <View className="flex gap-2 p-1.5 bg-slate-100 rounded-xl mb-6">
+                  <TouchableOpacity
+                    onPress={() => setSelectedBilling("monthly")}
+                    className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-semibold transition-all ${
+                      selectedBilling === "monthly"
+                        ? "bg-white text-[#172334] shadow-sm"
+                        : "text-slate-600 hover:text-[#172334]"
+                    }`}
+                  >
+                    Monthly
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => setSelectedBilling("yearly")}
+                    className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-semibold transition-all ${
+                      selectedBilling === "yearly"
+                        ? "bg-white text-[#172334] shadow-sm"
+                        : "text-slate-600 hover:text-[#172334]"
+                    }`}
+                  >
+                    Yearly
+                    <Text className="ml-1 text-xs text-[#f38660]">Save 17%</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View className="space-y-3">
+                  <TouchableOpacity
+                    onPress={() => onSelectPlan(currentPlanKey)}
+                    className="w-full bg-[#f38660] hover:bg-[#e67550] text-white py-4 rounded-xl text-base font-semibold shadow-md hover:shadow-lg transition-all"
+                  >
+                    Continue with {currentPlan.name} Plan
+                  </TouchableOpacity>
+
+                  <View className="space-y-2 pt-4 border-t border-slate-200">
+                    {["Cancel anytime", "HSA/FSA eligible", "Results in a week"].map((item) => (
+                      <View key={item} className="flex items-center gap-2 text-sm text-[#6b7280]">
+                        <Check className="w-4 h-4 text-[#f38660] mt-0.5 flex-shrink-0" strokeWidth={2} />
+                        <Text>{item}</Text>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+              </View>
+
+              <View className="bg-slate-50 px-8 py-6 border-t border-slate-200/80">
+                <Text className="text-xs text-[#6b7280] text-center leading-relaxed">
+                  Join 10,000+ members managing ADHD with data-driven care
+                </Text>
+              </View>
+            </Card>
+
+            {/* Compare button */}
+            <TouchableOpacity
+              onPress={() => {
+                const nextIndex = (currentPlanIndex + 1) % plans.length
+                setCurrentPlanIndex(nextIndex)
+              }}
+              className="w-full mt-4 border border-slate-300 text-slate-700 hover:bg-slate-50 py-3 rounded-xl text-sm font-semibold transition-all bg-white"
+            >
+              Compare All Plans →
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Comparison Table - Full Width Below */}
+        <Card className="mt-12 bg-white border border-slate-200/80 rounded-2xl p-10 shadow-sm">
+          <Text className="text-3xl font-bold text-[#172334] mb-2 text-center tracking-tight">
+            More than just tracking.
+          </Text>
+          <Text className="text-base text-[#6b7280] mb-10 text-center">It's comprehensive ADHD care.</Text>
+
+          <View className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b-2 border-slate-200">
+                  <th className="text-left py-4 pr-6 font-semibold text-[#172334] text-sm"></th>
+                  <th className="text-center py-4 px-6 font-bold text-[#f38660] text-sm">
+                    <View className="flex items-center justify-center gap-2">
+                      <View className="w-5 h-5 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                          <Textath d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z" />
+                        </svg>
+                      </View>
+                      Attunio
+                    </View>
+                  </th>
+                  <th className="text-center py-4 px-6 font-semibold text-slate-600 text-sm">Primary care</th>
+                  <th className="text-center py-4 px-6 font-semibold text-slate-600 text-sm">Concierge</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {[
+                  { feature: "Preventive health focus", attunio: true, primary: true, concierge: true },
+                  { feature: "Personalized wellness plans", attunio: true, primary: false, concierge: true },
+                  { feature: "Real-time wearable monitoring", attunio: true, primary: false, concierge: false },
+                  { feature: "ADHD-specific biomarker tracking", attunio: true, primary: false, concierge: false },
+                  { feature: "Monthly clinician consultations", attunio: true, primary: false, concierge: true },
+                ].map((row) => (
+                  <tr key={row.feature} className="hover:bg-slate-50/50 transition-colors">
+                    <td className="py-4 pr-6 text-[#172334] text-sm font-medium">{row.feature}</td>
+                    <td className="py-4 px-6 text-center">
+                      {row.attunio ? (
+                        <Check className="w-5 h-5 text-[#f38660] mx-auto" strokeWidth={2} />
+                      ) : (
+                        <X className="w-5 h-5 text-slate-300 mx-auto" />
+                      )}
+                    </td>
+                    <td className="py-4 px-6 text-center">
+                      {row.primary ? (
+                        <Check className="w-5 h-5 text-slate-400 mx-auto" strokeWidth={2} />
+                      ) : (
+                        <X className="w-5 h-5 text-slate-300 mx-auto" />
+                      )}
+                    </td>
+                    <td className="py-4 px-6 text-center">
+                      {row.concierge ? (
+                        <Check className="w-5 h-5 text-slate-400 mx-auto" strokeWidth={2} />
+                      ) : (
+                        <X className="w-5 h-5 text-slate-300 mx-auto" />
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </View>
+        </Card>
+      </View>
+    </View>
+  )
+}

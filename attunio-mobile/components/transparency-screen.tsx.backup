@@ -1,0 +1,98 @@
+import { View, Text, TouchableOpacity, TextInput, Image, ScrollView, StyleSheet } from 'react-native';
+"use client"
+
+export function TransparencyScreen() {
+  return (
+    <View className="pb-24">
+      <View className="bg-gradient-to-br from-primary/10 via-primary/5 to-background p-8 mb-6">
+        <Text className="text-3xl font-bold text-foreground mb-2">How Attunio Works</Text>
+        <Text className="text-muted-foreground">Understanding our methodology and limitations</Text>
+      </View>
+
+      <View className="px-4 space-y-6">
+        <View className="bg-card rounded-xl p-6 border border-border">
+          <Text className="text-lg font-bold text-foreground mb-3">What Attunio Does</Text>
+          <View className="space-y-2">
+            <View className="flex items-start gap-3 text-sm text-foreground/80">
+              <View className="w-1.5 h-1.5 rounded-full bg-chart-2 mt-2 flex-shrink-0" />
+              <Text>Tracks wearable biomarkers with research-validated correlation to ADHD symptoms</Text>
+            </View>
+            <View className="flex items-start gap-3 text-sm text-foreground/80">
+              <View className="w-1.5 h-1.5 rounded-full bg-chart-2 mt-2 flex-shrink-0" />
+              <Text>Monitors treatment response through objective data patterns</Text>
+            </View>
+            <View className="flex items-start gap-3 text-sm text-foreground/80">
+              <View className="w-1.5 h-1.5 rounded-full bg-chart-2 mt-2 flex-shrink-0" />
+              <Text>Provides lifestyle insights to optimize focus and symptom management</Text>
+            </View>
+          </View>
+        </View>
+
+        <View className="bg-chart-1/10 rounded-xl p-6 border border-chart-1/20">
+          <Text className="text-lg font-bold text-foreground mb-3">What Attunio Does NOT Do</Text>
+          <View className="space-y-2">
+            <View className="flex items-start gap-3 text-sm text-foreground/80">
+              <View className="w-1.5 h-1.5 rounded-full bg-chart-1 mt-2 flex-shrink-0" />
+              <Text>Diagnose ADHD - Clinical diagnosis requires comprehensive evaluation by a healthcare provider</Text>
+            </View>
+            <View className="flex items-start gap-3 text-sm text-foreground/80">
+              <View className="w-1.5 h-1.5 rounded-full bg-chart-1 mt-2 flex-shrink-0" />
+              <Text>Replace medical advice - Always consult your doctor for treatment decisions</Text>
+            </View>
+            <View className="flex items-start gap-3 text-sm text-foreground/80">
+              <View className="w-1.5 h-1.5 rounded-full bg-chart-1 mt-2 flex-shrink-0" />
+              <Text>
+                Guarantee accuracy - Consumer wearables provide directional insights, not clinical measurements
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        <View className="bg-card rounded-xl p-6 border border-border">
+          <Text className="text-lg font-bold text-foreground mb-3">Research Foundation</Text>
+          <View className="space-y-4">
+            <View>
+              <Text className="text-sm font-semibold text-foreground mb-1">Random Forest ML Classifier</Text>
+              <Text className="text-sm text-muted-foreground">89% accuracy (0.95 AUC) using Fitbit data</Text>
+              <TouchableOpacity href="#" className="text-xs text-primary hover:underline">
+                View study →
+              </TouchableOpacity>
+            </View>
+            <View>
+              <Text className="text-sm font-semibold text-foreground mb-1">HRV Multiparametric Model</Text>
+              <Text className="text-sm text-muted-foreground">85.5% accuracy discriminating ADHD</Text>
+              <TouchableOpacity href="#" className="text-xs text-primary hover:underline">
+                View study →
+              </TouchableOpacity>
+            </View>
+            <View>
+              <Text className="text-sm font-semibold text-foreground mb-1">Sleep Architecture Research</Text>
+              <Text className="text-sm text-muted-foreground">REM disruption linked to ADHD symptoms</Text>
+              <TouchableOpacity href="#" className="text-xs text-primary hover:underline">
+                View study →
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
+        <View className="bg-card rounded-xl p-6 border border-border">
+          <Text className="text-lg font-bold text-foreground mb-3">Data Quality & Privacy</Text>
+          <View className="space-y-2">
+            <View className="flex items-start gap-3 text-sm text-foreground/80">
+              <View className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+              <Text>Consumer wearables have ±10-15% variance vs medical-grade devices</Text>
+            </View>
+            <View className="flex items-start gap-3 text-sm text-foreground/80">
+              <View className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+              <Text>Your health data is encrypted and never sold to third parties</Text>
+            </View>
+            <View className="flex items-start gap-3 text-sm text-foreground/80">
+              <View className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+              <Text>HIPAA-compliant data storage and transmission</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  )
+}

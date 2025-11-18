@@ -1,0 +1,203 @@
+// Optimized for React Native from web component
+// Some features may need manual implementation
+
+import { View, Text, TouchableOpacity, TextInput, Image, ScrollView, StyleSheet } from 'react-native';
+import { useState, useEffect } from "react"
+
+interface FeaturesModalProps {
+  isOpen: boolean
+  onClose: () => void
+  onSelectFeature: (feature: string) => void
+}
+
+export function FeaturesModal({ isOpen, onClose, onSelectFeature }: FeaturesModalProps) {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (!isOpen) {
+      setSelectedIndex(null)
+    }
+  }, [isOpen])
+
+  if (!isOpen) return null
+
+  const features = [
+    {
+      id: "progress",
+      name: "Progress Insights",
+      tagline: "Watch your transformation",
+      description: "Visualize your ADHD symptom improvements with data-driven milestones and personalized insights",
+      icon: (
+        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <Textath
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"
+          />
+        </svg>
+      ),
+      gradient: "from-teal-500 to-cyan-500",
+      bgGradient: "from-teal-50 to-cyan-50",
+      shadow: "shadow-teal-200",
+    },
+    {
+      id: "medications",
+      name: "Medication Tracker",
+      tagline: "Never miss a dose",
+      description: "Smart reminders and adherence tracking to optimize your treatment effectiveness",
+      icon: (
+        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <Textath
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"
+          />
+        </svg>
+      ),
+      gradient: "from-indigo-500 to-purple-500",
+      bgGradient: "from-indigo-50 to-purple-50",
+      shadow: "shadow-indigo-200",
+    },
+    {
+      id: "labs",
+      name: "Lab Analysis",
+      tagline: "Clinical-grade insights",
+      description: "Upload blood work for AI-powered biomarker analysis and personalized recommendations",
+      icon: (
+        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <Textath
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"
+          />
+        </svg>
+      ),
+      gradient: "from-blue-500 to-cyan-500",
+      bgGradient: "from-blue-50 to-cyan-50",
+      shadow: "shadow-blue-200",
+    },
+    {
+      id: "glucose",
+      name: "Glucose Monitor",
+      tagline: "Optimize focus & energy",
+      description: "Track blood sugar patterns and discover how they affect your ADHD symptoms",
+      icon: (
+        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <Textath
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"
+          />
+        </svg>
+      ),
+      gradient: "from-amber-500 to-orange-500",
+      bgGradient: "from-amber-50 to-orange-50",
+      shadow: "shadow-amber-200",
+    },
+  ]
+
+  return (
+    <>
+      <View
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 animate-in fade-in duration-300"
+        onPress={onClose}
+      />
+
+      <View className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 pointer-events-none">
+        <View
+          className="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-2xl shadow-2xl pointer-events-auto overflow-hidden animate-in slide-in-from-bottom-8 sm:slide-in-from-bottom-4 duration-500"
+          onPress={(e) => e.stopPropagation()}
+        >
+          <View className="relative bg-gradient-to-br from-slate-50 to-slate-100 border-b border-slate-200 p-6 pb-8">
+            <View className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-500" />
+            <View className="flex items-start justify-between">
+              <View>
+                <Text className="text-xs font-semibold text-teal-600 tracking-wider uppercase mb-2">Unlock More Value</Text>
+                <Text className="text-3xl font-bold text-slate-900 tracking-tight">Power Features</Text>
+                <Text className="text-sm text-slate-600 mt-2">Take control of your ADHD management journey</Text>
+              </View>
+              <TouchableOpacity
+                onPress={onClose}
+                className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center hover:bg-slate-50 transition-all active:scale-95"
+              >
+                <svg className="w-5 h-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View className="p-6 max-h-[60vh] overflow-y-auto">
+            <View className="grid sm:grid-cols-2 gap-4">
+              {features.map((feature, index) => (
+                <TouchableOpacity
+                  key={feature.id}
+                  onPress={() => {
+                    setSelectedIndex(index)
+                    setTimeout(() => {
+                      onSelectFeature(feature.id)
+                      onClose()
+                    }, 300)
+                  }}
+                  className={`
+                    group relative flex flex-col p-5 rounded-2xl border-2 transition-all duration-300
+                    hover:scale-[1.02] hover:-translate-y-1 active:scale-[0.98]
+                    ${
+                      selectedIndex === index
+                        ? `border-transparent bg-gradient-to-br ${feature.bgGradient} shadow-lg ${feature.shadow}`
+                        : "border-slate-200 hover:border-slate-300 bg-white hover:shadow-lg"
+                    }
+                  `}
+                  style={{
+                    animationDelay: `${index * 100}ms`,
+                    animation: "slideInUp 0.5s ease-out forwards",
+                  }}
+                >
+                  <View
+                    className={`
+                    w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.gradient} 
+                    flex items-center justify-center text-white mb-4 
+                    transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3
+                    ${selectedIndex === index ? "scale-110 rotate-3" : ""}
+                  `}
+                  >
+                    {feature.icon}
+                  </View>
+
+                  <View className="text-left">
+                    <Text className="text-lg font-bold text-slate-900 mb-1">{feature.name}</Text>
+                    <Text className="text-xs font-medium text-teal-600 mb-2">{feature.tagline}</Text>
+                    <Text className="text-sm text-slate-600 leading-relaxed">{feature.description}</Text>
+                  </View>
+
+                  <View className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </View>
+
+                  {selectedIndex === index && (
+                    <View className="absolute inset-0 rounded-2xl border-2 border-teal-500 animate-pulse" />
+                  )}
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        </View>
+      </View>
+
+      <style jsx>{`
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+    </>
+  )
+}

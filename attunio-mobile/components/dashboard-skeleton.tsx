@@ -1,0 +1,47 @@
+// Optimized for React Native from web component
+// Some features may need manual implementation
+
+import { View, Text, TouchableOpacity, TextInput, Image, ScrollView, StyleSheet } from 'react-native';
+
+export function DashboardSkeleton() {
+  return (
+    <View className="space-y-6 p-4 max-w-5xl mx-auto">
+      {/* Header skeleton */}
+      <View className="space-y-2 mb-8">
+        <Skeleton className="h-8 w-64" /> {/* Greeting */}
+        <Skeleton className="h-4 w-80" /> {/* Subtitle */}
+      </View>
+
+      {/* Focus Score Card skeleton */}
+      <View className="bg-white rounded-3xl p-8 border border-slate-200">
+        <View className="flex items-center justify-between mb-6">
+          <View className="space-y-2">
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="h-10 w-48" />
+          </View>
+          <Skeleton className="h-8 w-20 rounded-full" />
+        </View>
+        <View className="flex items-center gap-8">
+          <Skeleton className="w-32 h-32 rounded-full" />
+          <View className="flex-1 space-y-4">
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-3/4" />
+          </View>
+        </View>
+      </View>
+
+      {/* Biomarker cards skeleton */}
+      <View className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[...Array(6)].map((_, i) => (
+          <View key={i} className="bg-white rounded-2xl p-6 border border-slate-200">
+            <Skeleton className="h-4 w-40 mb-3" />
+            <Skeleton className="h-10 w-32 mb-2" />
+            <Skeleton className="h-2 w-full rounded-full" />
+          </View>
+        ))}
+      </View>
+    </View>
+  )
+}

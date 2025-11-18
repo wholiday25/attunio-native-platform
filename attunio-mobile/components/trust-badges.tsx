@@ -1,0 +1,26 @@
+// Optimized for React Native from web component
+// Some features may need manual implementation
+
+import { View, Text, TouchableOpacity, TextInput, Image, ScrollView, StyleSheet } from 'react-native';
+import { Ionicons, MaterialCommunityIcons, Feather } from "@expo/vector-icons"
+
+export function TrustBadges() {
+  return (
+    <View className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 py-4">
+      <View className="flex items-center gap-2 text-sm text-slate-600">
+        <Shield className="w-5 h-5 text-teal-600" />
+        <Text>HIPAA Compliant</Text>
+      </View>
+
+      <View className="flex items-center gap-2 text-sm text-slate-600">
+        <Lock className="w-5 h-5 text-teal-600" />
+        <Text>256-bit Encryption</Text>
+      </View>
+
+      <View className="flex items-center gap-2 text-sm text-slate-600">
+        <CheckCircle className="w-5 h-5 text-teal-600" />
+        <Text>FDA-Registered Labs</Text>
+      </View>
+    </View>
+  )
+}

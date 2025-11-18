@@ -1,0 +1,91 @@
+// Optimized for React Native from web component
+// Some features may need manual implementation
+
+import { View, Text, TouchableOpacity, TextInput, Image, ScrollView, StyleSheet } from 'react-native';
+interface ArticleDetailScreenProps {
+  article: string
+  onBack: () => void
+}
+
+export function ArticleDetailScreen({ article, onBack }: ArticleDetailScreenProps) {
+  const articles: Record<
+    string,
+    {
+      content: string[]
+      readTime: string
+    }
+  > = {
+    "Heart Rate Variability (HRV)": {
+      readTime: "8 min",
+      content: [
+        "Heart Rate Variability (HRV) is one of the most powerful biomarkers for understanding your nervous system's health and stress response.",
+        "HRV measures the variation in time intervals between consecutive heartbeats. A higher HRV indicates better cardiovascular fitness and stress resilience.",
+        "Research shows that HRV-based models can detect ADHD with 85.5% accuracy. Individuals with ADHD often show reduced HRV, indicating decreased autonomic nervous system flexibility.",
+        "Low HRV is associated with increased stress, anxiety, and reduced ability to regulate emotions - all challenges commonly faced by those with ADHD.",
+        "You can improve your HRV through consistent sleep schedules, regular exercise, stress management techniques like meditation, and avoiding excessive caffeine.",
+      ],
+    },
+    "89% Accuracy Study": {
+      readTime: "12 min",
+      content: [
+        "A groundbreaking study demonstrated that machine learning classifiers using Fitbit-derived physical activity data could predict ADHD diagnosis with remarkable accuracy.",
+        "The Random Forest classifier achieved 89% cross-validation accuracy, 95% AUC, 88% precision, 90% recall, and 88% test accuracy.",
+        "Key predictive features included sedentary time, resting heart rate, and energy expenditure - all metrics easily captured by consumer wearables.",
+        "This research validates the potential of wearable devices for objective ADHD assessment and monitoring, moving beyond subjective self-reports.",
+        "The implications are significant: continuous, objective tracking could help with diagnosis, treatment monitoring, and understanding how lifestyle factors affect ADHD symptoms.",
+      ],
+    },
+  }
+
+  const data = articles[article] || articles["Heart Rate Variability (HRV)"]
+
+  return (
+    <View className="pb-24 min-h-screen bg-[#F8F7F4]">
+      <View className="bg-white border-b border-slate-200 p-6 sm:p-8 lg:p-12">
+        <View className="max-w-4xl mx-auto">
+          <TouchableOpacity
+            onPress={onBack}
+            className="mb-4 sm:mb-6 text-teal-600 hover:text-teal-700 flex items-center gap-2 text-sm sm:text-base font-medium transition-colors"
+          >
+            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Library
+          </TouchableOpacity>
+          <View className="flex items-center gap-2 mb-3 sm:mb-4">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <Textath
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <Text className="text-sm sm:text-base text-slate-600">{data.readTime} read</Text>
+          </View>
+          <Text className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight">{article}</Text>
+        </View>
+      </View>
+
+      <View className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6 sm:space-y-8">
+        {data.content.map((paragraph, index) => (
+          <Text key={index} className="text-base sm:text-lg text-slate-700 leading-relaxed">
+            {paragraph}
+          </Text>
+        ))}
+
+        <View className="bg-teal-50 border border-teal-200 rounded-3xl p-6 sm:p-8 lg:p-10 mt-10 sm:mt-12 shadow-sm">
+          <Text className="text-xl sm:text-2xl font-bold text-slate-900 mb-2 sm:mb-3 tracking-tight">
+            Want to learn more?
+          </Text>
+          <Text className="text-sm sm:text-base text-slate-600 mb-5 sm:mb-6">
+            Explore related articles and research studies
+          </Text>
+          <TouchableOpacity className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-6 sm:px-8">
+            View Related Content
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  )
+}

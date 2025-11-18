@@ -1,0 +1,622 @@
+// Optimized for React Native from web component
+// Some features may need manual implementation
+
+import { View, Text, TouchableOpacity, TextInput, Image, ScrollView, StyleSheet } from 'react-native';
+import { useState } from "react"
+
+interface CheckoutScreenProps {
+  selectedPackage: "essential" | "complete" | "pro"
+  onBack: () => void
+  onComplete: (userData: { 
+    firstName: string; 
+    lastName: string;
+    email: string; 
+    phone: string;
+    dob: { month: string; day: string; year: string };
+    biologicalSex: string;
+  }) => void
+}
+
+const packageDetails = {
+  essential: {
+    name: "Attunio Essential",
+    price: 348,
+    monthlyPrice: 29,
+    items: [
+      { name: "Wearable Biomarker Tracking", description: "HRV, Sleep, Activity patterns", included: true },
+      { name: "Focus Score Algorithm", description: "ADHD-specific insights", included: true },
+    ],
+  },
+  pro: {
+    name: "Attunio Pro",
+    price: 828,
+    monthlyPrice: 69,
+    items: [
+      { name: "Comprehensive Lab Panel (1 panel)", description: "100+ biomarkers", included: true },
+      { name: "Continuous Glucose Monitor (1 kit)", description: "Glucose monitor, once (2 sensors)", included: true },
+    ],
+  },
+  complete: {
+    name: "Attunio Complete",
+    price: 1188,
+    monthlyPrice: 99,
+    items: [
+      { name: "Comprehensive Lab Panel (2 panels)", description: "Two lab visits", included: true },
+      { name: "Continuous Glucose Monitor (2 kits)", description: "Glucose monitor, once (4 sensors)", included: true },
+    ],
+  },
+}
+
+export function CheckoutScreen({ selectedPackage, onBack, onComplete }: CheckoutScreenProps) {
+  const [currentStep, setCurrentStep] = useState(1)
+  const [orderSummaryExpanded, setOrderSummaryExpanded] = useState(true)
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    dob: { month: "", day: "", year: "" },
+    biologicalSex: "female",
+    testingState: "",
+    cgmAcknowledged: false,
+  })
+
+  const packageInfo = packageDetails[selectedPackage]
+
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <View className="space-y-6">
+            <Text className="text-lg font-semibold text-slate-900">1. Account Information</Text>
+
+            <View className="space-y-4">
+              <View>
+                <Text // htmlFor="firstName" className="text-sm text-slate-700">
+                  First Name *
+                </Text>
+                <TextInput
+                  id="firstName"
+                  type="text"
+                  value={formData.firstName}
+                  onChangeText={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                  className="mt-1"
+                  placeholder="Alex"
+                  required
+                />
+              </View>
+
+              <View>
+                <Text // htmlFor="lastName" className="text-sm text-slate-700">
+                  Last Name *
+                </Text>
+                <TextInput
+                  id="lastName"
+                  type="text"
+                  value={formData.lastName}
+                  onChangeText={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                  className="mt-1"
+                  placeholder="Johnson"
+                  required
+                />
+              </View>
+
+              <View>
+                <Text // htmlFor="email" className="text-sm text-slate-700">
+                  Email address *
+                </Text>
+                <TextInput
+                  id="email"
+                  type="email"
+                  value={formData.email}
+                  onChangeText={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="mt-1"
+                  required
+                />
+              </View>
+
+              <View>
+                <Text // htmlFor="phone" className="text-sm text-slate-700">
+                  Telephone number *
+                </Text>
+                <View className="flex gap-2 mt-1">
+                  <View className="w-16 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg flex items-center justify-center text-sm">
+                    🇺🇸 +1
+                  </View>
+                  <TextInput
+                    id="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChangeText={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="flex-1"
+                    placeholder="404-933-9053"
+                  />
+                </View>
+                <Text className="text-xs text-slate-500 mt-1">
+                  *A phone number is required by our lab partner in order to fulfill your Lab order
+                </Text>
+              </View>
+
+              <View className="flex items-center gap-2">
+                <Checkbox id="newsletter" />
+                <Text // htmlFor="newsletter" className="text-sm text-slate-700 font-normal">
+                  Sign me up for news and offers from Attunio
+                </Text>
+              </View>
+            </View>
+
+            <TouchableOpacity
+              onPress={() => setCurrentStep(2)}
+              disabled={
+                !formData.firstName.trim() ||
+                !formData.lastName.trim() ||
+                !formData.email.trim() ||
+                !formData.phone.trim()
+              }
+              className="w-full rounded-full bg-[#f38660] hover:bg-[#e67550] h-12 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </TouchableOpacity>
+
+            <View className="space-y-3 pt-4">
+              <TouchableOpacity
+                onPress={() => setCurrentStep(2)}
+                className="w-full text-left p-4 bg-slate-50 rounded-xl border border-slate-200"
+              >
+                <Text className="text-sm font-semibold text-slate-900">2. Information required for Labs</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setCurrentStep(3)}
+                className="w-full text-left p-4 bg-slate-50 rounded-xl border border-slate-200"
+              >
+                <Text className="text-sm font-semibold text-slate-900">3. Information required for Glucose Monitors</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setCurrentStep(4)}
+                className="w-full text-left p-4 bg-slate-50 rounded-xl border border-slate-200"
+              >
+                <Text className="text-sm font-semibold text-slate-900">4. Shipping Address</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setCurrentStep(5)}
+                className="w-full text-left p-4 bg-slate-50 rounded-xl border border-slate-200"
+              >
+                <Text className="text-sm font-semibold text-slate-900">5. Payment Method</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )
+
+      case 2:
+        return (
+          <View className="space-y-6">
+            <Text className="text-lg font-semibold text-slate-900">2. Information required for Labs</Text>
+
+            <View className="space-y-4">
+              <View className="grid grid-cols-3 gap-2">
+                <View>
+                  <Text // htmlFor="month" className="text-sm text-slate-700">
+                    Date of birth
+                  </Text>
+                  <TextInput
+                    id="month"
+                    placeholder="MM"
+                    className="mt-1"
+                    maxLength={2}
+                    value={formData.dob.month}
+                    onChangeText={(e) => setFormData({ ...formData, dob: { ...formData.dob, month: e.target.value } })}
+                  />
+                </View>
+                <View>
+                  <Text // htmlFor="day" className="text-sm text-slate-700 opacity-0">
+                    Day
+                  </Text>
+                  <TextInput
+                    id="day"
+                    placeholder="DD"
+                    className="mt-1"
+                    maxLength={2}
+                    value={formData.dob.day}
+                    onChangeText={(e) => setFormData({ ...formData, dob: { ...formData.dob, day: e.target.value } })}
+                  />
+                </View>
+                <View>
+                  <Text // htmlFor="year" className="text-sm text-slate-700 opacity-0">
+                    Year
+                  </Text>
+                  <TextInput
+                    id="year"
+                    placeholder="YYYY"
+                    className="mt-1"
+                    maxLength={4}
+                    value={formData.dob.year}
+                    onChangeText={(e) => setFormData({ ...formData, dob: { ...formData.dob, year: e.target.value } })}
+                  />
+                </View>
+              </View>
+
+              <View>
+                <Text className="text-sm text-slate-700 mb-3 block">Biological sex *</Text>
+                <RadioGroup
+                  value={formData.biologicalSex}
+                  onValueChange={(value) => setFormData({ ...formData, biologicalSex: value })}
+                >
+                  <View className="flex items-center gap-3">
+                    <RadioGroupItem value="female" id="female" />
+                    <Text // htmlFor="female" className="font-normal">
+                      Female
+                    </Text>
+                  </View>
+                  <View className="flex items-center gap-3">
+                    <RadioGroupItem value="male" id="male" />
+                    <Text // htmlFor="male" className="font-normal">
+                      Male
+                    </Text>
+                  </View>
+                </RadioGroup>
+              </View>
+
+              <View>
+                <Text // htmlFor="state" className="text-sm text-slate-700">
+                  Where will you be testing *
+                </Text>
+                <View className="relative mt-1">
+                  <View
+                    id="state"
+                    value={formData.testingState}
+                    onChangeText={(e) => setFormData({ ...formData, testingState: e.target.value })}
+                    className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg appearance-none pr-10"
+                  >
+                    <option value="">Select a state</option>
+                    <option value="GA">Georgia</option>
+                    <option value="CA">California</option>
+                    <option value="NY">New York</option>
+                    <option value="TX">Texas</option>
+                  </View>
+                  <svg
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </View>
+              </View>
+            </View>
+
+            <TouchableOpacity
+              onPress={() => setCurrentStep(3)}
+              disabled={
+                !formData.dob.month ||
+                !formData.dob.day ||
+                !formData.dob.year ||
+                !formData.testingState
+              }
+              className="w-full rounded-full bg-[#f38660] hover:bg-[#e67550] h-12 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </TouchableOpacity>
+          </View>
+        )
+
+      case 3:
+        return (
+          <View className="space-y-6">
+            <Text className="text-lg font-semibold text-slate-900">3. Information required for Glucose Monitors</Text>
+
+            <View className="bg-slate-50 rounded-xl p-4 text-sm text-slate-600">
+              This information is required in order to be able to process the Glucose Monitor (Stelo by Dexcom) in your
+              order.
+            </View>
+
+            <View className="space-y-4">
+              <View className="flex items-start gap-3 p-4 bg-orange-50 rounded-xl border border-orange-200">
+                <View className="w-5 h-5 rounded-full bg-[#f38660] flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <Textath
+                      fillRule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </View>
+                <Text className="text-sm text-slate-700">For people: Not on insulin, ages 18 years and older.</Text>
+              </View>
+
+              <View className="flex items-start gap-3 p-4 bg-red-50 rounded-xl border border-red-200">
+                <View className="w-5 h-5 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <Textath
+                      fillRule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </View>
+                <Text className="text-sm text-slate-700">
+                  Don't use if: On insulin, on dialysis, or if you have problematic hypoglycemia.
+                </Text>
+              </View>
+
+              <View className="bg-white rounded-xl p-4 border border-slate-200 space-y-3">
+                <Text className="text-sm font-semibold text-slate-900">Intended usage acknowledgement</Text>
+                <Text className="text-sm text-slate-600">Stelo is not intended for use by those:</Text>
+
+                <View className="space-y-2 pl-4">
+                  {["On insulin", "On dialysis", "With problematic hypoglycemia", "Under 18 years of age"].map(
+                    (item) => (
+                      <View key={item} className="flex items-center gap-2 text-sm text-slate-700">
+                        <View className="w-4 h-4 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                          <svg className="w-2.5 h-2.5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                            <Textath
+                              fillRule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </View>
+                        {item}
+                      </View>
+                    ),
+                  )}
+                </View>
+
+                <View className="flex items-start gap-3 pt-3">
+                  <Checkbox
+                    id="cgm-acknowledge"
+                    checked={formData.cgmAcknowledged}
+                    onCheckedChange={(checked) => setFormData({ ...formData, cgmAcknowledged: checked as boolean })}
+                  />
+                  <Text // htmlFor="cgm-acknowledge" className="text-sm text-slate-700 font-normal">
+                    I acknowledge intended usage (required)
+                  </Text>
+                </View>
+              </View>
+
+              <details className="bg-slate-50 rounded-xl overflow-hidden">
+                <summary className="px-4 py-3 cursor-pointer text-sm font-medium text-slate-900 flex items-center justify-between">
+                  Safety Information
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <View className="px-4 pb-4 text-xs text-slate-600 space-y-2">
+                  <Text>
+                    <strong>IMPORTANT:</strong> Consult your healthcare provider before making any medication
+                    adjustments based on your sensor readings.
+                  </Text>
+                </View>
+              </details>
+            </View>
+
+            <TouchableOpacity
+              onPress={() => setCurrentStep(4)}
+              disabled={!formData.cgmAcknowledged}
+              className="w-full rounded-full bg-[#f38660] hover:bg-[#e67550] h-12 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </TouchableOpacity>
+          </View>
+        )
+
+      case 4:
+        return (
+          <View className="space-y-6">
+            <Text className="text-lg font-semibold text-slate-900">4. Shipping Address</Text>
+            <View className="text-center py-8 text-slate-600">Shipping address form would go here</View>
+            <TouchableOpacity
+              onPress={() => setCurrentStep(5)}
+              className="w-full rounded-full bg-[#f38660] hover:bg-[#e67550] h-12"
+            >
+              Next
+            </TouchableOpacity>
+          </View>
+        )
+
+      case 5:
+        return (
+          <View className="space-y-6">
+            <Text className="text-lg font-semibold text-slate-900">5. Payment Method</Text>
+            <View className="text-center py-8 text-slate-600">Payment form would go here</View>
+
+            <View className="flex items-center justify-center gap-2 py-4 border-t border-slate-200">
+              <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <Textath
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 15v2m-6 4h12a2 2 0 002-2V5a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              <Text className="text-xs text-slate-500">SECURE ENCRYPTED PAYMENTS</Text>
+            </View>
+
+            <View className="text-center text-xs text-slate-500">Powered by Stripe</View>
+
+            <TouchableOpacity 
+              onPress={() => {
+                // Validation
+                if (!formData.firstName.trim()) {
+                  alert("Please enter your first name");
+                  return;
+                }
+                if (!formData.lastName.trim()) {
+                  alert("Please enter your last name");
+                  return;
+                }
+                if (!formData.email.trim() || !formData.email.includes("@")) {
+                  alert("Please enter a valid email address");
+                  return;
+                }
+                if (!formData.phone.trim()) {
+                  alert("Please enter your phone number");
+                  return;
+                }
+                if (!formData.dob.month || !formData.dob.day || !formData.dob.year) {
+                  alert("Please enter your date of birth");
+                  return;
+                }
+                if (!formData.biologicalSex) {
+                  alert("Please select your biological sex");
+                  return;
+                }
+                
+                // All validated, proceed
+                onComplete({ 
+                  firstName: formData.firstName.trim(), 
+                  lastName: formData.lastName.trim(),
+                  email: formData.email.trim(), 
+                  phone: formData.phone.trim(),
+                  dob: formData.dob,
+                  biologicalSex: formData.biologicalSex,
+                });
+              }} 
+              disabled={
+                !formData.firstName.trim() ||
+                !formData.lastName.trim() ||
+                !formData.email.trim() ||
+                !formData.email.includes("@") ||
+                !formData.phone.trim() ||
+                !formData.dob.month ||
+                !formData.dob.day ||
+                !formData.dob.year ||
+                !formData.biologicalSex
+              }
+              className="w-full rounded-full bg-[#f38660] hover:bg-[#e67550] h-12 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Continue to Create Account
+            </TouchableOpacity>
+
+            <View className="bg-white rounded-xl p-4 text-center">
+              <Text className="font-semibold text-slate-900 mb-1">14-DAY</Text>
+              <Text className="text-sm text-slate-600 mb-1">SATISFACTION GUARANTEE</Text>
+              <Text className="text-xs text-slate-500">Cancel any time, no questions asked.</Text>
+            </View>
+          </View>
+        )
+
+      default:
+        return null
+    }
+  }
+
+  return (
+    <View className="min-h-screen bg-[#fff8f2]">
+      <View className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+        <View className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
+          <View className="flex items-center gap-3 sm:gap-4 max-w-5xl mx-auto">
+            <TouchableOpacity
+              variant="ghost"
+              size="icon"
+              onPress={onBack}
+              className="rounded-full hover:bg-slate-100 flex-shrink-0"
+              aria-label="Go back"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </TouchableOpacity>
+            <Image source={require("/attunio-logo.png")} alt="Attunio" width={140} height={40} className="h-8 sm:h-10 w-auto" />
+          </View>
+        </View>
+      </View>
+
+      <View className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 max-w-7xl">
+        <View className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12">
+          {/* Checkout Form - Left Side on Desktop */}
+          <View className="order-2 lg:order-1">
+            <View className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 lg:p-10 shadow-sm">
+              {renderStepContent()}
+            </View>
+          </View>
+
+          {/* Order Summary - Right Side on Desktop, Top on Mobile */}
+          <View className="order-1 lg:order-2">
+            <View className="lg:sticky lg:top-24">
+              <View className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+                <TouchableOpacity
+                  onPress={() => setOrderSummaryExpanded(!orderSummaryExpanded)}
+                  className="w-full px-6 py-5 flex items-center justify-between hover:bg-slate-50 transition-colors lg:pointer-events-none"
+                >
+                  <Text className="text-lg font-semibold text-slate-900">Order Summary</Text>
+                  <svg
+                    className={`w-5 h-5 text-slate-400 transition-transform lg:hidden ${orderSummaryExpanded ? "rotate-180" : ""}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </TouchableOpacity>
+
+                <View className={`${orderSummaryExpanded ? "block" : "hidden lg:block"}`}>
+                  <View className="p-6 space-y-4 border-t border-slate-100">
+                    <View className="flex items-start justify-between">
+                      <View>
+                        <Text className="font-semibold text-slate-900">{packageInfo.name}</Text>
+                        <Text className="text-sm text-slate-500">Yearly</Text>
+                        <TouchableOpacity
+                          variant="link"
+                          className="p-0 h-auto text-sm text-[#f38660] hover:text-[#e67550]"
+                          onPress={onBack}
+                        >
+                          Edit Selection →
+                        </TouchableOpacity>
+                      </View>
+                      <Text className="font-bold text-slate-900 text-lg">${packageInfo.price}.00</Text>
+                    </View>
+
+                    <View className="space-y-3 pt-4 border-t border-slate-100">
+                      {packageInfo.items.map((item, idx) => (
+                        <View key={idx} className="flex items-start justify-between gap-4">
+                          <View className="flex-1">
+                            <Text className="text-sm font-medium text-slate-900">{item.name}</Text>
+                            <Text className="text-xs text-slate-500">{item.description}</Text>
+                          </View>
+                          <Text className="text-sm text-[#f38660] font-medium flex-shrink-0">Included</Text>
+                        </View>
+                      ))}
+                    </View>
+
+                    <View className="pt-4 border-t border-slate-100 space-y-3">
+                      <View className="flex items-center justify-between">
+                        <Text className="text-sm text-slate-700">Subtotal</Text>
+                        <Text className="font-semibold text-slate-900">${packageInfo.price}.00</Text>
+                      </View>
+
+                      <View className="flex gap-2">
+                        <TextInput placeholder="Promo code" className="flex-1 h-10 text-sm" />
+                        <TouchableOpacity className="rounded-full px-5 bg-[#f38660] hover:bg-[#e67550] text-white text-sm">
+                          Apply
+                        </TouchableOpacity>
+                      </View>
+
+                      <View className="flex items-center justify-between text-sm">
+                        <Text className="text-slate-700">Sales Tax</Text>
+                        <Text className="text-slate-900">$0.00</Text>
+                      </View>
+
+                      <View className="flex items-center justify-between text-sm">
+                        <Text className="text-slate-700">Shipping</Text>
+                        <Text className="text-[#f38660] font-medium">Included</Text>
+                      </View>
+
+                      <View className="flex items-center justify-between pt-3 border-t border-slate-200">
+                        <Text className="font-semibold text-slate-900">Today's Total</Text>
+                        <View className="text-right">
+                          <Text className="text-2xl sm:text-3xl font-bold text-slate-900">${packageInfo.price}</Text>
+                          <Text className="text-xs text-slate-500">.00</Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  )
+}

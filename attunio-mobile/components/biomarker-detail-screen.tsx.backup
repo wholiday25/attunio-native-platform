@@ -1,0 +1,661 @@
+import { View, Text, TouchableOpacity, TextInput, Image, ScrollView, StyleSheet } from 'react-native';
+"use client"
+
+
+
+import { useState, useEffect } from "react"
+
+interface BiomarkerDetailScreenProps {
+  biomarker: string
+  onBack: () => void
+}
+
+export function BiomarkerDetailScreen({ biomarker, onBack }: BiomarkerDetailScreenProps) {
+  const [chartAnimated, setChartAnimated] = useState(false)
+  const [valueAnimated, setValueAnimated] = useState(false)
+  const [timePeriod, setTimePeriod] = useState<"daily" | "weekly" | "monthly">("daily")
+  const [comparisonMode, setComparisonMode] = useState(false)
+  const [selectedComparisons, setSelectedComparisons] = useState<string[]>([])
+
+  useEffect(() => {
+    const valueTimer = setTimeout(() => setValueAnimated(true), 300)
+    const chartTimer = setTimeout(() => setChartAnimated(true), 600)
+    return () => {
+      clearTimeout(valueTimer)
+      clearTimeout(chartTimer)
+    }
+  }, [biomarker, timePeriod])
+
+  const biomarkerData: Record<
+    string,
+    {
+      value: string
+      status: string
+      color: string
+      description: string
+      normal: string
+      whyItMatters: string
+      improvements: string[]
+      historicalData: { date: string; value: number }[]
+      trend: "improving" | "declining" | "stable"
+      correlations: { biomarker: string; impact: string }[]
+      personalizedInsight: string
+      isClinical?: boolean
+      unit?: string
+      optimalRange?: { min: number; max: number }
+    }
+  > = {
+    "Vitamin D": {
+      value: "22 ng/mL",
+      status: "Low",
+      color: "chart-1",
+      description:
+        "Vitamin D is a fat-soluble hormone that regulates over 1,000 genes including those critical for brain function, immune health, and mood regulation.",
+      normal: "30-50 ng/mL (optimal for ADHD)",
+      whyItMatters:
+        "Vitamin D deficiency is 2x more common in individuals with ADHD. It directly affects dopamine receptor gene expression (DRD2) and prefrontal cortex function. Low levels worsen focus, mood regulation, executive function, and impulsivity. Studies show supplementation improves ADHD symptoms by 25-30%.",
+      improvements: [
+        "Supplement with 4,000-5,000 IU Vitamin D3 daily (with K2 for absorption)",
+        "Get 15-20 minutes of direct sun exposure daily (arms/legs exposed)",
+        "Eat fatty fish (salmon, mackerel) 2-3x weekly",
+        "Retest in 8-12 weeks to ensure levels reach 40-50 ng/mL",
+      ],
+      historicalData: [
+        { date: "3mo", value: 18 },
+        { date: "2mo", value: 20 },
+        { date: "1mo", value: 22 },
+        { date: "Now", value: 22 },
+      ],
+      trend: "stable",
+      correlations: [
+        { biomarker: "Ferritin", impact: "Both deficiencies compound focus issues - address together" },
+        { biomarker: "Magnesium", impact: "Required for Vitamin D activation and absorption" },
+      ],
+      personalizedInsight:
+        "Your Vitamin D has been consistently low for 3 months. At 22 ng/mL, you're in deficiency territory which is directly impacting your dopamine function. Supplementing 5,000 IU daily should bring you to optimal range (40-50) in 2-3 months.",
+      isClinical: true,
+      unit: "ng/mL",
+      optimalRange: { min: 30, max: 50 },
+    },
+    Ferritin: {
+      value: "15 ng/mL",
+      status: "Low",
+      color: "chart-1",
+      description:
+        "Ferritin is your body's stored iron. It's essential for oxygen transport, energy production, and most importantly for ADHD - dopamine synthesis.",
+      normal: "50-100 ng/mL (optimal for ADHD)",
+      whyItMatters:
+        "Iron is required for tyrosine hydroxylase, the rate-limiting enzyme in dopamine synthesis. Studies show 84% of children with ADHD have low ferritin (<30). Low iron causes restless legs, poor focus, fatigue, and reduced working memory. Levels below 50 directly impair attention.",
+      improvements: [
+        "Supplement with iron bisglycinate 25-50mg daily (most absorbable form)",
+        "Take iron with Vitamin C (orange juice) for 4x better absorption",
+        "Avoid tea/coffee within 2 hours of iron supplement (blocks absorption)",
+        "Eat iron-rich foods: red meat, spinach, lentils, pumpkin seeds",
+      ],
+      historicalData: [
+        { date: "3mo", value: 12 },
+        { date: "2mo", value: 13 },
+        { date: "1mo", value: 14 },
+        { date: "Now", value: 15 },
+      ],
+      trend: "improving",
+      correlations: [
+        { biomarker: "HRV", impact: "Low iron reduces oxygen delivery, lowering HRV" },
+        { biomarker: "Vitamin D", impact: "Vitamin D helps iron absorption - both are low" },
+      ],
+      personalizedInsight:
+        "Your ferritin is critically low at 15 ng/mL but trending up slowly. To reach optimal ADHD range (50-100), you'll need consistent supplementation for 3-6 months. The slow rise suggests absorption issues - make sure to take with Vitamin C.",
+      isClinical: true,
+      unit: "ng/mL",
+      optimalRange: { min: 50, max: 100 },
+    },
+    Magnesium: {
+      value: "1.8 mg/dL",
+      status: "Borderline",
+      color: "chart-3",
+      description:
+        "Magnesium is involved in over 300 enzymatic reactions including neurotransmitter synthesis, nerve transmission, and stress response regulation.",
+      normal: "2.0-2.6 mg/dL (optimal range)",
+      whyItMatters:
+        "95% of ADHD patients have suboptimal magnesium. It regulates NMDA receptors (learning/memory), supports GABA production (calming), and modulates cortisol (stress). Deficiency causes hyperactivity, anxiety, poor concentration, and sleep disturbances. Supplementation reduces ADHD symptoms by 30-40%.",
+      improvements: [
+        "Supplement with magnesium glycinate 400-600mg daily (best absorbed, non-laxative)",
+        "Take before bed to improve sleep quality and reduce restlessness",
+        "Eat magnesium-rich foods: almonds, spinach, avocado, dark chocolate",
+        "Reduce stress and caffeine (both deplete magnesium rapidly)",
+      ],
+      historicalData: [
+        { date: "3mo", value: 1.7 },
+        { date: "2mo", value: 1.75 },
+        { date: "1mo", value: 1.8 },
+        { date: "Now", value: 1.8 },
+      ],
+      trend: "stable",
+      correlations: [
+        { biomarker: "Sleep Efficiency", impact: "Low magnesium causes restless sleep and frequent waking" },
+        { biomarker: "HRV", impact: "Magnesium deficiency increases stress response and lowers HRV" },
+      ],
+      personalizedInsight:
+        "You're just below optimal at 1.8 mg/dL. This borderline deficiency is likely contributing to your sleep issues and stress response. Magnesium glycinate 400mg before bed should push you into optimal range within 4-6 weeks.",
+      isClinical: true,
+      unit: "mg/dL",
+      optimalRange: { min: 2.0, max: 2.6 },
+    },
+    TSH: {
+      value: "3.8 mIU/L",
+      status: "Borderline",
+      color: "chart-3",
+      description:
+        "TSH (Thyroid Stimulating Hormone) tells your thyroid to produce thyroid hormones. Higher TSH means your thyroid is underactive (hypothyroidism).",
+      normal: "0.5-2.5 mIU/L (functional medicine optimal)",
+      whyItMatters:
+        "Subclinical hypothyroidism (TSH >2.5) causes brain fog, fatigue, poor focus, and memory issues that perfectly mimic ADHD. Thyroid hormones regulate neurotransmitter production, brain metabolism, and myelin formation. Many ADHD diagnoses are actually undiagnosed thyroid issues.",
+      improvements: [
+        "Get full thyroid panel (Free T3, Free T4, TPO antibodies) to assess true function",
+        "Check selenium and iodine levels (required for thyroid hormone production)",
+        "Reduce gluten if TPO antibodies positive (autoimmune thyroid)",
+        "Consider thyroid medication if Free T3/T4 are also low",
+      ],
+      historicalData: [
+        { date: "6mo", value: 3.5 },
+        { date: "3mo", value: 3.7 },
+        { date: "Now", value: 3.8 },
+      ],
+      trend: "stable",
+      correlations: [
+        { biomarker: "Energy Expenditure", impact: "Elevated TSH slows metabolism and reduces energy" },
+        { biomarker: "HRV", impact: "Thyroid dysfunction affects autonomic nervous system balance" },
+      ],
+      personalizedInsight:
+        "Your TSH at 3.8 is concerning - functional medicine considers >2.5 suboptimal. This level often causes cognitive symptoms that overlap with ADHD. Request a full thyroid panel including Free T3, Free T4, and TPO antibodies to rule out thyroid as a root cause.",
+      isClinical: true,
+      unit: "mIU/L",
+      optimalRange: { min: 0.5, max: 2.5 },
+    },
+    "Heart Rate Variability": {
+      value: "42 ms",
+      status: "Low",
+      color: "chart-1",
+      description:
+        "HRV measures the variation in time between heartbeats, reflecting your autonomic nervous system's ability to adapt to stress.",
+      normal: "50-100 ms (higher is better)",
+      whyItMatters:
+        "Research shows 85.5% accuracy in ADHD detection using HRV. Low HRV indicates higher stress and reduced autonomic flexibility, common in ADHD.",
+      improvements: [
+        "Practice deep breathing exercises (5-10 minutes daily)",
+        "Get consistent sleep (aim for 7-9 hours)",
+        "Reduce caffeine intake after 2pm",
+        "Try meditation or yoga",
+      ],
+      historicalData: [
+        { date: "Mon", value: 38 },
+        { date: "Tue", value: 40 },
+        { date: "Wed", value: 39 },
+        { date: "Thu", value: 42 },
+        { date: "Fri", value: 41 },
+        { date: "Sat", value: 45 },
+        { date: "Sun", value: 42 },
+      ],
+      trend: "improving",
+      correlations: [
+        { biomarker: "Sleep Efficiency", impact: "Your poor sleep (72%) is lowering your HRV by ~15%" },
+        { biomarker: "Step Variability", impact: "Irregular activity patterns correlate with low HRV" },
+      ],
+      personalizedInsight:
+        "Your HRV has improved 10% this week! Keep up your current sleep schedule and consider adding 10 minutes of morning meditation to push into the optimal range.",
+    },
+    "Sleep Efficiency": {
+      value: "72%",
+      status: "Fair",
+      color: "chart-2",
+      description:
+        "Sleep efficiency is the percentage of time you're actually asleep while in bed. It's calculated by dividing total sleep time by time in bed.",
+      normal: "85-95% (optimal range)",
+      whyItMatters:
+        "Poor sleep efficiency correlates with ADHD symptoms. Fragmented sleep reduces focus, increases impulsivity, and worsens executive function.",
+      improvements: [
+        "Maintain consistent sleep/wake times",
+        "Avoid screens 1 hour before bed",
+        "Keep bedroom cool (65-68°F)",
+        "Consider sleep restriction therapy",
+      ],
+      historicalData: [
+        { date: "Mon", value: 68 },
+        { date: "Tue", value: 70 },
+        { date: "Wed", value: 72 },
+        { date: "Thu", value: 71 },
+        { date: "Fri", value: 74 },
+        { date: "Sat", value: 73 },
+        { date: "Sun", value: 72 },
+      ],
+      trend: "improving",
+      correlations: [
+        { biomarker: "REM Sleep", impact: "Low REM (14%) suggests sleep fragmentation" },
+        { biomarker: "Respiratory Rate", impact: "Elevated breathing (18 bpm) may indicate sleep apnea" },
+      ],
+      personalizedInsight:
+        "You're spending too much time awake in bed. Try reducing your time in bed by 30 minutes to compress your sleep window and improve efficiency.",
+    },
+    "REM Sleep": {
+      value: "14%",
+      status: "Low",
+      color: "chart-1",
+      description:
+        "REM (Rapid Eye Movement) sleep is when most dreaming occurs and plays a critical role in memory consolidation and emotional regulation.",
+      normal: "20-25% of total sleep",
+      whyItMatters:
+        "ADHD research shows reduced REM sleep is linked to attention difficulties and emotional dysregulation. REM sleep is crucial for learning and memory.",
+      improvements: [
+        "Avoid alcohol before bed (suppresses REM)",
+        "Maintain regular sleep schedule",
+        "Address sleep apnea if present",
+        "Consider timing of stimulant medications",
+      ],
+      historicalData: [
+        { date: "Mon", value: 12 },
+        { date: "Tue", value: 13 },
+        { date: "Wed", value: 15 },
+        { date: "Thu", value: 14 },
+        { date: "Fri", value: 16 },
+        { date: "Sat", value: 15 },
+        { date: "Sun", value: 14 },
+      ],
+      trend: "stable",
+      correlations: [
+        { biomarker: "Sleep Efficiency", impact: "Improving efficiency will naturally increase REM %" },
+        { biomarker: "HRV", impact: "Low HRV suggests stress that may disrupt REM cycles" },
+      ],
+      personalizedInsight:
+        "Your REM sleep has been consistently low for 2 weeks. This may be medication-related if you take stimulants late in the day. Consider discussing timing with your doctor.",
+    },
+  }
+
+  const getHistoricalDataByPeriod = (baseData: { date: string; value: number }[]) => {
+    if (timePeriod === "daily") return baseData
+
+    if (timePeriod === "weekly") {
+      return [
+        { date: "Week 1", value: baseData[0]?.value || 20 },
+        { date: "Week 2", value: 22 },
+        { date: "Week 3", value: 24 },
+        { date: "Week 4", value: 26 },
+      ]
+    }
+
+    return [
+      { date: "Jan", value: baseData[0]?.value || 20 },
+      { date: "Feb", value: 22 },
+      { date: "Mar", value: 25 },
+    ]
+  }
+
+  const calculatePercentiles = (values: number[]) => {
+    const sorted = [...values].sort((a, b) => a - b)
+    const p25 = sorted[Math.floor(sorted.length * 0.25)]
+    const p75 = sorted[Math.floor(sorted.length * 0.75)]
+    return { p25, p75 }
+  }
+
+  const data = biomarkerData[biomarker] || biomarkerData["Heart Rate Variability"]
+  const historicalData = getHistoricalDataByPeriod(data.historicalData)
+  const percentiles = calculatePercentiles(data.historicalData.map((d) => d.value))
+
+  const maxValue =
+    data.isClinical && data.optimalRange
+      ? data.optimalRange.max * 1.2
+      : Math.max(...historicalData.map((d) => d.value)) * 1.1
+  const chartHeight = 140
+
+  const comparisonBiomarkers = [
+    { name: "Sleep Efficiency", color: "#8b5cf6" },
+    { name: "HRV", color: "#14b8a6" },
+    { name: "Ferritin", color: "#f59e0b" },
+    { name: "Magnesium", color: "#ec4899" },
+  ].filter((b) => b.name !== biomarker)
+
+  const toggleComparison = (name: string) => {
+    if (selectedComparisons.includes(name)) {
+      setSelectedComparisons(selectedComparisons.filter((b) => b !== name))
+    } else if (selectedComparisons.length < 2) {
+      setSelectedComparisons([...selectedComparisons, name])
+    }
+  }
+
+  return (
+    <View className="pb-24 min-h-screen bg-white">
+      <View
+        className={`${data.isClinical ? "bg-gradient-to-br from-purple-50 via-white to-white" : "bg-gradient-to-br from-teal-50 via-white to-white"} p-6 pb-8 border-b border-slate-200`}
+      >
+        <TouchableOpacity onPress={onBack} className="mb-6 text-teal-600 hover:underline flex items-center gap-2 font-semibold">
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back to My Data
+        </TouchableOpacity>
+
+        {data.isClinical && <Badge className="mb-3 bg-purple-100 text-purple-700 border-0">Clinical Blood Test</Badge>}
+
+        <Text className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4 tracking-tight">{biomarker}</Text>
+        <View
+          className={`flex items-end gap-4 mb-2 transition-all duration-700 ${valueAnimated ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+        >
+          <Text className="text-5xl sm:text-6xl font-bold text-slate-900">{data.value}</Text>
+          <Badge
+            className={`${
+              data.status === "Low"
+                ? "bg-red-100 text-red-700 border-0"
+                : data.status === "Borderline" || data.status === "Fair"
+                  ? "bg-orange-100 text-orange-700 border-0"
+                  : "bg-teal-100 text-teal-700 border-0"
+            } text-sm px-3 py-1.5 mb-2`}
+          >
+            {data.status}
+          </Badge>
+        </View>
+        {data.unit && <Text className="text-sm text-slate-600">Normal range: {data.normal}</Text>}
+      </View>
+
+      <View className="px-4 py-6 space-y-5 max-w-4xl mx-auto sm:px-6 lg:px-8">
+        <View className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-2xl p-6 border border-teal-200 shadow-sm">
+          <View className="flex items-start gap-4">
+            <View className="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center flex-shrink-0">
+              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </View>
+            <View className="flex-1">
+              <Text className="text-base font-bold text-slate-900 mb-2">Your Personalized Insight</Text>
+              <Text className="text-sm text-slate-700 leading-relaxed">{data.personalizedInsight}</Text>
+            </View>
+          </View>
+        </View>
+
+        <View className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+          <View className="flex gap-2">
+            {(["daily", "weekly", "monthly"] as const).map((period) => (
+              <TouchableOpacity
+                key={period}
+                onPress={() => setTimePeriod(period)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  timePeriod === period
+                    ? "bg-teal-600 text-white shadow-md"
+                    : "bg-white border border-slate-300 text-slate-700 hover:border-teal-600"
+                }`}
+              >
+                {period.charAt(0).toUpperCase() + period.slice(1)}
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          <TouchableOpacity
+            onPress={() => setComparisonMode(!comparisonMode)}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              comparisonMode
+                ? "bg-purple-600 text-white shadow-md"
+                : "bg-white border border-slate-300 text-slate-700 hover:border-purple-600"
+            }`}
+          >
+            {comparisonMode ? "✓ Compare Mode" : "+ Compare"}
+          </TouchableOpacity>
+        </View>
+
+        {comparisonMode && (
+          <View className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-5 border border-purple-200">
+            <Text className="text-sm font-semibold text-slate-900 mb-3">Select up to 2 biomarkers to compare</Text>
+            <View className="flex flex-wrap gap-2">
+              {comparisonBiomarkers.map((bio) => (
+                <TouchableOpacity
+                  key={bio.name}
+                  onPress={() => toggleComparison(bio.name)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    selectedComparisons.includes(bio.name)
+                      ? "bg-purple-600 text-white shadow-md"
+                      : "bg-white border border-slate-300 text-slate-700 hover:border-purple-600"
+                  }`}
+                  disabled={!selectedComparisons.includes(bio.name) && selectedComparisons.length >= 2}
+                >
+                  <View className="flex items-center gap-2">
+                    <View className="w-3 h-3 rounded-full" style={{ backgroundColor: bio.color }} />
+                    {bio.name}
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </View>
+            {selectedComparisons.length > 0 && (
+              <Text className="text-xs text-purple-700 mt-3">
+                Comparing {biomarker} with {selectedComparisons.join(" and ")} to find correlations
+              </Text>
+            )}
+          </View>
+        )}
+
+        <View className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <View className="flex items-center justify-between mb-5">
+            <Text className="text-lg font-bold text-slate-900">Trend Over Time</Text>
+            <Badge
+              className={`${
+                data.trend === "improving"
+                  ? "bg-teal-100 text-teal-700 border-0"
+                  : data.trend === "declining"
+                    ? "bg-red-100 text-red-700 border-0"
+                    : "bg-slate-100 text-slate-700 border-0"
+              } text-xs px-3 py-1`}
+            >
+              {data.trend === "improving" ? "↗ Improving" : data.trend === "declining" ? "↘ Declining" : "→ Stable"}
+            </Badge>
+          </View>
+
+          <View className="relative" style={{ height: chartHeight }}>
+            <svg width="100%" height={chartHeight} className="overflow-visible">
+              {!data.isClinical && (
+                <rect
+                  x="0"
+                  y={chartHeight - (percentiles.p75 / maxValue) * chartHeight}
+                  width="100%"
+                  height={((percentiles.p75 - percentiles.p25) / maxValue) * chartHeight}
+                  fill="#e0f2fe"
+                  opacity="0.5"
+                />
+              )}
+
+              {data.isClinical && data.optimalRange && (
+                <rect
+                  x="0"
+                  y={chartHeight - (data.optimalRange.max / maxValue) * chartHeight}
+                  width="100%"
+                  height={((data.optimalRange.max - data.optimalRange.min) / maxValue) * chartHeight}
+                  fill="#d1fae5"
+                  opacity="0.3"
+                />
+              )}
+
+              {[0, 0.25, 0.5, 0.75, 1].map((ratio, i) => (
+                <Viewne
+                  key={i}
+                  x1="0"
+                  y1={chartHeight * ratio}
+                  x2="100%"
+                  y2={chartHeight * ratio}
+                  stroke="#e5e7eb"
+                  strokeWidth="1"
+                  strokeDasharray="4,4"
+                />
+              ))}
+
+              {/* Main biomarker line */}
+              <polyline
+                points={historicalData
+                  .map((d, i) => {
+                    const x = (i / (historicalData.length - 1)) * 100
+                    const y = chartHeight - (d.value / maxValue) * chartHeight
+                    return `${x}%,${y}`
+                  })
+                  .join(" ")}
+                stroke={data.isClinical ? "#a855f7" : "#14b8a6"}
+                strokeWidth="3"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeDasharray={chartAnimated ? "0" : "1000"}
+                strokeDashoffset={chartAnimated ? "0" : "1000"}
+                className="transition-all duration-1500 ease-out"
+              />
+
+              {comparisonMode &&
+                selectedComparisons.map((compBio, idx) => {
+                  const compColor = comparisonBiomarkers.find((b) => b.name === compBio)?.color || "#888"
+                  return (
+                    <polyline
+                      key={compBio}
+                      points={historicalData
+                        .map((d, i) => {
+                          const x = (i / (historicalData.length - 1)) * 100
+                          const mockValue = d.value * (0.8 + idx * 0.2) // Mock comparison data
+                          const y = chartHeight - (mockValue / maxValue) * chartHeight
+                          return `${x}%,${y}`
+                        })
+                        .join(" ")}
+                      stroke={compColor}
+                      strokeWidth="2"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeDasharray={chartAnimated ? "0" : "1000"}
+                      strokeDashoffset={chartAnimated ? "0" : "1000"}
+                      opacity="0.7"
+                      className="transition-all duration-1500 ease-out"
+                      style={{ transitionDelay: `${(idx + 1) * 200}ms` }}
+                    />
+                  )
+                })}
+
+              {historicalData.map((d, i) => {
+                const x = (i / (historicalData.length - 1)) * 100
+                const y = chartHeight - (d.value / maxValue) * chartHeight
+                return (
+                  <g
+                    key={i}
+                    className={`transition-all duration-500 ${chartAnimated ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}
+                    style={{ transitionDelay: `${i * 100}ms` }}
+                  >
+                    <circle
+                      cx={`${x}%`}
+                      cy={y}
+                      r="5"
+                      fill={data.isClinical ? "#a855f7" : "#14b8a6"}
+                      stroke="white"
+                      strokeWidth="2"
+                    />
+                    <text x={`${x}%`} y={y - 12} textAnchor="middle" className="text-xs font-semibold fill-slate-700">
+                      {d.value}
+                    </text>
+                  </g>
+                )
+              })}
+            </svg>
+          </View>
+
+          <View className="flex justify-between mt-4 px-1">
+            {historicalData.map((d, i) => (
+              <Text key={i} className="text-xs text-slate-600 font-medium">
+                {d.date}
+              </Text>
+            ))}
+          </View>
+
+          <View className="mt-4 flex flex-col gap-2 text-xs text-slate-600">
+            {!data.isClinical && (
+              <View className="flex items-center gap-2">
+                <View className="w-4 h-4 bg-sky-100 rounded border border-sky-300" />
+                <Text>
+                  Your typical range: {percentiles.p25}-{percentiles.p75} (25th-75th percentile)
+                </Text>
+              </View>
+            )}
+            {data.isClinical && data.optimalRange && (
+              <View className="flex items-center gap-2">
+                <View className="w-4 h-4 bg-teal-100 rounded" />
+                <Text>
+                  Optimal range: {data.optimalRange.min}-{data.optimalRange.max} {data.unit}
+                </Text>
+              </View>
+            )}
+            {comparisonMode && selectedComparisons.length > 0 && (
+              <View className="flex flex-wrap gap-3 mt-2">
+                {selectedComparisons.map((compBio) => {
+                  const compColor = comparisonBiomarkers.find((b) => b.name === compBio)?.color || "#888"
+                  return (
+                    <View key={compBio} className="flex items-center gap-2">
+                      <View className="w-3 h-3 rounded-full" style={{ backgroundColor: compColor }} />
+                      <Text>{compBio}</Text>
+                    </View>
+                  )
+                })}
+              </View>
+            )}
+          </View>
+        </View>
+
+        <View className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <Text className="text-lg font-bold text-slate-900 mb-5">What's affecting this?</Text>
+          <View className="space-y-3">
+            {data.correlations.map((corr, index) => (
+              <View key={index} className="flex items-start gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <View className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-4 h-4 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </View>
+                <View className="flex-1">
+                  <Text className="text-sm font-semibold text-slate-900 mb-1.5">{corr.biomarker}</Text>
+                  <Text className="text-sm text-slate-600 leading-relaxed">{corr.impact}</Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        </View>
+
+        <View
+          className={`${data.isClinical ? "bg-gradient-to-r from-purple-50 to-purple-100/50" : "bg-gradient-to-r from-teal-50 to-teal-100/50"} rounded-2xl p-6 border ${data.isClinical ? "border-purple-200" : "border-teal-200"}`}
+        >
+          <Text className="text-lg font-bold text-slate-900 mb-3">Why it matters for ADHD</Text>
+          <Text className="text-sm text-slate-700 leading-relaxed">{data.whyItMatters}</Text>
+        </View>
+
+        <View className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <Text className="text-lg font-bold text-slate-900 mb-3">What is this?</Text>
+          <Text className="text-sm text-slate-600 leading-relaxed mb-4">{data.description}</Text>
+          <View className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+            <Text className="text-xs font-semibold text-slate-700 mb-1">Normal Range</Text>
+            <Text className="text-sm text-slate-900 font-semibold">{data.normal}</Text>
+          </View>
+        </View>
+
+        <View className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <Text className="text-lg font-bold text-slate-900 mb-5">How to improve</Text>
+          <View className="space-y-4">
+            {data.improvements.map((tip, index) => (
+              <View key={index} className="flex items-start gap-4">
+                <View className="w-8 h-8 rounded-full bg-teal-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Text className="text-sm font-bold text-white">{index + 1}</Text>
+                </View>
+                <Text className="text-sm text-slate-700 flex-1 leading-relaxed pt-1">{tip}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+
+        <TouchableOpacity className="w-full rounded-full bg-teal-600 hover:bg-teal-700 text-white h-12 font-semibold text-base shadow-lg">
+          Track Progress
+        </TouchableOpacity>
+
+        <TouchableOpacity className="w-full text-teal-600 hover:underline text-sm font-semibold flex items-center justify-center gap-1.5">
+          Read research studies
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </TouchableOpacity>
+      </View>
+    </View>
+  )
+}
