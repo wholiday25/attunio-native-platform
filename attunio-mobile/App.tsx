@@ -65,7 +65,7 @@ export default function App() {
     try {
       const user = await getCurrentUser();
       
-      // Check if user has completed onboarding
+      // User is authenticated - check their onboarding status
       const onboardingComplete = await AsyncStorage.getItem('onboarding_complete');
       const savedEmail = await AsyncStorage.getItem('user_email');
       
@@ -74,12 +74,15 @@ export default function App() {
       }
       
       if (onboardingComplete === 'true') {
+        // Existing user who completed onboarding - go to dashboard
         setAppState('dashboard');
       } else {
+        // New user or incomplete onboarding - go to onboarding
         setAppState('onboarding');
       }
     } catch (error) {
       console.log('Not authenticated:', error);
+      // No authenticated user - show login/signup
       setAppState('auth');
     }
   };
@@ -98,20 +101,24 @@ export default function App() {
 
   const handleSignUpSuccess = async (email: string) => {
     // After email verification via magic link, store email and go to onboarding
+    // New users always go through onboarding
     setUserEmail(email);
     await AsyncStorage.setItem('user_email', email);
+    await AsyncStorage.removeItem('onboarding_complete'); // Ensure they go through onboarding
     setAppState('onboarding');
   };
 
   const handleLoginSuccess = async (email: string) => {
-    // Check if they've completed onboarding
+    // Existing users: check if they've completed onboarding
     const onboardingComplete = await AsyncStorage.getItem('onboarding_complete');
     setUserEmail(email);
     await AsyncStorage.setItem('user_email', email);
     
     if (onboardingComplete === 'true') {
+      // Returning user - skip onboarding, go straight to dashboard
       setAppState('dashboard');
     } else {
+      // User created account but never completed onboarding - resume it
       setAppState('onboarding');
     }
   };
