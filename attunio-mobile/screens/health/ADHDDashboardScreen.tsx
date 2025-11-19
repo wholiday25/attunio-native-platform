@@ -1,0 +1,1698 @@
+// Optimized for React Native from web component
+// Some features may need manual implementation
+
+import { View, Text, TouchableOpacity, TextInput, Image, ScrollView, StyleSheet } from 'react-native';
+import { useState, useEffect } from "react"
+
+// Motion animations removed - use react-native-reanimated for animations
+// Confetti removed - use react-native-confetti-cannon if needed
+import { Ionicons, MaterialCommunityIcons, Feather } from "@expo/vector-icons"
+
+import { Ionicons, MaterialCommunityIcons, Feather } from "@expo/vector-icons"
+
+interface UserData {
+  userJourney: "diagnosed" | "exploring" | "monitoring"
+  acceptedTerms: boolean
+  connectedDevice: boolean
+  firstName?: string
+  email?: string
+}
+
+interface ADHDBiomarkerDashboardProps {
+  userData?: UserData | null
+}
+
+// ADHD Biomarker Types based on research
+type BiomarkerData = {
+  hrv: number // Heart Rate Variability (ms) - 85.5% accuracy
+  restingHeartRate: number // BPM
+  sedentaryTime: number // minutes per day
+  activeMinutes: number // minutes per day
+  sleepEfficiency: number // percentage
+  sleepLatency: number // minutes to fall asleep
+  waso: number // Wake After Sleep Onset (minutes)
+  totalSleepTime: number // hours
+  energyExpenditure: number // calories
+  // New ADHD-relevant biomarkers from research
+  remSleep: number // REM sleep percentage
+  deepSleep: number // Deep sleep percentage
+  lightSleep: number // Light sleep percentage
+  respiratoryRate: number // Breaths per minute
+  stepVariability: number // Coefficient of variation in daily steps
+  adhdRiskScore: number // 0-100 calculated risk score
+}
+
+export function ADHDBiomarkerDashboard({ userData }: ADHDBiomarkerDashboardProps) {
+  const [isConnected, setIsConnected] = useState(true)
+  const [biomarkers, setBiomarkers] = useState<BiomarkerData | null>(null)
+  const [dataState, setDataState] = useState<UserDataState | null>(null)
+  const [isMockData, setIsMockData] = useState(false)
+  const [selectedPeriod, setSelectedPeriod] = useState<"7d" | "14d" | "30d" | "90d">("7d")
+  const [activeTab, setActiveTab] = useState<"home" | "library" | "data" | "medications" | "labs" | "profile">("home")
+  const [selectedBiomarker, setSelectedBiomarker] = useState<string | null>(null)
+  const [selectedArticle, setSelectedArticle] = useState<string | null>(null)
+  const [additionalScreen, setAdditionalScreen] = useState<string | null>(null)
+  const [showDoctorConsultation, setShowDoctorConsultation] = useState(false)
+  const [showFeaturesModal, setShowFeaturesModal] = useState(false)
+
+  const [countersAnimated, setCountersAnimated] = useState(false)
+  const [pulseActive, setPulseActive] = useState(true)
+
+  const [showConfetti, setShowConfetti] = useState(false)
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
+  const [syncTimeText, setSyncTimeText] = useState("2s ago")
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [showCommandPalette, setShowCommandPalette] = useState(false)
+  const [isSyncing, setIsSyncing] = useState(false)
+  const { copied, copyToClipboard } = useCopyToClipboard()
+  const { toast } = useToast()
+
+  useEffect(() => {
+    const timer = setTimeout(() => setCountersAnimated(true), 300)
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    if (!isConnected) return
+    const interval = setInterval(() => {
+      setPulseActive((prev) => !prev)
+    }, 2000)
+    return () => clearInterval(interval)
+  }, [isConnected])
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight })
+    }
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+  useEffect(() => {
+    if (!isConnected) return
+    const times = ["2s ago", "5s ago", "8s ago", "3s ago"]
+    let index = 0
+    const interval = setInterval(() => {
+      index = (index + 1) % times.length
+      setSyncTimeText(times[index])
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [isConnected])
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1500)
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Transform API biomarker data to dashboard format
+  const transformBiomarkerData = (apiData: any[]): BiomarkerData | null => {
+    if (!apiData || apiData.length === 0) return null;
+
+    // Aggregate the latest biomarker readings
+    const latest = apiData[0]; // Most recent entry
+    const recent = apiData.slice(0, 7); // Last 7 days for averages
+
+    // Calculate averages from recent data
+    const avgHRV = recent.reduce((sum, d) => sum + (d.hrv || 0), 0) / recent.length || 0;
+    const avgRHR = recent.reduce((sum, d) => sum + (d.restingHeartRate || 0), 0) / recent.length || 0;
+    const avgSleep = recent.reduce((sum, d) => sum + (d.sleepEfficiency || 0), 0) / recent.length || 0;
+    const avgActive = recent.reduce((sum, d) => sum + (d.activeMinutes || 0), 0) / recent.length || 0;
+    const avgSteps = recent.reduce((sum, d) => sum + (d.steps || 0), 0) / recent.length || 0;
+
+    // Calculate step variability (CV) for ADHD correlation
+    const stepMean = avgSteps;
+    const stepVariance = recent.reduce((sum, d) => {
+      const diff = (d.steps || 0) - stepMean;
+      return sum + (diff * diff);
+    }, 0) / recent.length;
+    const stepCV = stepMean > 0 ? (Math.sqrt(stepVariance) / stepMean) * 100 : 0;
+
+    return {
+      hrv: Math.round(avgHRV),
+      restingHeartRate: Math.round(avgRHR),
+      sedentaryTime: 680, // TODO: Add to API when available
+      activeMinutes: Math.round(avgActive),
+      sleepEfficiency: Math.round(avgSleep),
+      sleepLatency: 30, // TODO: Add to API when available
+      waso: 45, // TODO: Add to API when available
+      totalSleepTime: latest.sleepDuration ? latest.sleepDuration / 60 : 7.2,
+      energyExpenditure: Math.round(avgSteps * 0.04 + avgActive * 5), // Rough estimate
+      remSleep: 18, // TODO: Add sleep stages to API
+      deepSleep: 16, // TODO: Add sleep stages to API
+      lightSleep: 66, // TODO: Add sleep stages to API
+      respiratoryRate: 16, // TODO: Add to API when available
+      stepVariability: Math.round(stepCV),
+      adhdRiskScore: calculateADHDRisk(avgHRV, avgSleep, avgRHR, stepCV),
+    };
+  };
+
+  // Calculate ADHD risk score from biomarkers
+  const calculateADHDRisk = (hrv: number, sleepEff: number, rhr: number, stepCV: number): number => {
+    let risk = 0;
+    
+    // Low HRV increases risk (optimal: 50-100ms)
+    if (hrv < 30) risk += 30;
+    else if (hrv < 40) risk += 20;
+    else if (hrv < 50) risk += 10;
+    
+    // Poor sleep increases risk (optimal: >85%)
+    if (sleepEff < 70) risk += 25;
+    else if (sleepEff < 80) risk += 15;
+    else if (sleepEff < 85) risk += 5;
+    
+    // Elevated RHR increases risk (optimal: 60-70)
+    if (rhr > 85) risk += 20;
+    else if (rhr > 75) risk += 10;
+    
+    // High step variability indicates inconsistent routine (optimal: <30%)
+    if (stepCV > 50) risk += 25;
+    else if (stepCV > 40) risk += 15;
+    else if (stepCV > 30) risk += 5;
+    
+    return Math.min(100, risk);
+  };
+
+  // Load user data status and biomarkers
+  useEffect(() => {
+    async function loadDataStatus() {
+      try {
+        const response = await fetch('/api/users/data-status');
+        
+        // If unauthorized or failed, fall back to showing sample data for demo
+        if (!response.ok) {
+          if (response.status === 401) {
+            console.log('[Dashboard] User not authenticated, showing demo data');
+          } else {
+            console.error('[Dashboard] Failed to fetch data status:', response.status);
+          }
+          // Show sample data as fallback
+          setBiomarkers(sampleData);
+          setIsMockData(true);
+          setDataState({
+            status: 'waiting-sync',
+            hasRealData: false,
+            showMockData: true,
+            canRequestLabs: false,
+            message: 'Connect your account to sync real data',
+          });
+          return;
+        }
+        
+        const data = await response.json();
+        setDataState(data.dataStatus);
+        
+        // Determine what data to show based on status
+        if (data.dataStatus.hasRealData) {
+          console.log('[Dashboard] Loading real biomarker data from API...');
+          
+          try {
+            // Fetch actual biomarker data
+            const biomarkerResponse = await fetch('/api/biomarkers/latest?days=7');
+            
+            if (biomarkerResponse.ok) {
+              const biomarkerData = await biomarkerResponse.json();
+              console.log('[Dashboard] ✅ Real biomarker data loaded:', biomarkerData);
+              
+              // Transform API data to dashboard format
+              const transformedData = transformBiomarkerData(biomarkerData.data);
+              
+              if (transformedData) {
+                setBiomarkers(transformedData);
+                setIsMockData(false);
+                console.log('[Dashboard] ✅ Using real user data');
+              } else {
+                console.log('[Dashboard] ⚠️ No biomarker data available, showing sample');
+                setBiomarkers(sampleData);
+                setIsMockData(true);
+              }
+            } else {
+              console.error('[Dashboard] ⚠️ Failed to fetch biomarkers, using sample data');
+              setBiomarkers(sampleData);
+              setIsMockData(true);
+            }
+          } catch (biomarkerError) {
+            console.error('[Dashboard] ⚠️ Error fetching biomarkers:', biomarkerError);
+            setBiomarkers(sampleData);
+            setIsMockData(true);
+          }
+        } else if (data.dataStatus.showMockData) {
+          console.log('[Dashboard] Showing mock data during waiting period');
+          setBiomarkers(sampleData);
+          setIsMockData(true);
+        } else {
+          console.log('[Dashboard] No data to show - empty state');
+          setBiomarkers(null);
+          setIsMockData(false);
+        }
+      } catch (error) {
+        console.error('[Dashboard] Error loading data status:', error);
+        // Show sample data as fallback on error
+        setBiomarkers(sampleData);
+        setIsMockData(true);
+      }
+    }
+    
+    loadDataStatus();
+  }, []);
+
+  useKeyboardShortcuts([
+    {
+      key: "k",
+      meta: true,
+      handler: () => setShowCommandPalette(true),
+    },
+    {
+      key: "1",
+      handler: () => setActiveTab("home"),
+    },
+    {
+      key: "2",
+      handler: () => setActiveTab("library"),
+    },
+    {
+      key: "3",
+      handler: () => setActiveTab("data"),
+    },
+    {
+      key: "4",
+      handler: () => setActiveTab("medications"),
+    },
+    {
+      key: "5",
+      handler: () => setActiveTab("labs"),
+    },
+    {
+      key: "6",
+      handler: () => setActiveTab("profile"),
+    },
+  ])
+
+  const sampleData: BiomarkerData = {
+    hrv: 42,
+    restingHeartRate: 78,
+    sedentaryTime: 680,
+    activeMinutes: 28,
+    sleepEfficiency: 72,
+    sleepLatency: 45,
+    waso: 65,
+    totalSleepTime: 5.8,
+    energyExpenditure: 1850,
+    remSleep: 14, // ADHD often shows reduced REM (normal: 20-25%)
+    deepSleep: 18, // Normal: 15-20%
+    lightSleep: 68, // Higher light sleep indicates fragmented sleep
+    respiratoryRate: 18, // Elevated (normal: 12-16) indicates stress/arousal
+    stepVariability: 47, // High variability (CV > 40%) indicates inconsistent activity
+    adhdRiskScore: 72,
+  }
+
+  const handleConnect = async () => {
+    setIsConnected(true)
+    setBiomarkers(sampleData)
+  }
+
+  const getRiskStatus = (score: number) => {
+    if (score >= 70) return { label: "High Risk", color: "text-chart-1" }
+    if (score >= 40) return { label: "Moderate", color: "text-chart-3" }
+    return { label: "Optimal", color: "text-primary" }
+  }
+
+  const risk = biomarkers ? getRiskStatus(biomarkers.adhdRiskScore) : null
+
+  const focusScore = biomarkers
+    ? calculateFocusScore({
+        hrv: biomarkers.hrv,
+        restingHeartRate: biomarkers.restingHeartRate,
+        sleepEfficiency: biomarkers.sleepEfficiency,
+        remSleep: biomarkers.remSleep,
+        deepSleep: biomarkers.deepSleep,
+        activeMinutes: biomarkers.activeMinutes,
+        stepVariability: biomarkers.stepVariability,
+        respiratoryRate: biomarkers.respiratoryRate,
+        waso: biomarkers.waso,
+        sleepLatency: biomarkers.sleepLatency,
+      })
+    : null
+
+  useEffect(() => {
+    if (focusScore && focusScore.score >= 80) {
+      setShowConfetti(true)
+      const timer = setTimeout(() => setShowConfetti(false), 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [focusScore])
+
+  const getPersonalizedMessage = () => {
+    if (!userData) return null
+
+    switch (userData.userJourney) {
+      case "exploring":
+        return {
+          title: "Building Your Case",
+          message:
+            "Track your patterns over 2-4 weeks, then share these insights with a healthcare provider to discuss potential ADHD diagnosis.",
+          icon: "/images/scanner-image.svg",
+        }
+      case "diagnosed":
+        return {
+          title: "Track Your Treatment",
+          message: "Monitor how medication, therapy, or lifestyle changes affect your biomarkers over time.",
+          icon: "/images/dashboard-01.svg",
+        }
+      case "monitoring":
+        return {
+          title: "Optimize Your Focus",
+          message: "Use these insights to improve sleep quality, reduce stress, and boost daily productivity.",
+          icon: "/images/icon-17.svg",
+        }
+    }
+  }
+
+  const personalizedMessage = getPersonalizedMessage()
+
+  const handleBiomarkerClick = (biomarker: string) => {
+    setSelectedBiomarker(biomarker)
+  }
+
+  const handleArticleClick = (article: string) => {
+    setSelectedArticle(article)
+  }
+
+  const handleBackFromBiomarker = () => {
+    setSelectedBiomarker(null)
+  }
+
+  const handleBackFromArticle = () => {
+    setSelectedArticle(null)
+  }
+
+  const handleNavigateToScreen = (screen: string) => {
+    setAdditionalScreen(screen)
+  }
+
+  const handleBackFromAdditionalScreen = () => {
+    setAdditionalScreen(null)
+  }
+
+  const getGreeting = () => {
+    const hour = new Date().getHours()
+    if (hour < 12) return "Good morning"
+    if (hour < 18) return "Good afternoon"
+    return "Good evening"
+  }
+
+  const getUserName = () => {
+    return "Alex" // This would come from user profile/auth in production
+  }
+
+  const yesterdayData = {
+    hrv: 39,
+    sleepEfficiency: 68,
+    restingHeartRate: 80,
+    activeMinutes: 24,
+  }
+
+  const getDelta = (current: number, yesterday: number) => {
+    const delta = ((current - yesterday) / yesterday) * 100
+    return {
+      value: Math.abs(delta).toFixed(0),
+      isPositive: delta > 0,
+      isImprovement:
+        // For metrics where higher is better
+        (current > yesterday && ["hrv", "sleepEfficiency", "activeMinutes"].includes("current")) ||
+        // For metrics where lower is better
+        (current < yesterday && ["restingHeartRate"].includes("current")),
+    }
+  }
+
+  const sparklineData = {
+    hrv: [38, 40, 39, 42, 45, 42, 44],
+    sleepEfficiency: [68, 70, 69, 72, 74, 71, 72],
+    restingHeartRate: [82, 80, 81, 78, 77, 79, 78],
+    activeMinutes: [22, 25, 24, 28, 30, 27, 28],
+  }
+
+  const handleCopyFocusScore = async () => {
+    if (!focusScore) return
+    const success = await copyToClipboard(`My Focus Score: ${focusScore.score}/100 - ${focusScore.level}`)
+    if (success) {
+      toast({
+        title: "Focus Score Copied! 🎉",
+        description: "You can now share your score with others.",
+        duration: 3000,
+      })
+    }
+  }
+
+  const handleExportData = () => {
+    if (!biomarkers) return
+
+    const data = {
+      focusScore: focusScore?.score,
+      biomarkers,
+      exportDate: new Date().toISOString(),
+      timestamp: Date.now(),
+    }
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: "application/json",
+    })
+
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `attunio-data-${Date.now()}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+
+    toast({
+      title: "Data Exported Successfully",
+      description: "Your health data has been downloaded as JSON.",
+      duration: 4000,
+    })
+  }
+
+  const handleSyncData = async () => {
+    if (isSyncing) return;
+    
+    setIsSyncing(true);
+    toast({
+      title: "Syncing device data...",
+      description: "Fetching latest data from Terra",
+      duration: 2000,
+    });
+    
+    try {
+      const response = await fetch('/api/terra/sync', {
+        method: 'POST',
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Sync failed');
+      }
+      
+      const result = await response.json();
+      
+      toast({
+        title: "Sync Complete! ✓",
+        description: `Updated ${result.biomarkersProcessed} biomarker entries`,
+        duration: 3000,
+      });
+      
+      // Refresh data status and reload biomarkers
+      const statusResponse = await fetch('/api/users/data-status');
+      if (statusResponse.ok) {
+        const data = await statusResponse.json();
+        setDataState(data.dataStatus);
+        
+        if (data.dataStatus.hasRealData) {
+          console.log('[Dashboard] Reloading biomarker data after sync...');
+          
+          // Fetch updated biomarker data
+          const biomarkerResponse = await fetch('/api/biomarkers/latest?days=7');
+          if (biomarkerResponse.ok) {
+            const biomarkerData = await biomarkerResponse.json();
+            const transformedData = transformBiomarkerData(biomarkerData.data);
+            
+            if (transformedData) {
+              setBiomarkers(transformedData);
+              setIsMockData(false);
+              console.log('[Dashboard] ✅ Biomarkers refreshed after sync');
+            }
+          }
+        }
+      }
+      
+    } catch (error: any) {
+      console.error('[Dashboard] Sync error:', error);
+      toast({
+        title: "Sync Failed",
+        description: error.message || "Could not sync data from Terra",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  console.log("[v0] Dashboard rendering, isConnected:", isConnected, "activeTab:", activeTab)
+
+  return (
+    <View className="min-h-screen bg-[#F8F7F4]">
+      {showConfetti && focusScore && focusScore.score >= 80 && (
+        {/* Confetti removed */}
+      )}
+
+      {isConnected && (
+        <Viewbar05 activeTab={activeTab} onTabChange={setActiveTab} userName={getUserName()} isDemoMode={true} />
+      )}
+
+      {!isConnected ? (
+        <View className="container mx-auto px-4 py-16">
+          <View className="max-w-5xl mx-auto space-y-12">
+            <View className="text-center space-y-6">
+              <Text className="text-5xl md:text-6xl font-bold text-foreground leading-tight tracking-tight">
+                Understand your ADHD <br />
+                <Text className="text-primary">with biomarker tracking</Text>
+              </Text>
+              <Text className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                Track research-validated metrics from your wearable device with up to 89% accuracy for ADHD prediction
+              </Text>
+            </View>
+
+            <View className="relative mx-auto max-w-sm aspect-[9/19] bg-card rounded-[3rem] border-8 border-border shadow-xl overflow-hidden">
+              <View className="absolute inset-0 bg-gradient-to-b from-background to-muted/20 p-6 overflow-y-auto">
+                <View className="space-y-6">
+                  <View>
+                    <Text className="text-xs text-muted-foreground uppercase tracking-wider mb-2">ADHD Risk Score</Text>
+                    <Text className="text-3xl font-bold text-foreground">Your biomarker panel</Text>
+                  </View>
+
+                  <View className="space-y-3">
+                    <View className="bg-card rounded-2xl p-4 border border-border shadow-sm flex items-center justify-between">
+                      <View>
+                        <Text className="text-sm text-muted-foreground mb-1">Heart Rate Variability</Text>
+                        <Text className="text-2xl font-bold text-foreground">
+                          42 <Text className="text-lg text-muted-foreground">ms</Text>
+                        </Text>
+                      </View>
+                      <View className="flex items-center gap-2">
+                        <Text className="text-sm font-medium text-chart-3">Monitor</Text>
+                        <View className="w-16 h-1.5 bg-muted rounded-full overflow-hidden">
+                          <View className="w-2/5 h-full bg-chart-3 rounded-full" />
+                        </View>
+                      </View>
+                    </View>
+
+                    <View className="bg-card rounded-2xl p-4 border border-border shadow-sm flex items-center justify-between">
+                      <View>
+                        <Text className="text-sm text-muted-foreground mb-1">Sleep Efficiency</Text>
+                        <Text className="text-2xl font-bold text-foreground">
+                          72 <Text className="text-lg text-muted-foreground">%</Text>
+                        </Text>
+                      </View>
+                      <View className="flex items-center gap-2">
+                        <Text className="text-sm font-medium text-chart-1">Low</Text>
+                        <View className="w-16 h-1.5 bg-muted rounded-full overflow-hidden">
+                          <View className="w-3/5 h-full bg-chart-1 rounded-full" />
+                        </View>
+                      </View>
+                    </View>
+
+                    <View className="bg-card rounded-2xl p-4 border border-border shadow-sm flex items-center justify-between">
+                      <View>
+                        <Text className="text-sm text-muted-foreground mb-1">Active Minutes</Text>
+                        <Text className="text-2xl font-bold text-foreground">
+                          28 <Text className="text-lg text-muted-foreground">min</Text>
+                        </Text>
+                      </View>
+                      <View className="flex items-center gap-2">
+                        <Text className="text-sm font-medium text-chart-1">Low</Text>
+                        <View className="w-16 h-1.5 bg-muted rounded-full overflow-hidden">
+                          <View className="w-1/3 h-full bg-chart-1 rounded-full" />
+                        </View>
+                      </View>
+                    </View>
+
+                    <View className="bg-card rounded-2xl p-4 border border-border shadow-sm flex items-center justify-between">
+                      <View>
+                        <Text className="text-sm text-muted-foreground mb-1">Resting Heart Rate</Text>
+                        <Text className="text-2xl font-bold text-foreground">
+                          78 <Text className="text-lg text-muted-foreground">bpm</Text>
+                        </Text>
+                      </View>
+                      <View className="flex items-center gap-2">
+                        <Text className="text-sm font-medium text-chart-2">In Range</Text>
+                        <View className="w-16 h-1.5 bg-muted rounded-full overflow-hidden">
+                          <View className="w-4/5 h-full bg-chart-2 rounded-full" />
+                        </View>
+                      </View>
+                    </View>
+
+                    {/* Added REM Sleep card to the preview */}
+                    <View className="bg-card rounded-2xl p-4 border border-border shadow-sm flex items-center justify-between">
+                      <View>
+                        <Text className="text-sm text-muted-foreground mb-1">REM Sleep</Text>
+                        <Text className="text-2xl font-bold text-foreground">
+                          14 <Text className="text-lg text-muted-foreground">%</Text>
+                        </Text>
+                      </View>
+                      <View className="flex items-center gap-2">
+                        <Text className="text-sm font-medium text-chart-1">Low</Text>
+                        <View className="w-16 h-1.5 bg-muted rounded-full overflow-hidden">
+                          <View className="w-1/2 h-full bg-chart-1 rounded-full" />
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+
+                  {/* Updated "3 OF 5 BIOMARKERS IN RANGE" to "2 OF 5 BIOMARKERS IN RANGE" */}
+                  <View className="text-center text-sm text-muted-foreground font-medium py-2 border-t border-border">
+                    2 OF 5 BIOMARKERS IN RANGE
+                  </View>
+                </View>
+              </View>
+            </View>
+
+            <View className="text-center space-y-6">
+              <TouchableOpacity
+                onPress={handleConnect}
+                size="lg"
+                className="h-14 px-10 text-base rounded-full bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all"
+              >
+                View Demo Dashboard
+              </TouchableOpacity>
+              <Text className="text-sm text-muted-foreground">
+                Supports Fitbit, Oura, Garmin, Apple Health, and 150+ devices
+              </Text>
+            </View>
+          </View>
+        </View>
+      ) : isLoading ? (
+        <View className="container mx-auto px-4 py-8 max-w-5xl">
+          <DashboardSkeleton />
+        </View>
+      ) : (
+        <View className="container mx-auto px-4 py-8 max-w-5xl">
+          {selectedBiomarker ? (
+            <BiomarkerDetailScreen biomarker={selectedBiomarker} onBack={handleBackFromBiomarker} />
+          ) : selectedArticle ? (
+            <TouchableOpacityrticleDetailScreen article={selectedArticle} onBack={handleBackFromArticle} />
+          ) : additionalScreen === "progress" ? (
+            <TextrogressTrackerScreen onBack={handleBackFromAdditionalScreen} />
+          ) : additionalScreen === "medications" || activeTab === "medications" ? (
+            <View>
+              {additionalScreen === "medications" && (
+                <TouchableOpacity
+                  onPress={handleBackFromAdditionalScreen}
+                  className="flex items-center gap-2 text-primary mb-4 hover:underline"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                  Back
+                </TouchableOpacity>
+              )}
+              <MedicationTrackingScreen />
+            </View>
+          ) : additionalScreen === "labs" || activeTab === "labs" ? (
+            <View>
+              {additionalScreen === "labs" && (
+                <TouchableOpacity
+                  onPress={handleBackFromAdditionalScreen}
+                  className="flex items-center gap-2 text-primary mb-4 hover:underline"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                  Back
+                </TouchableOpacity>
+              )}
+              <LabResultsScreen />
+            </View>
+          ) : additionalScreen === "transparency" ? (
+            <View>
+              <TouchableOpacity
+                onPress={handleBackFromAdditionalScreen}
+                className="flex items-center gap-2 text-primary mb-4 hover:underline"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Back
+              </TouchableOpacity>
+              <TransparencyScreen />
+            </View>
+          ) : additionalScreen === "glucose" ? (
+            <GlucoseTrackingScreen onBack={handleBackFromAdditionalScreen} />
+          ) : activeTab === "home" && !biomarkers ? (
+            // Empty state or waiting state based on data status
+            <PageTransition>
+              <View className="space-y-6">
+                <View className="mb-8">
+                  <Text className="text-3xl font-semibold text-foreground mb-2">Dashboard</Text>
+                  <Text className="text-muted-foreground">
+                    Welcome back, {userData?.firstName || "Alex"}
+                  </Text>
+                </View>
+
+                {/* Show status-specific message */}
+                {dataState?.status === 'waiting-sync' || dataState?.status === 'device-connected' ? (
+                  <View className="bg-blue-50 border border-blue-200 rounded-2xl p-6">
+                    <View className="flex items-start gap-4">
+                      <View className="flex-shrink-0">
+                        <Clock className="w-6 h-6 text-blue-600" />
+                      </View>
+                      <View className="flex-1">
+                        <Text className="font-semibold text-blue-900 mb-2">Syncing Your Data</Text>
+                        <Text className="text-sm text-blue-700 mb-3">{dataState.message}</Text>
+                        {dataState.estimatedReadyTime && (
+                          <Text className="text-xs text-blue-600">Expected ready: {dataState.estimatedReadyTime}</Text>
+                        )}
+                      </View>
+                    </View>
+                  </View>
+                ) : dataState?.status === 'lab-pending' || dataState?.status === 'lab-processing' ? (
+                  <View className="bg-purple-50 border border-purple-200 rounded-2xl p-6">
+                    <View className="flex items-start gap-4">
+                      <View className="flex-shrink-0">
+                        <TestTube className="w-6 h-6 text-purple-600" />
+                      </View>
+                      <View className="flex-1">
+                        <Text className="font-semibold text-purple-900 mb-2">
+                          {dataState.status === 'lab-pending' ? 'Lab Results Pending' : 'Processing Lab Results'}
+                        </Text>
+                        <Text className="text-sm text-purple-700 mb-3">{dataState.message}</Text>
+                        {dataState.estimatedReadyTime && (
+                          <Text className="text-xs text-purple-600">Expected: {dataState.estimatedReadyTime}</Text>
+                        )}
+                      </View>
+                    </View>
+                  </View>
+                ) : null}
+
+                <EmptyState 
+                  type="biomarker" 
+                  onAction={handleConnect}
+                />
+              </View>
+            </PageTransition>
+          ) : activeTab === "home" && focusScore && biomarkers ? (
+            <PageTransition>
+              <View className="space-y-6">
+                <View className="flex items-center justify-between mb-8">
+                  <View>
+                    <Text className="text-3xl font-semibold text-foreground mb-2">Dashboard</Text>
+                    <Text className="text-muted-foreground">
+                      Welcome back, {userData?.firstName || "Alex"}
+                    </Text>
+                  </View>
+                  <View className="flex items-center gap-3">
+                    {isMockData ? (
+                      <Badge variant="secondary" className="text-xs">
+                        Sample Data
+                      </Badge>
+                    ) : (
+                      <View className="flex items-center gap-2">
+                        <View
+                          className="w-2 h-2 rounded-full bg-emerald-500"
+                          animate={{ opacity: [1, 0.4, 1] }}
+                          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                        />
+                        <Text className="text-xs text-muted-foreground">Live</Text>
+                      </View>
+                    )}
+                    <TouchableOpacity
+                      size="sm"
+                      variant="outline"
+                      onPress={handleSyncData}
+                      disabled={isSyncing}
+                      className="h-9"
+                    >
+                      <RefreshCw className={`h-4 w-4 mr-2 ${isSyncing ? 'animate-spin' : ''}`} />
+                      Sync
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                {/* Key Metrics Cards */}
+                <View className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <View className="bg-white rounded-xl p-6 border border-slate-200">
+                    <View className="flex items-center justify-between mb-4">
+                      <Text className="text-sm text-muted-foreground">Focus Score</Text>
+                      <View className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                      </View>
+                    </View>
+                    <Text className="text-3xl font-bold text-foreground mb-1">
+                      <TouchableOpacitynimatedNumber value={focusScore.score} duration={1500} decimals={0} />
+                    </Text>
+                    <Text className="text-xs text-muted-foreground">{focusScore.level}</Text>
+                  </View>
+
+                  <View className="bg-white rounded-xl p-6 border border-slate-200">
+                    <View className="flex items-center justify-between mb-4">
+                      <Text className="text-sm text-muted-foreground">HRV</Text>
+                      <View className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+                        <svg className="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                      </View>
+                    </View>
+                    <Text className="text-3xl font-bold text-foreground mb-1">
+                      <TouchableOpacitynimatedNumber value={biomarkers.hrv} duration={1500} decimals={0} />
+                      <Text className="text-base text-muted-foreground ml-1">ms</Text>
+                    </Text>
+                    <Text className="text-xs text-muted-foreground">Heart rate variability</Text>
+                  </View>
+
+                  <View className="bg-white rounded-xl p-6 border border-slate-200">
+                    <View className="flex items-center justify-between mb-4">
+                      <Text className="text-sm text-muted-foreground">Sleep Quality</Text>
+                      <View className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center">
+                        <svg className="w-4 h-4 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                      </View>
+                    </View>
+                    <Text className="text-3xl font-bold text-foreground mb-1">
+                      <TouchableOpacitynimatedNumber value={biomarkers.sleepEfficiency} duration={1500} decimals={0} />
+                      <Text className="text-base text-muted-foreground ml-1">%</Text>
+                    </Text>
+                    <Text className="text-xs text-muted-foreground">Sleep efficiency</Text>
+                  </View>
+
+                  <View className="bg-white rounded-xl p-6 border border-slate-200">
+                    <View className="flex items-center justify-between mb-4">
+                      <Text className="text-sm text-muted-foreground">Activity</Text>
+                      <View className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
+                        <svg className="w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                      </View>
+                    </View>
+                    <Text className="text-3xl font-bold text-foreground mb-1">
+                      <TouchableOpacitynimatedNumber value={biomarkers.activeMinutes} duration={1500} decimals={0} />
+                      <Text className="text-base text-muted-foreground ml-1">min</Text>
+                    </Text>
+                    <Text className="text-xs text-muted-foreground">Active today</Text>
+                  </View>
+                </View>
+
+                {/* Priority Insights */}
+                <View className="bg-white rounded-xl border border-slate-200">
+                  <View className="flex items-center justify-between p-6 border-b border-slate-200">
+                    <Text className="text-lg font-semibold text-foreground">Priority Insights</Text>
+                    <TouchableOpacity className="text-sm text-primary hover:underline">View All →</TouchableOpacity>
+                  </View>
+                  <View className="p-6 space-y-4">
+                    <View className="flex items-start gap-4 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg">
+                      <View className="flex-shrink-0">
+                        <View className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+                          <svg className="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                          </svg>
+                        </View>
+                      </View>
+                      <View className="flex-1">
+                        <View className="flex items-center justify-between mb-1">
+                          <Text className="font-semibold text-foreground">REM Sleep Disruption</Text>
+                          <Text className="text-xs text-muted-foreground">2 hours ago</Text>
+                        </View>
+                        <Text className="text-sm text-muted-foreground">
+                          Your REM sleep is 14%, below optimal 20-25% range. This may affect attention and focus.
+                        </Text>
+                        <TouchableOpacity className="text-sm text-red-600 font-medium mt-2 hover:underline">
+                          Review Insights →
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+
+                    <View className="flex items-start gap-4 p-4 bg-amber-50 border-l-4 border-amber-500 rounded-lg">
+                      <View className="flex-shrink-0">
+                        <View className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
+                          <svg className="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </View>
+                      </View>
+                      <View className="flex-1">
+                        <View className="flex items-center justify-between mb-1">
+                          <Text className="font-semibold text-foreground">Activity Pattern Alert</Text>
+                          <Text className="text-xs text-muted-foreground">5 hours ago</Text>
+                        </View>
+                        <Text className="text-sm text-muted-foreground">
+                          Step variability is high (47% CV). Consider establishing a more consistent routine.
+                        </Text>
+                        <TouchableOpacity className="text-sm text-amber-600 font-medium mt-2 hover:underline">
+                          View Suggestions →
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+
+                {/* Focus Score Card with tooltips and copy */}
+                <View
+                  className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  {focusScore.score >= 80 && (
+                    <View
+                      className="mb-4 text-center"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                    >
+                      <Text className="text-lg font-bold text-teal-600">🎉 Excellent focus today!</Text>
+                    </View>
+                  )}
+
+                  <View className="flex items-center justify-between mb-6">
+                    <View>
+                      <Text className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2">
+                        Your Real-Time
+                      </Text>
+                      <BiomarkerTooltip term="focusScore">
+                        <Text className="text-4xl font-bold text-foreground">Focus Score</Text>
+                      </BiomarkerTooltip>
+                    </View>
+                    <View className="flex items-center gap-2">
+                      <Badge
+                        className={`text-base font-semibold px-4 py-2 border-0 ${
+                          focusScore.level === "Excellent"
+                            ? "bg-teal-600 text-white"
+                            : focusScore.level === "Good"
+                              ? "bg-teal-500 text-white"
+                              : focusScore.level === "Fair"
+                                ? "bg-teal-400 text-white"
+                                : "bg-teal-300 text-white"
+                        }`}
+                      >
+                        {focusScore.level}
+                      </Badge>
+                      <TouchableOpacity variant="ghost" size="sm" onPress={handleCopyFocusScore} className="gap-2">
+                        {copied ? (
+                          <>
+                            <CheckIcon className="w-4 h-4" /> Copied
+                          </>
+                        ) : (
+                          <>
+                            <CopyIcon className="w-4 h-4" /> Share
+                          </>
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+
+                  <View className="flex items-center gap-8 mb-6">
+                    <View className="relative">
+                      <View className="w-32 h-32 rounded-full bg-white border-4 border-teal-100 flex items-center justify-center">
+                        <View className="text-center">
+                          <Text className="text-5xl font-bold text-teal-600">
+                            <TouchableOpacitynimatedNumber value={focusScore.score} duration={1500} decimals={0} />
+                          </Text>
+                          <Text className="text-xs text-muted-foreground font-medium mt-1">out of 100</Text>
+                        </View>
+                      </View>
+                      <svg className="absolute inset-0 w-full h-full -rotate-90">
+                        <circle cx="50%" cy="50%" r="62" fill="none" stroke="#d1fae5" strokeWidth="4" />
+                        <View
+                          cx="50%"
+                          cy="50%"
+                          r="62"
+                          fill="none"
+                          stroke="#14b8a6"
+                          strokeWidth="4"
+                          strokeLinecap="round"
+                          strokeDasharray={`${2 * Math.PI * 62}`}
+                          initial={{ strokeDashoffset: `${2 * Math.PI * 62}` }}
+                          animate={{ strokeDashoffset: `${2 * Math.PI * 62 * (1 - focusScore.score / 100)}` }}
+                          transition={{ duration: 1.5, ease: "easeOut" }}
+                        />
+                      </svg>
+                    </View>
+
+                    <View className="flex-1 space-y-4">
+                      <View>
+                        <View className="flex items-center justify-between mb-2">
+                          <Text className="text-sm font-medium text-foreground">Sleep Quality</Text>
+                          <Text className="text-sm font-bold text-foreground">
+                            <TouchableOpacitynimatedNumber value={focusScore.contributing.sleep} duration={1500} decimals={0} />%
+                          </Text>
+                        </View>
+                        <View className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                          <View
+                            className="h-full bg-teal-600 rounded-full"
+                            initial={{ width: "0%" }}
+                            animate={{ width: `${focusScore.contributing.sleep}%` }}
+                            transition={{ duration: 1.5, ease: "easeOut" }}
+                          />
+                        </View>
+                      </View>
+
+                      <View>
+                        <View className="flex items-center justify-between mb-2">
+                          <Text className="text-sm font-medium text-foreground">Glucose Stability</Text>
+                          <Text className="text-sm font-bold text-foreground">68%</Text>
+                        </View>
+                        <View className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                          <View
+                            className="h-full bg-orange-500 rounded-full"
+                            initial={{ width: "0%" }}
+                            animate={{ width: "68%" }}
+                            transition={{ duration: 1.5, ease: "easeOut", delay: 0.1 }}
+                          />
+                        </View>
+                      </View>
+
+                      <View>
+                        <View className="flex items-center justify-between mb-2">
+                          <Text className="text-sm font-medium text-foreground">Activity Level</Text>
+                          <Text className="text-sm font-bold text-foreground">
+                            <TouchableOpacitynimatedNumber value={focusScore.contributing.activity} duration={1500} decimals={0} />%
+                          </Text>
+                        </View>
+                        <View className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                          <View
+                            className="h-full bg-teal-500 rounded-full"
+                            initial={{ width: "0%" }}
+                            animate={{ width: `${focusScore.contributing.activity}%` }}
+                            transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
+                          />
+                        </View>
+                      </View>
+
+                      <View>
+                        <View className="flex items-center justify-between mb-2">
+                          <Text className="text-sm font-medium text-foreground">Stress Management</Text>
+                          <Text className="text-sm font-bold text-foreground">
+                            <TouchableOpacitynimatedNumber value={focusScore.contributing.stress} duration={1500} decimals={0} />%
+                          </Text>
+                        </View>
+                        <View className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                          <View
+                            className="h-full bg-teal-700 rounded-full"
+                            initial={{ width: "0%" }}
+                            animate={{ width: `${focusScore.contributing.stress}%` }}
+                            transition={{ duration: 1.5, ease: "easeOut", delay: 0.3 }}
+                          />
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+
+                  {/* Focus Insights */}
+                  {focusScore.insights.length > 0 && (
+                    <View className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                      <Text className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                        Today's Focus Insights
+                      </Text>
+                      <View className="space-y-2">
+                        {focusScore.insights.map((insight, index) => (
+                          <View key={index} className="flex items-start gap-2 text-sm text-foreground/80">
+                            <View className="w-1.5 h-1.5 rounded-full bg-teal-600 mt-2 flex-shrink-0" />
+                            <Text>{insight}</Text>
+                          </View>
+                        ))}
+                      </View>
+                    </View>
+                  )}
+
+                  <View className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                    <View
+                      className={`w-1.5 h-1.5 rounded-full bg-emerald-500 transition-opacity duration-500 ${pulseActive ? "opacity-100" : "opacity-40"}`}
+                    />
+                    <Text>Updates in real-time based on your wearable data</Text>
+                  </View>
+                </View>
+
+                {/* AI-Powered Insights */}
+                {biomarkers && (
+                  <TouchableOpacityIInsightsPanel 
+                    biomarkers={{
+                      hrv: biomarkers.hrv,
+                      restingHeartRate: biomarkers.restingHeartRate,
+                      totalSleepTime: biomarkers.totalSleepTime,
+                      sleepEfficiency: biomarkers.sleepEfficiency,
+                      steps: 0, // Not in current biomarker data
+                      activeMinutes: biomarkers.activeMinutes,
+                    }}
+                  />
+                )}
+
+                <View className="bg-gradient-to-r from-teal-100 via-teal-50 to-white rounded-3xl p-6 border border-teal-100 shadow-sm">
+                  <View className="flex items-center justify-between mb-4">
+                    <View className="flex items-center gap-3">
+                      <Text className="text-lg font-semibold text-foreground">Insights</Text>
+                      {/* Updated badge count from 3 to 4 */}
+                      <Badge className="bg-teal-600 text-white border-0 rounded-full h-6 w-6 p-0 flex items-center justify-center text-xs">
+                        4
+                      </Badge>
+                    </View>
+                    <Text className="text-sm text-muted-foreground">Last 7 days</Text>
+                  </View>
+                  <View className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+                    <View className="flex items-start justify-between gap-4">
+                      <View className="flex-1">
+                        <View className="flex items-center gap-2 mb-2">
+                          <View className="w-1.5 h-1.5 rounded-full bg-teal-600" />
+                          {/* Updated insight title to "REM Sleep Disruption" */}
+                          <Text className="text-sm font-semibold text-foreground">REM Sleep Disruption</Text>
+                        </View>
+                        {/* Updated insight description to be specific to REM sleep */}
+                        <Text className="text-sm text-muted-foreground leading-relaxed">
+                          Your REM sleep is 14%, below the optimal 20-25% range. ADHD research shows REM sleep
+                          disruption correlates with attention difficulties.
+                        </Text>
+                      </View>
+                      <Text className="text-xs text-muted-foreground whitespace-nowrap">Yesterday</Text>
+                    </View>
+                    <TouchableOpacity className="text-primary text-sm font-medium mt-4 hover:underline flex items-center gap-1">
+                      View Details
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View
+                  onPress={() => handleNavigateToScreen("glucose")}
+                  className="bg-gradient-to-r from-orange-100 to-orange-50 rounded-3xl p-6 border border-orange-100 shadow-sm cursor-pointer hover:shadow-md transition-shadow"
+                >
+                  <View className="flex items-center justify-between mb-4">
+                    <View className="flex items-center gap-3">
+                      <View className="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center">
+                        <svg className="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <Textath
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13 10V3L4 14h7v7l9-11h-7z"
+                          />
+                        </svg>
+                      </View>
+                      <View>
+                        <Text className="text-sm font-semibold text-foreground">Glucose & Focus</Text>
+                        <Text className="text-xs text-muted-foreground">Track blood sugar impact on ADHD symptoms</Text>
+                      </View>
+                    </View>
+                    <Badge className="bg-orange-500/10 text-orange-600 border-0">New</Badge>
+                  </View>
+
+                  <View className="grid grid-cols-3 gap-3">
+                    <View className="bg-white rounded-lg p-3 border border-slate-200 shadow-sm">
+                      <Text className="text-xs text-muted-foreground mb-1">Current</Text>
+                      <Text className="text-xl font-bold text-foreground">95 mg/dL</Text>
+                    </View>
+                    <View className="bg-white rounded-lg p-3 border border-slate-200 shadow-sm">
+                      <Text className="text-xs text-muted-foreground mb-1">In Range</Text>
+                      <Text className="text-xl font-bold text-foreground">68%</Text>
+                    </View>
+                    <View className="bg-white rounded-lg p-3 border border-slate-200 shadow-sm">
+                      <Text className="text-xs text-muted-foreground mb-1">Variability</Text>
+                      <Text className="text-xl font-bold text-foreground">28 SD</Text>
+                    </View>
+                  </View>
+
+                  <TouchableOpacity className="text-orange-600 text-sm font-medium mt-4 hover:underline flex items-center gap-1">
+                    View Glucose Patterns
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </TouchableOpacity>
+                </View>
+
+                {/* Detailed Metrics Section */}
+                <View className="bg-white rounded-xl border border-slate-200">
+                  <View className="flex items-center justify-between p-6 border-b border-slate-200">
+                    <Text className="text-lg font-semibold text-foreground">Biomarker Trends</Text>
+                    <View className="flex gap-2">
+                      {(["7d", "14d", "30d", "90d"] as const).map((period) => (
+                        <TouchableOpacity
+                          key={period}
+                          onPress={() => setSelectedPeriod(period)}
+                          className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                            selectedPeriod === period
+                              ? "bg-primary text-white"
+                              : "text-muted-foreground hover:bg-slate-100"
+                          }`}
+                        >
+                          {period}
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  </View>
+
+                  <View className="p-6">
+                    <View className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {biomarkers && [
+                        {
+                          name: "Heart Rate Variability",
+                          value: biomarkers.hrv,
+                          unit: "ms",
+                          yesterday: yesterdayData.hrv,
+                          sparkline: sparklineData.hrv,
+                        },
+                        {
+                          name: "Sleep Efficiency",
+                          value: biomarkers.sleepEfficiency,
+                          unit: "%",
+                          yesterday: yesterdayData.sleepEfficiency,
+                          sparkline: sparklineData.sleepEfficiency,
+                        },
+                        {
+                          name: "Resting Heart Rate",
+                          value: biomarkers.restingHeartRate,
+                          unit: "bpm",
+                          yesterday: yesterdayData.restingHeartRate,
+                          sparkline: sparklineData.restingHeartRate,
+                        },
+                        {
+                          name: "Active Minutes",
+                          value: biomarkers.activeMinutes,
+                          unit: "min",
+                          yesterday: yesterdayData.activeMinutes,
+                          sparkline: sparklineData.activeMinutes,
+                        },
+                      ].map((item, index) => {
+                        const delta = getDelta(item.value, item.yesterday)
+                        return (
+                          <View
+                            key={item.name}
+                            className="bg-slate-50 rounded-lg p-5 hover:bg-slate-100 transition-colors cursor-pointer"
+                          >
+                            <View className="flex items-center justify-between mb-3">
+                              <Text className="text-sm text-muted-foreground font-medium">{item.name}</Text>
+                              <View className="flex items-center gap-1 text-xs">
+                                {delta.isPositive ? (
+                                  <TrendingUp
+                                    className={`w-3.5 h-3.5 ${delta.isImprovement ? "text-emerald-600" : "text-red-600"}`}
+                                  />
+                                ) : (
+                                  <TrendingDown
+                                    className={`w-3.5 h-3.5 ${delta.isImprovement ? "text-emerald-600" : "text-red-600"}`}
+                                  />
+                                )}
+                                <Text className={delta.isImprovement ? "text-emerald-600 font-medium" : "text-red-600 font-medium"}>
+                                  {delta.isPositive ? "+" : ""}
+                                  {delta.value}%
+                                </Text>
+                              </View>
+                            </View>
+                            <View className="flex items-end justify-between">
+                              <View>
+                                <Text className="text-3xl font-bold text-foreground">
+                                  <TouchableOpacitynimatedNumber value={item.value} duration={1500} decimals={0} />
+                                  <Text className="text-lg text-muted-foreground ml-1">{item.unit}</Text>
+                                </Text>
+                              </View>
+                              <Sparkline data={item.sparkline} color="#0ea5e9" />
+                            </View>
+                          </View>
+                        )
+                      })}
+                    </View>
+                  </View>
+                </View>
+
+                <View className="mt-8">
+                  <Text className="text-2xl font-bold mb-6 text-foreground">Sleep Architecture</Text>
+                  <View className="bg-white rounded-3xl p-8 border border-slate-200 shadow-lg">
+                    <View className="mb-6">
+                      <Text className="text-sm text-muted-foreground mb-4">Sleep stage distribution (ADHD-relevant)</Text>
+                      <View className="flex gap-2 h-12 rounded-xl overflow-hidden">
+                        <View
+                          className="bg-teal-600 flex items-center justify-center text-white text-sm font-bold"
+                          style={{ width: `${biomarkers.remSleep}%` }}
+                        >
+                          {biomarkers.remSleep}%
+                        </View>
+                        <View
+                          className="bg-teal-500 flex items-center justify-center text-white text-sm font-bold"
+                          style={{ width: `${biomarkers.deepSleep}%` }}
+                        >
+                          {biomarkers.deepSleep}%
+                        </View>
+                        <View
+                          className="bg-teal-400 flex items-center justify-center text-white text-sm font-bold"
+                          style={{ width: `${biomarkers.lightSleep}%` }}
+                        >
+                          {biomarkers.lightSleep}%
+                        </View>
+                      </View>
+                    </View>
+
+                    <View className="grid grid-cols-3 gap-6">
+                      <View className="text-center space-y-3">
+                        <View className="w-4 h-4 bg-teal-600 rounded-full mx-auto" />
+                        <View>
+                          <Text className="text-xs text-muted-foreground mb-1">REM Sleep</Text>
+                          <Text className="text-2xl font-bold text-foreground">{biomarkers.remSleep}%</Text>
+                        </View>
+                        <Badge className="bg-amber-600/10 text-amber-700 border-amber-600/20 text-xs whitespace-nowrap">
+                          Low
+                        </Badge>
+                        <Text className="text-xs text-muted-foreground">(Target: 20-25%)</Text>
+                      </View>
+                      <View className="text-center space-y-3">
+                        <View className="w-4 h-4 bg-teal-500 rounded-full mx-auto" />
+                        <View>
+                          <Text className="text-xs text-muted-foreground mb-1">Deep Sleep</Text>
+                          <Text className="text-2xl font-bold text-foreground">{biomarkers.deepSleep}%</Text>
+                        </View>
+                        <Badge className="bg-emerald-600/10 text-emerald-700 border-emerald-600/20 text-xs whitespace-nowrap">
+                          Good
+                        </Badge>
+                        <Text className="text-xs text-muted-foreground">(Target: 15-20%)</Text>
+                      </View>
+                      <View className="text-center space-y-3">
+                        <View className="w-4 h-4 bg-teal-400 rounded-full mx-auto" />
+                        <View>
+                          <Text className="text-xs text-muted-foreground mb-1">Light Sleep</Text>
+                          <Text className="text-2xl font-bold text-foreground">{biomarkers.lightSleep}%</Text>
+                        </View>
+                        <Badge className="bg-orange-600/10 text-orange-700 border-orange-600/20 text-xs whitespace-nowrap">
+                          High
+                        </Badge>
+                        <Text className="text-xs text-muted-foreground">(Target: 50-60%)</Text>
+                      </View>
+                    </View>
+
+                    <View className="mt-6 bg-slate-50 rounded-xl p-4 border border-slate-200">
+                      <Text className="text-sm text-foreground/80 leading-relaxed">
+                        Research shows individuals with ADHD often have reduced REM sleep and higher light sleep
+                        percentages, indicating fragmented sleep architecture that may contribute to daytime symptoms.
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+
+                <View className="bg-white rounded-3xl p-8 border border-slate-200 shadow-lg mt-8">
+                  <View className="flex items-center justify-between mb-8">
+                    <View>
+                      <Text className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2">
+                        Focus Pattern Assessment
+                      </Text>
+                      <Text className="text-3xl font-bold text-foreground">Pattern Score</Text>
+                    </View>
+                    {risk && (
+                      <Badge className={`${risk.color} text-base font-semibold px-4 py-2 border-0 bg-${risk.color}/10`}>
+                        {risk.label}
+                      </Badge>
+                    )}
+                  </View>
+
+                  <View className="flex items-center justify-center py-8">
+                    <View className="relative w-56 h-56">
+                      <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="40"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="6"
+                          className="text-slate-200"
+                        />
+                        <View
+                          cx="50"
+                          cy="50"
+                          r="40"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="6"
+                          strokeLinecap="round"
+                          strokeDasharray={`${2 * Math.PI * 40}`}
+                          initial={{ strokeDashoffset: `${2 * Math.PI * 40}` }}
+                          animate={{
+                            strokeDashoffset: `${2 * Math.PI * 40 * (1 - (countersAnimated ? biomarkers.adhdRiskScore / 100 : 0))}`,
+                          }}
+                          transition={{ duration: 1.5, ease: "easeOut" }}
+                          className={`text-${risk?.color || "teal"}-600`}
+                        />
+                      </svg>
+                      <View className="absolute inset-0 flex flex-col items-center justify-center">
+                        <Text className="text-6xl font-bold text-foreground">
+                          <TouchableOpacitynimatedNumber value={biomarkers.adhdRiskScore} duration={1500} decimals={0} />
+                        </Text>
+                        <Text className="text-base text-muted-foreground font-medium mt-1">Risk Score</Text>
+                      </View>
+                    </View>
+                  </View>
+
+                  <View className="space-y-4 mt-8 bg-slate-50 rounded-xl p-5 border border-slate-200">
+                    <Text className="text-sm text-foreground leading-relaxed">
+                      Your pattern score analyzes biomarkers associated with ADHD symptoms. This uses Random Forest ML
+                      with 89% research accuracy. <strong>This is not a diagnostic tool.</strong>
+                    </Text>
+                    <TouchableOpacity className="text-primary text-sm font-semibold hover:underline flex items-center gap-1">
+                      Learn more about methodology
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View className="mt-8">
+                  <Text className="text-2xl font-bold mb-6 text-foreground">Additional Biomarkers</Text>
+                  <View className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <View className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                      <View className="flex items-center justify-between">
+                        <View className="flex-1">
+                          <Text className="text-sm text-muted-foreground mb-2 font-medium">Respiratory Rate</Text>
+                          <Text className="text-3xl font-bold text-foreground">
+                            {biomarkers.respiratoryRate}{" "}
+                            <Text className="text-lg text-muted-foreground font-normal">bpm</Text>
+                          </Text>
+                          <Text className="text-xs text-muted-foreground mt-2">Elevated rate indicates stress/arousal</Text>
+                        </View>
+                        <View className="flex items-center gap-3">
+                          <Badge className="bg-orange-600/10 text-orange-600 border-orange-600/20">Elevated</Badge>
+                          <svg
+                            className="w-5 h-5 text-muted-foreground"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </View>
+                      </View>
+                    </View>
+
+                    <View className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                      <View className="flex items-center justify-between">
+                        <View className="flex-1">
+                          <Text className="text-sm text-muted-foreground mb-2 font-medium">Step Variability</Text>
+                          <Text className="text-3xl font-bold text-foreground">
+                            {biomarkers.stepVariability}{" "}
+                            <Text className="text-lg text-muted-foreground font-normal">CV%</Text>
+                          </Text>
+                          <Text className="text-xs text-muted-foreground mt-2">
+                            High variability indicates erratic patterns
+                          </Text>
+                        </View>
+                        <View className="flex items-center gap-3">
+                          <Badge className="bg-red-600/10 text-red-600 border-red-600/20">High</Badge>
+                          <svg
+                            className="w-5 h-5 text-muted-foreground"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </View>
+                      </View>
+                    </View>
+
+                    <View className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                      <View className="flex items-center justify-between">
+                        <View className="flex-1">
+                          <Text className="text-sm text-muted-foreground mb-2 font-medium">
+                            WASO (Wake After Sleep Onset)
+                          </Text>
+                          <Text className="text-3xl font-bold text-foreground">
+                            {biomarkers.waso} <Text className="text-lg text-muted-foreground font-normal">min</Text>
+                          </Text>
+                          <Text className="text-xs text-muted-foreground mt-2">Sleep fragmentation indicator</Text>
+                        </View>
+                        <View className="flex items-center gap-3">
+                          <Badge className="bg-orange-600/10 text-orange-600 border-orange-600/20">Monitor</Badge>
+                          <svg
+                            className="w-5 h-5 text-muted-foreground"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </View>
+                      </View>
+                    </View>
+
+                    <View className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                      <View className="flex items-center justify-between">
+                        <View className="flex-1">
+                          <Text className="text-sm text-muted-foreground mb-2 font-medium">Sleep Latency</Text>
+                          <Text className="text-3xl font-bold text-foreground">
+                            {biomarkers.sleepLatency}{" "}
+                            <Text className="text-lg text-muted-foreground font-normal">min</Text>
+                          </Text>
+                          <Text className="text-xs text-muted-foreground mt-2">Time to fall asleep</Text>
+                        </View>
+                        <View className="flex items-center gap-3">
+                          <Badge className="bg-red-600/10 text-red-600 border-red-600/20">Elevated</Badge>
+                          <svg
+                            className="w-5 h-5 text-muted-foreground"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                          </svg>
+                        </View>
+                      </View>
+                    </View>
+
+                    <View className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                      <View className="flex items-center justify-between">
+                        <View className="flex-1">
+                          <Text className="text-sm text-muted-foreground mb-2 font-medium">Total Sleep Time</Text>
+                          <Text className="text-3xl font-bold text-foreground">
+                            {biomarkers.totalSleepTime}{" "}
+                            <Text className="text-lg text-muted-foreground font-normal">hrs</Text>
+                          </Text>
+                          <Text className="text-xs text-muted-foreground mt-2">Target: 7-9 hours</Text>
+                        </View>
+                        <View className="flex items-center gap-3">
+                          <Badge className="bg-red-600/10 text-red-600 border-red-600/20">Low</Badge>
+                          <svg
+                            className="w-5 h-5 text-muted-foreground"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </View>
+                      </View>
+                    </View>
+
+                    <View className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                      <View className="flex items-center justify-between">
+                        <View className="flex-1">
+                          <Text className="text-sm text-muted-foreground mb-2 font-medium">Sedentary Time</Text>
+                          <Text className="text-3xl font-bold text-foreground">
+                            {Math.floor(biomarkers.sedentaryTime / 60)}h {biomarkers.sedentaryTime % 60}m
+                          </Text>
+                          <Text className="text-xs text-muted-foreground mt-2">Target: Less than 8 hours</Text>
+                        </View>
+                        <View className="flex items-center gap-3">
+                          <Badge className="bg-red-600/10 text-red-600 border-red-600/20">High</Badge>
+                          <svg
+                            className="w-5 h-5 text-muted-foreground"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+
+                <View className="bg-teal-50 rounded-3xl p-8 border border-teal-100 mt-8">
+                  <View className="flex items-start gap-4">
+                    <View className="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <Textath
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </View>
+                    <View className="flex-1">
+                      <Text className="text-base font-bold text-foreground mb-3">Research-Validated Biomarkers</Text>
+                      <Text className="text-sm text-foreground/80 leading-relaxed mb-4">
+                        This assessment tracks validated biomarkers from peer-reviewed studies. Consumer wearables
+                        provide directional insights, not clinical measurements.
+                      </Text>
+                      <View className="space-y-2.5">
+                        <View className="flex items-start gap-3 text-sm text-foreground/70">
+                          <View className="w-1.5 h-1.5 rounded-full bg-teal-600 mt-2 flex-shrink-0" />
+                          <Text>Random Forest ML classifier: 89% accuracy (0.95 AUC) using Fitbit data</Text>
+                        </View>
+                        <View className="flex items-start gap-3 text-sm text-foreground/70">
+                          <View className="w-1.5 h-1.5 rounded-full bg-teal-600 mt-2 flex-shrink-0" />
+                          <Text>HRV multiparametric model: 85.5% accuracy discriminating ADHD</Text>
+                        </View>
+                        {/* Updated research validation text */}
+                        <View className="flex items-start gap-3 text-sm text-foreground/70">
+                          <View className="w-1.5 h-1.5 rounded-full bg-teal-600 mt-2 flex-shrink-0" />
+                          <Text>Sleep architecture and REM disruption linked to ADHD symptoms</Text>
+                        </View>
+                        {/* Added new research validation point */}
+                        <View className="flex items-start gap-3 text-sm text-foreground/70">
+                          <View className="w-1.5 h-1.5 rounded-full bg-teal-600 mt-2 flex-shrink-0" />
+                          <Text>Step variability and respiratory rate indicate stress and movement patterns</Text>
+                        </View>
+                      </View>
+                      <TouchableOpacity
+                        onPress={() => handleNavigateToScreen("transparency")}
+                        className="text-teal-600 text-sm font-semibold hover:underline flex items-center gap-1 mt-4"
+                      >
+                        View full methodology & limitations
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <Textath strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </PageTransition>
+          ) : activeTab === "library" ? (
+            <PageTransition>
+              <ViewbraryScreen onLearnMore={handleArticleClick} />
+            </PageTransition>
+          ) : activeTab === "data" ? (
+            <PageTransition>
+              {!biomarkers ? (
+                <EmptyState 
+                  type="data" 
+                  onAction={() => setActiveTab("home")}
+                />
+              ) : (
+                <MyDataScreen
+                  onBiomarkerClick={handleBiomarkerClick}
+                  onScheduleDoctorReview={() => setShowDoctorConsultation(true)}
+                />
+              )}
+            </PageTransition>
+          ) : activeTab === "profile" ? (
+            <PageTransition>
+              <TextrofileScreen onNavigate={handleNavigateToScreen} />
+            </PageTransition>
+          ) : null}
+        </View>
+      )}
+
+      <DoctorConsultationModal isOpen={showDoctorConsultation} onClose={() => setShowDoctorConsultation(false)} />
+
+      <FeaturesModal
+        isOpen={showFeaturesModal}
+        onClose={() => setShowFeaturesModal(false)}
+        onSelectFeature={(feature) => handleNavigateToScreen(feature)}
+      />
+
+      <CommandPalette
+        open={showCommandPalette}
+        setOpen={setShowCommandPalette}
+        onNavigate={(tab) => setActiveTab(tab as any)}
+        onAction={(action) => {
+          if (action === "sync") handleSyncData()
+          if (action === "export") handleExportData()
+          if (action === "doctor") setShowDoctorConsultation(true)
+          if (action === "medications") handleNavigateToScreen("medications")
+          if (action === "hrv") handleBiomarkerClick("Heart Rate Variability")
+          if (action === "sleep") handleBiomarkerClick("Sleep Efficiency")
+          if (action === "activity") handleBiomarkerClick("Active Minutes")
+        }}
+      />
+    </View>
+  )
+}

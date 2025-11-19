@@ -9,6 +9,7 @@ import { getCurrentUser } from 'aws-amplify/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { LoadingSpinner } from './components/LoadingSpinner';
+import { RootStackParamList } from './types/navigation';
 
 // Configure AWS Amplify
 try {
@@ -24,8 +25,28 @@ import DashboardScreen from './screens/dashboard/DashboardScreen';
 import LoginScreen from './screens/auth/LoginScreen';
 import SignUpScreen from './screens/auth/SignUpScreen';
 import OnboardingFlow from './screens/onboarding/OnboardingFlow';
+import LibraryScreen from './screens/LibraryScreen';
+import MoreScreen from './screens/MoreScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
-const Stack = createNativeStackNavigator();
+// Health Screens
+import ADHDDashboardScreen from './screens/health/ADHDDashboardScreen';
+import BiomarkerDetailScreen from './screens/health/BiomarkerDetailScreen';
+import GlucoseTrackingScreen from './screens/health/GlucoseTrackingScreen';
+import LabResultsScreen from './screens/health/LabResultsScreen';
+import MedicationTrackingScreen from './screens/health/MedicationTrackingScreen';
+import MyDataScreen from './screens/health/MyDataScreen';
+import ProgressTrackerScreen from './screens/health/ProgressTrackerScreen';
+import TreatmentPlanScreen from './screens/health/TreatmentPlanScreen';
+
+// Content Screens
+import ArticleDetailScreen from './screens/content/ArticleDetailScreen';
+import TransparencyScreen from './screens/content/TransparencyScreen';
+
+// Settings Screens
+import CheckoutScreen from './screens/settings/CheckoutScreen';
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 type AppState = 'splash' | 'loading' | 'auth' | 'onboarding' | 'dashboard';
 
@@ -104,7 +125,29 @@ export default function App() {
               {(props) => <OnboardingFlow {...props} onComplete={handleOnboardingComplete} />}
             </Stack.Screen>
           ) : (
-            <Stack.Screen name="Dashboard" component={DashboardScreen} />
+            <>
+              <Stack.Screen name="Dashboard" component={DashboardScreen} />
+              <Stack.Screen name="Library" component={LibraryScreen} />
+              <Stack.Screen name="More" component={MoreScreen} />
+              <Stack.Screen name="Profile" component={ProfileScreen} />
+              
+              {/* Health Screens */}
+              <Stack.Screen name="ADHDDashboard" component={ADHDDashboardScreen} />
+              <Stack.Screen name="BiomarkerDetail" component={BiomarkerDetailScreen} />
+              <Stack.Screen name="GlucoseTracking" component={GlucoseTrackingScreen} />
+              <Stack.Screen name="LabResults" component={LabResultsScreen} />
+              <Stack.Screen name="MedicationTracking" component={MedicationTrackingScreen} />
+              <Stack.Screen name="MyData" component={MyDataScreen} />
+              <Stack.Screen name="ProgressTracker" component={ProgressTrackerScreen} />
+              <Stack.Screen name="TreatmentPlan" component={TreatmentPlanScreen} />
+              
+              {/* Content Screens */}
+              <Stack.Screen name="ArticleDetail" component={ArticleDetailScreen} />
+              <Stack.Screen name="Transparency" component={TransparencyScreen} />
+              
+              {/* Settings Screens */}
+              <Stack.Screen name="Checkout" component={CheckoutScreen} />
+            </>
           )}
         </Stack.Navigator>
       </NavigationContainer>
