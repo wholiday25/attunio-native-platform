@@ -22,14 +22,13 @@ interface SignUpScreenProps {
 
 export default function SignUpScreen({ navigation, onSignUpSuccess }: SignUpScreenProps) {
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmationCode, setConfirmationCode] = useState('');
 
   const handleSignUp = async () => {
-    if (!email || !name) {
-      Alert.alert('Error', 'Please enter your name and email');
+    if (!email) {
+      Alert.alert('Error', 'Please enter your email');
       return;
     }
 
@@ -49,7 +48,6 @@ export default function SignUpScreen({ navigation, onSignUpSuccess }: SignUpScre
         options: {
           userAttributes: {
             email: email.toLowerCase().trim(),
-            name,
           },
           autoSignIn: true, // Enable auto sign-in after confirmation
         },
@@ -185,7 +183,7 @@ export default function SignUpScreen({ navigation, onSignUpSuccess }: SignUpScre
         >
           <View className="flex-1 px-6 justify-center py-8">
             {/* Header */}
-            <View className="items-center mb-8">
+            <View className="items-center mb-12">
               <Image
                 source={require('../../assets/attunio-logo.png')}
                 className="w-32 h-32 mb-4"
@@ -203,20 +201,8 @@ export default function SignUpScreen({ navigation, onSignUpSuccess }: SignUpScre
             </View>
 
             {/* Sign Up Form */}
-            <View className="mb-4">
-              <Text className="text-gray-700 font-semibold mb-2">Full Name</Text>
-              <TextInput
-                className="bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-gray-900"
-                placeholder="Enter your name"
-                value={name}
-                onChangeText={setName}
-                autoCapitalize="words"
-                editable={!isLoading}
-              />
-            </View>
-
             <View className="mb-6">
-              <Text className="text-gray-700 font-semibold mb-2">Email</Text>
+              <Text className="text-gray-700 font-semibold mb-2">Email Address</Text>
               <TextInput
                 className="bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-gray-900"
                 placeholder="Enter your email"
