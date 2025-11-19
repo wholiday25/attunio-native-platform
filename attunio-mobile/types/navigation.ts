@@ -9,7 +9,7 @@ export type RootStackParamList = {
   SignUp: undefined;
   
   // Onboarding Flow
-  Onboarding: undefined;
+  Onboarding: { userEmail?: string };
   
   // Main App
   Dashboard: undefined;
@@ -32,7 +32,7 @@ export type RootStackParamList = {
   Transparency: undefined;
   
   // Settings Screens
-  Checkout: undefined;
+  Checkout: { userEmail?: string };
 };
 
 declare global {

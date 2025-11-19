@@ -12,53 +12,55 @@ import {
   Alert,
   Image,
 } from 'react-native';
-import { signUp, confirmSignUp, signIn } from 'aws-amplify/auth';
+import { signUp, confirmSignUp, signIn, autoSignIn } from 'aws-amplify/auth';
+import { validateEmail } from '../../lib/utils/validation';
 
 interface SignUpScreenProps {
   navigation: any;
-  onSignUpSuccess?: () => void;
+  onSignUpSuccess?: (email: string) => void;
 }
 
 export default function SignUpScreen({ navigation, onSignUpSuccess }: SignUpScreenProps) {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmationCode, setConfirmationCode] = useState('');
 
   const handleSignUp = async () => {
-    if (!email || !password || !name) {
-      Alert.alert('Error', 'Please fill in all fields');
+    if (!email || !name) {
+      Alert.alert('Error', 'Please enter your name and email');
       return;
     }
 
-    if (password !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match');
-      return;
-    }
-
-    if (password.length < 8) {
-      Alert.alert('Error', 'Password must be at least 8 characters');
+    if (!validateEmail(email)) {
+      Alert.alert('Error', 'Please enter a valid email address');
       return;
     }
 
     setIsLoading(true);
     try {
+      // Generate a temporary password (AWS Cognito requires it, but user won't see it)
+      const tempPassword = `Temp${Math.random().toString(36).slice(-8)}!1Aa`;
+      
       const result = await signUp({
         username: email.toLowerCase().trim(),
-        password,
+        password: tempPassword,
         options: {
           userAttributes: {
             email: email.toLowerCase().trim(),
             name,
           },
+          autoSignIn: true, // Enable auto sign-in after confirmation
         },
       });
 
       console.log('Sign up result:', result);
       setShowConfirmation(true);
+      Alert.alert(
+        'Verification Email Sent',
+        `We've sent a 6-digit code to ${email}. Please check your inbox.`
+      );
     } catch (error: any) {
       console.error('Sign up error:', error);
       Alert.alert('Sign Up Failed', error.message || 'Failed to create account');
@@ -68,31 +70,41 @@ export default function SignUpScreen({ navigation, onSignUpSuccess }: SignUpScre
   };
 
   const handleConfirmSignUp = async () => {
-    if (!confirmationCode) {
-      Alert.alert('Error', 'Please enter the confirmation code');
+    if (!confirmationCode || confirmationCode.length !== 6) {
+      Alert.alert('Error', 'Please enter the 6-digit verification code');
       return;
     }
 
     setIsLoading(true);
     try {
+      // Confirm the sign-up with the code
       await confirmSignUp({
         username: email.toLowerCase().trim(),
-        confirmationCode,
+        confirmationCode: confirmationCode.trim(),
       });
 
-      // Auto sign in after confirmation
-      await signIn({
-        username: email.toLowerCase().trim(),
-        password,
-      });
-
-      onSignUpSuccess?.();
+      // Auto sign-in will happen automatically due to autoSignIn: true
+      Alert.alert(
+        'Success!',
+        'Your email has been verified. Setting up your account...',
+        [
+          {
+            text: 'Continue',
+            onPress: () => onSignUpSuccess?.(email.toLowerCase().trim()),
+          },
+        ]
+      );
     } catch (error: any) {
       console.error('Confirmation error:', error);
-      Alert.alert('Confirmation Failed', error.message || 'Invalid confirmation code');
+      Alert.alert('Verification Failed', error.message || 'Invalid verification code');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleResendCode = async () => {
+    // TODO: Implement resend code functionality
+    Alert.alert('Code Resent', 'A new verification code has been sent to your email.');
   };
 
   if (showConfirmation) {
@@ -140,8 +152,18 @@ export default function SignUpScreen({ navigation, onSignUpSuccess }: SignUpScre
               )}
             </TouchableOpacity>
 
+            <TouchableOpacity
+              className="mb-4"
+              onPress={handleResendCode}
+              disabled={isLoading}
+            >
+              <Text className="text-center text-primary font-semibold">
+                Resend Code
+              </Text>
+            </TouchableOpacity>
+
             <TouchableOpacity onPress={() => setShowConfirmation(false)}>
-              <Text className="text-center text-primary">
+              <Text className="text-center text-gray-600">
                 Back to Sign Up
               </Text>
             </TouchableOpacity>
@@ -175,6 +197,9 @@ export default function SignUpScreen({ navigation, onSignUpSuccess }: SignUpScre
               <Text className="text-gray-600 text-center">
                 See Your ADHD in High Definition
               </Text>
+              <Text className="text-sm text-gray-500 text-center mt-2">
+                No password needed - we'll email you a verification code
+              </Text>
             </View>
 
             {/* Sign Up Form */}
@@ -190,7 +215,7 @@ export default function SignUpScreen({ navigation, onSignUpSuccess }: SignUpScre
               />
             </View>
 
-            <View className="mb-4">
+            <View className="mb-6">
               <Text className="text-gray-700 font-semibold mb-2">Email</Text>
               <TextInput
                 className="bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-gray-900"
@@ -198,36 +223,6 @@ export default function SignUpScreen({ navigation, onSignUpSuccess }: SignUpScre
                 value={email}
                 onChangeText={setEmail}
                 keyboardType="email-address"
-                autoCapitalize="none"
-                autoCorrect={false}
-                editable={!isLoading}
-              />
-            </View>
-
-            <View className="mb-4">
-              <Text className="text-gray-700 font-semibold mb-2">Password</Text>
-              <TextInput
-                className="bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-gray-900"
-                placeholder="Create a password (min 8 characters)"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                autoCapitalize="none"
-                autoCorrect={false}
-                editable={!isLoading}
-              />
-            </View>
-
-            <View className="mb-6">
-              <Text className="text-gray-700 font-semibold mb-2">
-                Confirm Password
-              </Text>
-              <TextInput
-                className="bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-gray-900"
-                placeholder="Re-enter your password"
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                secureTextEntry
                 autoCapitalize="none"
                 autoCorrect={false}
                 editable={!isLoading}

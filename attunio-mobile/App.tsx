@@ -52,6 +52,7 @@ type AppState = 'splash' | 'loading' | 'auth' | 'onboarding' | 'dashboard';
 
 export default function App() {
   const [appState, setAppState] = useState<AppState>('splash');
+  const [userEmail, setUserEmail] = useState<string>('');
 
   useEffect(() => {
     // Only check auth after splash is done
@@ -62,10 +63,15 @@ export default function App() {
 
   const checkAuthStatus = async () => {
     try {
-      await getCurrentUser();
+      const user = await getCurrentUser();
       
       // Check if user has completed onboarding
       const onboardingComplete = await AsyncStorage.getItem('onboarding_complete');
+      const savedEmail = await AsyncStorage.getItem('user_email');
+      
+      if (savedEmail) {
+        setUserEmail(savedEmail);
+      }
       
       if (onboardingComplete === 'true') {
         setAppState('dashboard');
@@ -82,13 +88,32 @@ export default function App() {
     setAppState('loading');
   };
 
-  const handleOnboardingComplete = async () => {
+  const handleOnboardingComplete = async (userData: any) => {
     await AsyncStorage.setItem('onboarding_complete', 'true');
+    if (userData?.userData?.email) {
+      await AsyncStorage.setItem('user_email', userData.userData.email);
+    }
     setAppState('dashboard');
   };
 
-  const handleLoginSuccess = () => {
+  const handleSignUpSuccess = async (email: string) => {
+    // After email verification via magic link, store email and go to onboarding
+    setUserEmail(email);
+    await AsyncStorage.setItem('user_email', email);
     setAppState('onboarding');
+  };
+
+  const handleLoginSuccess = async (email: string) => {
+    // Check if they've completed onboarding
+    const onboardingComplete = await AsyncStorage.getItem('onboarding_complete');
+    setUserEmail(email);
+    await AsyncStorage.setItem('user_email', email);
+    
+    if (onboardingComplete === 'true') {
+      setAppState('dashboard');
+    } else {
+      setAppState('onboarding');
+    }
   };
 
   // Show splash screen
@@ -117,12 +142,12 @@ export default function App() {
                 {(props) => <LoginScreen {...props} onLoginSuccess={handleLoginSuccess} />}
               </Stack.Screen>
               <Stack.Screen name="SignUp">
-                {(props) => <SignUpScreen {...props} onSignUpSuccess={handleLoginSuccess} />}
+                {(props) => <SignUpScreen {...props} onSignUpSuccess={handleSignUpSuccess} />}
               </Stack.Screen>
             </>
           ) : appState === 'onboarding' ? (
             <Stack.Screen name="Onboarding">
-              {(props) => <OnboardingFlow {...props} onComplete={handleOnboardingComplete} />}
+              {(props) => <OnboardingFlow {...props} userEmail={userEmail} onComplete={handleOnboardingComplete} />}
             </Stack.Screen>
           ) : (
             <>

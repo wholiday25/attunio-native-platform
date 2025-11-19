@@ -1,42 +1,28 @@
 import { useState } from 'react';
-import WelcomeScreen from './WelcomeScreen';
-import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
+import { OnboardingFlow as OnboardingFlowComponent } from '../../components/onboarding-flow';
 
 interface OnboardingFlowProps {
-  onComplete: () => void;
+  userEmail?: string;
+  onComplete: (userData: any) => void;
 }
 
-export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
-  const [currentStep, setCurrentStep] = useState<'welcome' | 'complete'>('welcome');
-
-  const handleWelcomeContinue = () => {
-    // For now, just complete onboarding after welcome
-    // In future, add more steps (assessment, health profile, device connection)
-    onComplete();
+export default function OnboardingFlow({ userEmail = '', onComplete }: OnboardingFlowProps) {
+  const handleOnboardingComplete = (userData: any) => {
+    // Pass email data throughout the flow
+    const completeData = {
+      ...userData,
+      userData: {
+        ...userData.userData,
+        email: userEmail || userData.userData?.email,
+      },
+    };
+    onComplete(completeData);
   };
 
-  if (currentStep === 'welcome') {
-    return <WelcomeScreen onContinue={handleWelcomeContinue} />;
-  }
-
-  // Completion screen (shown briefly before redirecting to dashboard)
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <View className="flex-1 items-center justify-center px-6">
-        <Text className="text-4xl mb-4">🎉</Text>
-        <Text className="text-2xl font-bold text-gray-900 mb-4 text-center">
-          Welcome to Attunio!
-        </Text>
-        <Text className="text-gray-600 text-center mb-8">
-          Your personalized ADHD health journey starts now
-        </Text>
-        <TouchableOpacity
-          className="bg-primary rounded-lg py-4 px-8"
-          onPress={onComplete}
-        >
-          <Text className="text-white font-bold text-lg">Get Started</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+    <View style={{ flex: 1 }}>
+      <OnboardingFlowComponent onComplete={handleOnboardingComplete} />
+    </View>
   );
 }

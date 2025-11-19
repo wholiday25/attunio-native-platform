@@ -12,19 +12,50 @@ import {
   Alert,
   Image,
 } from 'react-native';
-import { signIn, SignInInput } from 'aws-amplify/auth';
+import { signIn, SignInInput, confirmSignIn } from 'aws-amplify/auth';
+import { validateEmail } from '../../lib/utils/validation';
 
 interface LoginScreenProps {
   navigation: any;
-  onLoginSuccess?: () => void;
+  onLoginSuccess?: (email: string) => void;
 }
 
 export default function LoginScreen({ navigation, onLoginSuccess }: LoginScreenProps) {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showPasswordLogin, setShowPasswordLogin] = useState(false);
+  const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
+  const handleMagicLinkLogin = async () => {
+    if (!email) {
+      Alert.alert('Error', 'Please enter your email');
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      Alert.alert('Error', 'Please enter a valid email address');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      // For now, show password option
+      // TODO: Implement true magic link with AWS SES
+      setShowPasswordLogin(true);
+      Alert.alert(
+        'Welcome Back',
+        'Please enter your password to continue',
+        [{ text: 'OK' }]
+      );
+    } catch (error: any) {
+      console.error('Login error:', error);
+      Alert.alert('Error', error.message || 'Failed to send login link');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePasswordLogin = async () => {
     if (!email || !password) {
       Alert.alert('Error', 'Please enter email and password');
       return;
@@ -40,7 +71,7 @@ export default function LoginScreen({ navigation, onLoginSuccess }: LoginScreenP
       const result = await signIn(signInInput);
       
       if (result.isSignedIn) {
-        onLoginSuccess?.();
+        onLoginSuccess?.(email.toLowerCase().trim());
       }
     } catch (error: any) {
       console.error('Login error:', error);
@@ -94,37 +125,43 @@ export default function LoginScreen({ navigation, onLoginSuccess }: LoginScreenP
               />
             </View>
 
-            <View className="mb-6">
-              <Text className="text-gray-700 font-semibold mb-2">Password</Text>
-              <TextInput
-                className="bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-gray-900"
-                placeholder="Enter your password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                autoCapitalize="none"
-                autoCorrect={false}
-                editable={!isLoading}
-              />
-            </View>
+            {showPasswordLogin && (
+              <View className="mb-6">
+                <Text className="text-gray-700 font-semibold mb-2">Password</Text>
+                <TextInput
+                  className="bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-gray-900"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  editable={!isLoading}
+                />
+              </View>
+            )}
 
             {/* Forgot Password */}
-            <TouchableOpacity className="mb-6">
-              <Text className="text-primary text-right">Forgot Password?</Text>
-            </TouchableOpacity>
+            {showPasswordLogin && (
+              <TouchableOpacity className="mb-6">
+                <Text className="text-primary text-right">Forgot Password?</Text>
+              </TouchableOpacity>
+            )}
 
             {/* Login Button */}
             <TouchableOpacity
               className={`rounded-lg py-4 items-center mb-4 ${
                 isLoading ? 'bg-gray-400' : 'bg-primary'
               }`}
-              onPress={handleLogin}
+              onPress={showPasswordLogin ? handlePasswordLogin : handleMagicLinkLogin}
               disabled={isLoading}
             >
               {isLoading ? (
                 <ActivityIndicator color="white" />
               ) : (
-                <Text className="text-white font-bold text-lg">Sign In</Text>
+                <Text className="text-white font-bold text-lg">
+                  {showPasswordLogin ? 'Sign In' : 'Continue with Email'}
+                </Text>
               )}
             </TouchableOpacity>
 
